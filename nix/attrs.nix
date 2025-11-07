@@ -12,7 +12,11 @@
     # https://github.com/catppuccin/nix/blob/08716214674ca27914daa52e6fa809cc022b581e/modules/lib/default.nix#L99
     importYAML = path:
       pkgs.lib.importJSON (
-        pkgs.runCommand "converted.json" {nativeBuildInputs = [pkgs.yj];} ''
+        pkgs.runCommand "converted.json" {
+          pname = "converted.json";
+          version = "0.0.1";
+          nativeBuildInputs = [pkgs.yj];
+        } ''
           yj < ${path} > $out
         ''
       );
