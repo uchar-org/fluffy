@@ -75,7 +75,7 @@ cd fluffychat
     * FLUFFYCHAT_NEW_GROUP: the group you want App IDs and such to live under (ie: com.example.fluffychat)
     * FLUFFYCHAT_INSTALL_IPA: set to `1` if you want the IPA to be deployed to connected devices after building, otherwise unset
 * Run `./scripts/build-ios.sh`
-* Then set your team ID in ios/Config/Secret.xcconfig 
+* Then set your team ID in `ios/Config/Secret.xcconfig` 
 
 ### Web
 
