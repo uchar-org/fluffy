@@ -26,7 +26,7 @@ dependencies:
   dynamic_color: ^1.8.1
   emoji_picker_flutter: ^4.3.0
   emojis: ^0.9.9
-  file_picker: ^10.3.3
+  file_picker: ^10.3.6
   file_selector: ^1.0.4
   flutter:
     sdk: flutter
@@ -48,17 +48,14 @@ dependencies:
   go_router: ^17.0.0
   handy_window: ^0.4.0
   html: ^0.15.4
-  http: ^1.5.0
+  http: ^1.6.0
   image: ^4.1.7
-  image_picker: ^1.2.0
+  image_picker: ^1.2.1
   intl: any
   just_audio: ^0.10.5
   latlong2: ^0.9.1
   linkify: ^5.0.0
-  matrix: #^3.0.1
-    git:
-      url: https://github.com/famedly/matrix-dart-sdk.git
-      ref: main
+  matrix: ^4.0.0
   mime: ^2.0.0
   native_imaging: ^0.2.0
   opus_caf_converter_dart: ^1.0.1
@@ -86,7 +83,7 @@ dependencies:
   universal_html: ^2.2.4
   url_launcher: ^6.3.2
   video_compress: ^3.1.4
-  video_player: ^2.9.5
+  video_player: ^2.10.1
   wakelock_plus: ^1.3.3
   webrtc_interface: ^1.3.0
 

@@ -498,10 +498,12 @@ class Message extends StatelessWidget {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: <Widget>[
-                                                        if (RelationshipTypes
-                                                                .reply ==
-                                                            event
-                                                                .relationshipType)
+                                                        if (event
+                                                                .inReplyToEventId(
+                                                              includingFallback:
+                                                                  false,
+                                                            ) !=
+                                                            null)
                                                           FutureBuilder<Event?>(
                                                             future: event
                                                                 .getReplyEvent(
@@ -519,7 +521,7 @@ class Message extends StatelessWidget {
                                                                           .data!
                                                                       : Event(
                                                                           eventId:
-                                                                              event.relationshipEventId!,
+                                                                              event.inReplyToEventId() ?? '\$fake_event_id',
                                                                           content: {
                                                                             'msgtype':
                                                                                 'm.text',

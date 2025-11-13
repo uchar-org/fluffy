@@ -1,3 +1,6 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
@@ -6,13 +9,27 @@ import 'package:flutter_vodozemac/flutter_vodozemac.dart' as vod;
 import 'package:matrix/matrix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/utils/client_manager.dart';
+import 'package:fluffychat/utils/notification_background_handler.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'config/setting_keys.dart';
 import 'utils/background_push.dart';
 import 'widgets/fluffy_chat_app.dart';
 
+ReceivePort? mainIsolateReceivePort;
+
 void main() async {
+  if (PlatformInfos.isAndroid) {
+    final port = mainIsolateReceivePort = ReceivePort();
+    IsolateNameServer.removePortNameMapping(AppConfig.mainIsolatePortName);
+    IsolateNameServer.registerPortWithName(
+      port.sendPort,
+      AppConfig.mainIsolatePortName,
+    );
+    await waitForPushIsolateDone();
+  }
+
   // Our background push shared isolate accesses flutter-internal things very early in the startup proccess
   // To make sure that the parts of flutter needed are started up already, we need to ensure that the
   // widget bindings are initialized already.
