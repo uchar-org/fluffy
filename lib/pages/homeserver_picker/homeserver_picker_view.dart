@@ -1,6 +1,8 @@
+import 'package:fluffychat/config/locale_provide.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -12,6 +14,9 @@ import 'package:fluffychat/widgets/layouts/login_scaffold.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import '../../config/themes.dart';
 import 'homeserver_picker.dart';
+
+import 'package:language_picker/language_picker.dart';
+import 'package:language_picker/languages.dart';
 
 class HomeserverPickerView extends StatelessWidget {
   final HomeserverPickerController controller;
@@ -136,6 +141,15 @@ class HomeserverPickerView extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            top: 32.0, left: 32.0, right: 32.0),
+                        child: LanguagePickerDropdown(
+                            onValuePicked: (Language language) {
+                          context
+                              .read<LocaleProvider>()
+                              .setLocale(Locale(language.isoCode));
+                        })),
                     Padding(
                       padding: const EdgeInsets.all(32.0),
                       child: Column(

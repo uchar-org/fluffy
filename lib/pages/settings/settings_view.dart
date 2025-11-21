@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:language_picker/language_picker_dropdown.dart';
+import 'package:language_picker/languages.dart';
 import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import 'package:provider/provider.dart';
+import 'package:fluffychat/config/locale_provide.dart';
 
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
@@ -201,6 +206,19 @@ class SettingsView extends StatelessWidget {
                             ? theme.colorScheme.surfaceContainerHigh
                             : null,
                     onTap: () => context.go('/rooms/settings/notifications'),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.language_outlined),
+                    title: LanguagePickerDropdown(
+                        onValuePicked: (Language language) {
+                      context
+                          .read<LocaleProvider>()
+                          .setLocale(Locale(language.isoCode));
+                    }),
+                    onTap: () {},
+                    tileColor: activeRoute.startsWith('/rooms/settings/devices')
+                        ? theme.colorScheme.surfaceContainerHigh
+                        : null,
                   ),
                   ListTile(
                     leading: const Icon(Icons.devices_outlined),
