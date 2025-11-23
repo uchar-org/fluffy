@@ -79,33 +79,11 @@ class _StartPollBottomSheetState extends State<StartPollBottomSheet> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         children: [
-          SegmentedButton<PollKind>(
-            selected: {_pollKind},
-            multiSelectionEnabled: false,
-            onSelectionChanged: (pollKind) => setState(() {
-              _pollKind = pollKind.first;
-            }),
-            segments: [
-              ButtonSegment(
-                value: PollKind.disclosed,
-                label: Text(
-                  L10n.of(context).answersVisible,
-                ),
-              ),
-              ButtonSegment(
-                value: PollKind.undisclosed,
-                label: Text(
-                  L10n.of(context).answersHidden,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 32),
           TextField(
             controller: _bodyController,
-            minLines: 1,
+            minLines: 2,
             maxLines: 4,
-            maxLength: 512,
+            maxLength: 1024,
             onChanged: _updateCanCreate,
             decoration: InputDecoration(
               hintText: L10n.of(context).pollQuestion,
@@ -147,6 +125,17 @@ class _StartPollBottomSheetState extends State<StartPollBottomSheet> {
               label: Text(L10n.of(context).addAnswerOption),
             ),
           ),
+          const Divider(height: 32),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: Switch.adaptive(
+              value: _pollKind == PollKind.disclosed,
+              onChanged: (allow) => setState(() {
+                _pollKind = allow ? PollKind.disclosed : PollKind.undisclosed;
+              }),
+            ),
+            title: Text(L10n.of(context).answersVisible),
+          ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Switch.adaptive(
@@ -157,7 +146,6 @@ class _StartPollBottomSheetState extends State<StartPollBottomSheet> {
             ),
             title: Text(L10n.of(context).allowMultipleAnswers),
           ),
-          const SizedBox(height: 8),
           ElevatedButton(
             onPressed: !isLoading && _canCreate ? _createPoll : null,
             child: isLoading

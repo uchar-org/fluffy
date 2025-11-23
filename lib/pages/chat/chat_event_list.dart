@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:collection/collection.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import 'package:fluffychat/config/themes.dart';
@@ -92,21 +93,28 @@ class ChatEventList extends StatelessWidget {
 
             // Request history button or progress indicator:
             if (i == events.length + 1) {
-              if (timeline.isRequestingHistory) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-                );
-              }
-              if (timeline.canRequestHistory &&
-                  controller.activeThreadId == null) {
+              if (controller.activeThreadId == null) {
                 return Builder(
                   builder: (context) {
-                    WidgetsBinding.instance
-                        .addPostFrameCallback(controller.requestHistory);
+                    final visibleIndex = timeline.events.lastIndexWhere(
+                      (event) =>
+                          !event.isCollapsedState && event.isVisibleInGui,
+                    );
+                    if (visibleIndex > timeline.events.length - 50) {
+                      WidgetsBinding.instance
+                          .addPostFrameCallback(controller.requestHistory);
+                    }
                     return Center(
-                      child: IconButton(
-                        onPressed: controller.requestHistory,
-                        icon: const Icon(Icons.refresh_outlined),
+                      child: AnimatedSwitcher(
+                        duration: FluffyThemes.animationDuration,
+                        child: timeline.canRequestHistory
+                            ? IconButton(
+                                onPressed: controller.requestHistory,
+                                icon: const Icon(Icons.refresh_outlined),
+                              )
+                            : const CircularProgressIndicator.adaptive(
+                                strokeWidth: 2,
+                              ),
                       ),
                     );
                   },

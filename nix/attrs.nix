@@ -77,6 +77,9 @@
           runHook postInstall
         '';
         targetFlutterPlatform = "web";
+        customSourceBuilders = {
+          flutter_vodozemac = pkgs.callPackage ./flutter_vodozemac.nix attrs;
+        };
       }
     );
     libwebrtc = pkgs.fetchzip {
