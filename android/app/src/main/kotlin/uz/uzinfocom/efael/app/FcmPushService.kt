@@ -1,4 +1,4 @@
-/*package uz.uzinfocom.efael.app
+package uz.uzinfocom.efael.app
 
 import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
 
@@ -25,4 +25,4 @@ class FcmPushService : FcmSharedIsolateService() {
         }
     }
 }
-*/
+
