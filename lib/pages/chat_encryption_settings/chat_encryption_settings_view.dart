@@ -1,3 +1,4 @@
+import 'package:fluffychat/utils/matrix_sdk_extensions/device_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ import 'package:fluffychat/pages/chat_encryption_settings/chat_encryption_settin
 import 'package:fluffychat/utils/beautify_string_extension.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/layouts/max_width_body.dart';
+
+import '../../utils/date_time_extension.dart';
 
 class ChatEncryptionSettingsView extends StatelessWidget {
   final ChatEncryptionSettingsController controller;
@@ -122,57 +125,159 @@ class ChatEncryptionSettingsView extends StatelessWidget {
                                       snapshot.data?.displayname ??
                                           deviceKeys[i].userId.localpart ??
                                           deviceKeys[i].userId;
-                                  return ListTile(
-                                    leading: Avatar(
-                                      name: displayname,
-                                      mxContent: snapshot.data?.avatarUrl,
-                                    ),
-                                    title: Text(displayname),
-                                    subtitle: Text(deviceKeys[i].userId),
+
+                                  return Column(
+                                    children: <Widget>[
+                                      ExpansionTile(
+                                          title: Text(displayname),
+                                          leading: Avatar(
+                                            name: displayname,
+                                            mxContent: snapshot.data?.avatarUrl,
+                                          ),
+                                          subtitle: Text(deviceKeys[i].userId),
+                                          children: [
+                                            ListView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: deviceKeys.length,
+                                              itemBuilder: (BuildContext
+                                                          context,
+                                                      int i) =>
+                                                  ExpansionTile(
+                                                      leading: Icon(
+                                                          deviceKeys[i].icon),
+                                                      title: Text(
+                                                        deviceKeys[i]
+                                                            .displayname,
+                                                        style: deviceKeys[i]
+                                                                .blocked
+                                                            ? TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                              )
+                                                            : TextStyle(
+                                                                color: deviceKeys[
+                                                                            i]
+                                                                        .verified
+                                                                    ? Colors
+                                                                        .green
+                                                                    : Colors
+                                                                        .orange,
+                                                              ),
+                                                      ),
+                                                      subtitle: Text(
+                                                          L10n.of(context)
+                                                                  .deviceId +
+                                                              ": "),
+                                                      // subtitle: Text(devices[i].ac),
+                                                      children: [
+                                                    Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: <Widget>[
+                                                        SwitchListTile(
+                                                          value: !deviceKeys[i]
+                                                              .blocked,
+                                                          activeThumbColor:
+                                                              deviceKeys[i]
+                                                                      .verified
+                                                                  ? Colors.green
+                                                                  : Colors
+                                                                      .orange,
+                                                          onChanged: (_) =>
+                                                              controller
+                                                                  .toggleDeviceKey(
+                                                                      deviceKeys[
+                                                                          i]),
+                                                          title: Row(
+                                                            children: [
+                                                              Text(
+                                                                deviceKeys[i]
+                                                                        .verified
+                                                                    ? L10n.of(
+                                                                            context)
+                                                                        .verified
+                                                                    : deviceKeys[i]
+                                                                            .blocked
+                                                                        ? L10n.of(context)
+                                                                            .blocked
+                                                                        : L10n.of(context)
+                                                                            .unverified,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: deviceKeys[
+                                                                              i]
+                                                                          .verified
+                                                                      ? Colors
+                                                                          .green
+                                                                      : deviceKeys[i]
+                                                                              .blocked
+                                                                          ? Colors
+                                                                              .red
+                                                                          : Colors
+                                                                              .orange,
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                  ' | ID: '),
+                                                              Text(
+                                                                deviceKeys[i]
+                                                                        .deviceId ??
+                                                                    L10n.of(context)
+                                                                        .unknownDevice,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          subtitle: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  deviceKeys[i]
+                                                                          .ed25519Key
+                                                                          ?.beautified ??
+                                                                      L10n.of(context)
+                                                                          .unknownEncryptionAlgorithm,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontFamily:
+                                                                        'RobotoMono',
+                                                                    color: theme
+                                                                        .colorScheme
+                                                                        .secondary,
+                                                                    fontSize:
+                                                                        11,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                    L10n.of(context)
+                                                                        .lastActiveAgo(
+                                                                      DateTime.fromMillisecondsSinceEpoch(deviceKeys[i].lastActive.hour ??
+                                                                              0)
+                                                                          .localizedTimeShort(
+                                                                              context),
+                                                                    ),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontVariations: <FontVariation>[
+                                                                        FontVariation.weight(
+                                                                            600), // Extra bold weight
+                                                                      ],
+                                                                    )),
+                                                              ]),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ]),
+                                            ),
+                                          ]),
+                                    ],
                                   );
                                 },
                               ),
                             ],
-                            SwitchListTile(
-                              value: !deviceKeys[i].blocked,
-                              activeThumbColor: deviceKeys[i].verified
-                                  ? Colors.green
-                                  : Colors.orange,
-                              onChanged: (_) =>
-                                  controller.toggleDeviceKey(deviceKeys[i]),
-                              title: Row(
-                                children: [
-                                  Text(
-                                    deviceKeys[i].verified
-                                        ? L10n.of(context).verified
-                                        : deviceKeys[i].blocked
-                                            ? L10n.of(context).blocked
-                                            : L10n.of(context).unverified,
-                                    style: TextStyle(
-                                      color: deviceKeys[i].verified
-                                          ? Colors.green
-                                          : deviceKeys[i].blocked
-                                              ? Colors.red
-                                              : Colors.orange,
-                                    ),
-                                  ),
-                                  const Text(' | ID: '),
-                                  Text(
-                                    deviceKeys[i].deviceId ??
-                                        L10n.of(context).unknownDevice,
-                                  ),
-                                ],
-                              ),
-                              subtitle: Text(
-                                deviceKeys[i].ed25519Key?.beautified ??
-                                    L10n.of(context).unknownEncryptionAlgorithm,
-                                style: TextStyle(
-                                  fontFamily: 'RobotoMono',
-                                  color: theme.colorScheme.secondary,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       );
