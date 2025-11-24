@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:language_picker/language_picker_dropdown.dart';
 import 'package:matrix/matrix.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import 'package:provider/provider.dart';
+import 'package:fluffychat/config/locale_provide.dart';
 
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
@@ -33,6 +37,8 @@ class SettingsView extends StatelessWidget {
         ?.additionalProperties
         .tryGetMap<String, Object?>('org.matrix.msc2965.authentication')
         ?.tryGet<String>('account');
+    final localeProvider = context.read<LocaleProvider>();
+
     return Row(
       children: [
         if (FluffyThemes.isColumnMode(context)) ...[
@@ -201,6 +207,15 @@ class SettingsView extends StatelessWidget {
                             ? theme.colorScheme.surfaceContainerHigh
                             : null,
                     onTap: () => context.go('/rooms/settings/notifications'),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.language_outlined),
+                    title: LanguagePickerDropdown(
+                      languages: localeProvider.languages,
+                      initialValue: localeProvider.language,
+                      onValuePicked: localeProvider.setLanguage,
+                    ),
+                    onTap: () {},
                   ),
                   ListTile(
                     leading: const Icon(Icons.devices_outlined),

@@ -55,6 +55,7 @@ dependencies:
   image_picker: ^1.2.1
   intl: any
   just_audio: ^0.10.5
+  language_picker: ^0.4.5
   latlong2: ^0.9.1
   linkify: ^5.0.0
   matrix: ^4.0.0
