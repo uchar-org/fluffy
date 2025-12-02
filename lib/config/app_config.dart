@@ -20,7 +20,7 @@ abstract class AppConfig {
   static const double borderRadius = 18.0;
   static const double columnWidth = 360.0;
 
-  static const String website = 'https://efael.uz';
+  static const String website = 'https://uchar.uz';
   static const String enablePushTutorial =
       'https://fluffy.chat/faq/#push_without_google_services';
   static const String encryptionTutorial =

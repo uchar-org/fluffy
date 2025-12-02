@@ -22,7 +22,7 @@ enum AppSettings<T> {
   unifiedPushEndpoint<String>('chat.fluffy.unifiedpush.endpoint', ''),
   pushNotificationsGatewayUrl<String>(
     'pushNotificationsGatewayUrl',
-    'https://matrix.efael.uz/_matrix/push/v1/notify',
+    'https://matrix.uchar.uz/_matrix/push/v1/notify',
   ),
   pushNotificationsPusherFormat<String>(
     'pushNotificationsPusherFormat',
@@ -46,13 +46,10 @@ enum AppSettings<T> {
     'chat.fluffy.no_encryption_warning_shown',
     false,
   ),
-  displayChatDetailsColumn(
-    'chat.fluffy.display_chat_details_column',
-    false,
-  ),
+  displayChatDetailsColumn('chat.fluffy.display_chat_details_column', false),
   // AppConfig-mirrored settings
-  applicationName<String>('chat.fluffy.application_name', 'Efael'),
-  defaultHomeserver<String>('chat.fluffy.default_homeserver', 'efael.uz'),
+  applicationName<String>('chat.fluffy.application_name', 'Uchar'),
+  defaultHomeserver<String>('chat.fluffy.default_homeserver', 'uchar.uz'),
   // colorSchemeSeed stored as ARGB int
   colorSchemeSeedInt<int>(
     'chat.fluffy.color_scheme_seed',
@@ -69,16 +66,15 @@ enum AppSettings<T> {
   static SharedPreferences get store => _store!;
   static SharedPreferences? _store;
 
-  static Future<SharedPreferences> init({loadWebConfigFile = true}) async {
+  static Future<SharedPreferences> init({bool loadWebConfigFile = true}) async {
     if (AppSettings._store != null) return AppSettings.store;
 
     final store = AppSettings._store = await SharedPreferences.getInstance();
 
     // Migrate wrong datatype for fontSizeFactor
-    final fontSizeFactorString =
-        Result(() => store.getString(AppSettings.fontSizeFactor.key))
-            .asValue
-            ?.value;
+    final fontSizeFactorString = Result(
+      () => store.getString(AppSettings.fontSizeFactor.key),
+    ).asValue?.value;
     if (fontSizeFactorString != null) {
       Logs().i('Migrate wrong datatype for fontSizeFactor!');
       await store.remove(AppSettings.fontSizeFactor.key);
@@ -93,8 +89,9 @@ enum AppSettings<T> {
     }
     if (kIsWeb && loadWebConfigFile) {
       try {
-        final configJsonString =
-            utf8.decode((await http.get(Uri.parse('config.json'))).bodyBytes);
+        final configJsonString = utf8.decode(
+          (await http.get(Uri.parse('config.json'))).bodyBytes,
+        );
         final configJson =
             json.decode(configJsonString) as Map<String, Object?>;
         for (final setting in AppSettings.values) {

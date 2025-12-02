@@ -12,7 +12,7 @@
 pinnedFlutter.buildFlutterApplication (
   packageAttrs
   // rec {
-    pname = "efael-${targetFlutterPlatform}";
+    pname = "uchar-${targetFlutterPlatform}";
 
     src = ../.;
 
@@ -21,7 +21,7 @@ pinnedFlutter.buildFlutterApplication (
     meta =
       {
         description = "Chat with your friends (matrix client)";
-        homepage = "https://efael.uz/";
+        homepage = "https://uchar.uz/";
         license = pkgs.lib.licenses.agpl3Plus;
         maintainers = with pkgs.lib.maintainers; [
           mkg20001
@@ -31,7 +31,7 @@ pinnedFlutter.buildFlutterApplication (
         badPlatforms = pkgs.lib.platforms.darwin;
       }
       // pkgs.lib.optionalAttrs (targetFlutterPlatform == "linux") {
-        mainProgram = "efael";
+        mainProgram = "uchar";
       };
   }
   // pkgs.lib.optionalAttrs (targetFlutterPlatform == "linux") {
@@ -46,10 +46,10 @@ pinnedFlutter.buildFlutterApplication (
 
     desktopItems = [
       (pkgs.makeDesktopItem {
-        name = "Efael";
-        exec = "efael";
-        icon = "efael";
-        desktopName = "Efael";
+        name = "Uchar";
+        exec = "uchar";
+        icon = "uchar";
+        desktopName = "Uchar";
         genericName = "Chat with your friends (matrix client)";
         categories = [
           "Chat"
@@ -88,7 +88,7 @@ pinnedFlutter.buildFlutterApplication (
     };
 
     postInstall = ''
-      FAV=$out/app/efael-linux/data/flutter_assets/assets/favicon.png
+      FAV=$out/app/uchar-linux/data/flutter_assets/assets/favicon.png
       ICO=$out/share/icons
 
       for size in 24 32 42 64 128 256 512; do
@@ -97,7 +97,7 @@ pinnedFlutter.buildFlutterApplication (
         magick $FAV -resize ''${size}x''${size} $D/fluffychat.png
       done
 
-      patchelf --add-rpath ${libwebrtcRpath} $out/app/efael-linux/lib/libwebrtc.so
+      patchelf --add-rpath ${libwebrtcRpath} $out/app/uchar-linux/lib/libwebrtc.so
     '';
   }
   // pkgs.lib.optionalAttrs (targetFlutterPlatform == "web") {

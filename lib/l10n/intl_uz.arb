@@ -908,7 +908,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -1090,7 +1090,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} sizni FluffyChat’ga taklif qildi.\n1. fluffychat.im saytiga tashrif buyuring va ilovani oʻrnating.\n2. Roʻyxatdan oʻting yoki tizimga kiring.\n3. Taklif havolasini oching:\n{link}",
+    "inviteText": "{username} sizni Uchar’ga taklif qildi.\n1. uchar.uz saytiga tashrif buyuring va ilovani oʻrnating.\n2. Roʻyxatdan oʻting yoki tizimga kiring.\n3. Taklif havolasini oching:\n{link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1380,7 +1380,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 FluffyChat yangi xabarlar",
+    "newMessageInFluffyChat": "💬 Uchar yangi xabarlar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -2100,7 +2100,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2400,7 +2400,7 @@
     "@messageType": {},
     "sender": "Yuboruvchi",
     "@sender": {},
-    "openGallery": "Ochiq galereya",
+    "openGallery": "Galereyani ochish",
     "@openGallery": {},
     "removeFromSpace": "Guruhdan olib tashlash",
     "@removeFromSpace": {},
@@ -2460,13 +2460,13 @@
     "@callingPermissions": {},
     "callingAccount": "Qoʻngʻiroq qilishi hisobi",
     "@callingAccount": {},
-    "callingAccountDetails": "FluffyChat’ga mahalliy android terish ilovasidan foydalanishga ruxsat beradi.",
+    "callingAccountDetails": "Uchar’ga mahalliy android terish ilovasidan foydalanishga ruxsat beradi.",
     "@callingAccountDetails": {},
     "appearOnTop": "Teppada paydo boʻladi",
     "@appearOnTop": {},
-    "appearOnTopDetails": "Ilovaning yuqori qismida koʻrinishiga ruxsat beradi (agar sizda Fluffychat qoʻngʻiroq qiluvchi hisobi sifatida oʻrnatilgan boʻlsa, kerak emas)",
+    "appearOnTopDetails": "Ilovaning yuqori qismida koʻrinishiga ruxsat beradi (agar sizda Uchar qoʻngʻiroq qiluvchi hisobi sifatida oʻrnatilgan boʻlsa, kerak emas)",
     "@appearOnTopDetails": {},
-    "otherCallingPermissions": "Mikrofon, kamera va boshqa FluffyChat ruxsatnomalari",
+    "otherCallingPermissions": "Mikrofon, kamera va boshqa Uchar ruxsatnomalari",
     "@otherCallingPermissions": {},
     "whyIsThisMessageEncrypted": "Nima uchun bu xabarni oʻqib boʻlmaydi?",
     "@whyIsThisMessageEncrypted": {},
@@ -2510,7 +2510,7 @@
     "@newSpaceDescription": {},
     "openChat": "Suhbatni ochish",
     "@openChat": {},
-    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut bo'yicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, FluffyChat ni ishga tushirish mumkin emas.",
+    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut bo'yicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, Uchar ni ishga tushirish mumkin emas.",
     "@indexedDbErrorLong": {},
     "youJoinedTheChat": "Siz suhbatga qoʻshildingiz",
     "@youJoinedTheChat": {},
@@ -2592,11 +2592,11 @@
     "@chatPermissionsDescription": {},
     "noticeChatBackupDeviceVerification": "Eslatma: Barcha qurilmalaringizni suhbat zaxira nusxasiga ulaganingizda, ular avtomatik ravishda tasdiqlanadi.",
     "@noticeChatBackupDeviceVerification": {},
-    "welcomeText": "Hey Hey 👋 Bu FluffyChat. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmog'i!",
+    "welcomeText": "Hey Hey 👋 Bu Uchar. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmog'i!",
     "@welcomeText": {},
     "unableToJoinChat": "Chatga qoʻshilib boʻlmadi. Ehtimol, boshqa tomon suhbatni allaqachon yopib qoʻygan.",
     "@unableToJoinChat": {},
-    "appIntroduction": "FluffyChat sizga turli messenjerlar orqali doʻstlaringiz bilan suhbatlashish imkonini beradi. Batafsil maʼlumotni https://matrix.org saytida oling yoki shunchaki *Davom etish* tugmasini bosing.",
+    "appIntroduction": "Uchar sizga turli messenjerlar orqali doʻstlaringiz bilan suhbatlashish imkonini beradi. Batafsil maʼlumotni https://matrix.org saytida oling yoki shunchaki *Davom etish* tugmasini bosing.",
     "@appIntroduction": {},
     "newChatRequest": "📩 Yangi suhbat uchun soʻrov",
     "@newChatRequest": {},
@@ -3168,7 +3168,7 @@
     },
     "appWantsToUseForLoginDescription": "Siz bu bilan ilova va veb-saytga siz haqingizdagi axborotni ulashishga ruxsat berasiz.",
     "@appWantsToUseForLoginDescription": {},
-    "open": "Ochiq",
+    "open": "Ochish",
     "@open": {},
     "waitingForServer": "Server kutilmoqda...",
     "@waitingForServer": {},
