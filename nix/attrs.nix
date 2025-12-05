@@ -22,7 +22,7 @@
         ''
       );
 
-    pinnedFlutter = pkgs.flutter335;
+    pinnedFlutter = pkgs.flutter338;
     pinnedJDK = pkgs.jdk17_headless;
     androidCustomPackage = inputs.android-nixpkgs.sdk.${system} (
       # show all potential values with
@@ -93,6 +93,7 @@
       gitHashes = {
         flutter_web_auth_2 = "sha256-3aci73SP8eXg6++IQTQoyS+erUUuSiuXymvR32sxHFw=";
         flutter_secure_storage_linux = "sha256-cFNHW7dAaX8BV7arwbn68GgkkBeiAgPfhMOAFSJWlyY=";
+        license_checker = "sha256-r9RUU8OvKwQQQGPnFhC1mfbq4voDJehLm4j+1Twur3w=";
       };
     };
     vodozemac = import ./vodozemac.nix attrs;
