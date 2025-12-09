@@ -4,7 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>im.fluffychat.app</string>
+		<string>uz.uzinfocom.uchar</string>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
@@ -19,7 +19,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>fluffychat</string>
+	<string>uchar</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -32,11 +32,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>im.fluffychat.app.uris</string>
+			<string>uz.uzinfocom.uchar.uris</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ShareMedia-$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-				<string>im.fluffychat</string>
+				<string>uz.uchar</string>
 				<string>matrix</string>
 			</array>
 		</dict>
@@ -59,9 +59,9 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Play audio and voice messages on bluetooth devices</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Share calendar dates with your contacts in FluffyChat.</string>
+	<string>Share calendar dates with your contacts in Uchar.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Open the camera and take a picture to share them with your contacts on Uchar.</string>
+	<string>Take pictures, videos and make video calls with your contacts on Uchar.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Share contacts with your contacts in Uchar.</string>
 	<key>NSFaceIDUsageDescription</key>
@@ -69,11 +69,11 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Share your location with your contacts in Uchar.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Share your location with your contacts in FluffyChat.</string>
+	<string>Share your location with your contacts in Uchar.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Share your location with your contacts in Uchar.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Record voice message and share them with your contacts on Uchar.</string>
+	<string>Record voice messages and make voice/video calls with your contacts on Uchar.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Share motions with your contacts in Uchar.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -88,6 +88,7 @@
 		<string>fetch</string>
 		<string>processing</string>
 		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

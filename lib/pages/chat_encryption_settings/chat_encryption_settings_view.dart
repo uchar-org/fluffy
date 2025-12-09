@@ -106,7 +106,7 @@ class ChatEncryptionSettingsView extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: deviceKeys.length,
                         itemBuilder: (BuildContext context, int i) => Column(
-                          mainAxisSize: .min,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             if (i == 0 ||
                                 deviceKeys[i].userId !=

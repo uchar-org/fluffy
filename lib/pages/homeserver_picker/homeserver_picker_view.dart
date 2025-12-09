@@ -1,6 +1,8 @@
+import 'package:fluffychat/config/locale_provide.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -11,6 +13,7 @@ import 'package:fluffychat/widgets/adaptive_dialogs/adaptive_dialog_action.dart'
 import 'package:fluffychat/widgets/layouts/login_scaffold.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'homeserver_picker.dart';
+import 'package:language_picker/languages.dart';
 
 class HomeserverPickerView extends StatelessWidget {
   final HomeserverPickerController controller;
@@ -20,6 +23,7 @@ class HomeserverPickerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final localeProvider = context.read<LocaleProvider>();
 
     return LoginScaffold(
       enforceMobileMode: Matrix.of(
@@ -110,6 +114,59 @@ class HomeserverPickerView extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 32.0,
+                        left: 32.0,
+                        right: 32.0,
+                      ),
+                      child: Theme(
+                        data: theme.copyWith(
+                          dropdownMenuTheme: DropdownMenuThemeData(
+                            inputDecorationTheme: InputDecorationTheme(
+                              filled: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  AppConfig.borderRadius,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                color: theme.colorScheme.surfaceTint,
+                              ),
+                              errorMaxLines: 4,
+                            ),
+                          ),
+                        ),
+                        child: DropdownButtonFormField<Language>(
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.language),
+                            filled: false,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                AppConfig.borderRadius,
+                              ),
+                            ),
+                          ),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            if (value != null) {
+                              localeProvider.setLanguage(value);
+                            }
+                          },
+                          items: localeProvider.languages
+                              .map(
+                                (language) => DropdownMenuItem<Language>(
+                                  value: language,
+                                  child: Text(
+                                    "${language.name} (${language.isoCode})",
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          value: localeProvider.language,
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(32.0),
                       child: Column(
