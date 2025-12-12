@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cp -r android/fastlane fdroid/metadata/uz.uzinfocom.efael.app
+cp -r android/fastlane fdroid/metadata/uz.uzinfocom.uchar
 cd fdroid
 echo $FDROID_KEY | base64 --decode --ignore-garbage >key.jks
 echo $FDROID_NIGHTLY_KEY | base64 --decode --ignore-garbage >key.nightly.jks

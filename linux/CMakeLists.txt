@@ -9,7 +9,7 @@ set(OPENSSL_USE_STATIC_LIBS OFF)
 set(BINARY_NAME "uchar")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
-set(APPLICATION_ID "uz.uzinfocom.efael.app")
+set(APPLICATION_ID "uz.uzinfocom.uchar")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

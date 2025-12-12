@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 git apply ./scripts/enable-android-google-services.patch
-FLUFFYCHAT_ORIG_GROUP="uz.efael.app"
+FLUFFYCHAT_ORIG_GROUP="im.fluffychat"
 FLUFFYCHAT_ORIG_TEAM="4NXF6Z997G"
-#FLUFFYCHAT_NEW_GROUP="com.example.fluffychat"
-#FLUFFYCHAT_NEW_TEAM="ABCDE12345"
+FLUFFYCHAT_NEW_GROUP="uz.uzinfocom.uchar"
+FLUFFYCHAT_NEW_TEAM="86VMSY4FK5"
 
 # In some cases (ie: running beta XCode releases) some pods haven't updated their minimum version
 # but XCode will reject the package for using too old of a minimum version. 

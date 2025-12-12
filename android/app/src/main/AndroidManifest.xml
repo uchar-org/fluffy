@@ -74,12 +74,12 @@
                <data android:scheme="matrix" />
             </intent-filter>
 
-            <!-- App can open uz.efael.app:// uris -->
+            <!-- App can open uz.uzinfocom.uchar:// uris -->
             <intent-filter>
                <action android:name="android.intent.action.VIEW" />
                <category android:name="android.intent.category.DEFAULT" />
                <category android:name="android.intent.category.BROWSABLE" />
-               <data android:scheme="uz.efael.app" android:host="chat" />
+               <data android:scheme="uz.uzinfocom.uchar" android:host="chat" />
             </intent-filter>
 
             <!-- App can receive shared text -->
@@ -109,7 +109,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="uz.efael.app" android:host="login"/>
+                <data android:scheme="uz.uzinfocom.uchar" android:host="login"/>
             </intent-filter>
         </activity>
 

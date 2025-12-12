@@ -33,6 +33,7 @@
           cmake-3-22-1
           build-tools-35-0-0
           ndk-27-0-12077973
+          ndk-28-2-13676358
           platform-tools
           emulator
           platforms-android-31

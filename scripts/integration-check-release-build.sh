@@ -18,9 +18,9 @@ flutter build apk --release
 
 # install and launch APK
 flutter install
-adb shell am start -n uz.uzinfocom.efael.app/uz.uzinfocom.efael.app.MainActivity
+adb shell am start -n uz.uzinfocom.uchar/uz.uzinfocom.uchar.MainActivity
 
 sleep 5
 
 # check whether FluffyChat runs
-adb shell ps | awk '{print $9}' | grep uz.uzinfocom.efael.app
+adb shell ps | awk '{print $9}' | grep uz.uzinfocom.uchar

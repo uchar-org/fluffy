@@ -34,7 +34,7 @@ configurations.all {
 
 
 android {
-    namespace = "uz.uzinfocom.efael.app"
+    namespace = "uz.uzinfocom.uchar"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -70,7 +70,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "uz.uzinfocom.efael.app"
+        applicationId = "uz.uzinfocom.uchar"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

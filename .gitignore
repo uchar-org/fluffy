@@ -75,3 +75,4 @@ web/pkg/vodozemac_bindings_dart.js
 /.direnv
 
 /result
+/.claude

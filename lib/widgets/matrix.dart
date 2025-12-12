@@ -17,6 +17,7 @@ import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:fluffychat/l10n/l10n.dart';
+import 'package:fluffychat/utils/callkit/call_monitor.dart';
 import 'package:fluffychat/utils/callkit/callkit_service.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/callkit/call_store.dart';
@@ -318,6 +319,11 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         // Navigate to call screen
         FluffyChatApp.router.go('/rooms/$roomId/call');
       };
+
+      // Start call monitor for sync-based incoming call detection
+      if (widget.clients.isNotEmpty) {
+        CallMonitor.instance.start(widget.clients.first);
+      }
     }
 
     for (final c in widget.clients) {

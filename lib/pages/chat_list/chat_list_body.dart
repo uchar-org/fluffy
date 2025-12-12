@@ -1,3 +1,4 @@
+import 'package:fluffychat/pages/chat_list/only_tab_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -58,6 +59,18 @@ class ChatListViewBody extends StatelessWidget {
     final userSearchResult = controller.userSearchResult;
     const dummyChatCount = 4;
     final filter = controller.searchController.text.toLowerCase();
+    final filterItems = [
+      if (AppSettings.separateChatTypes.value)
+        ActiveFilter.messages
+      else
+        ActiveFilter.allChats,
+      ActiveFilter.groups,
+      ActiveFilter.unread,
+      if (spaceDelegateCandidates.isNotEmpty &&
+          !AppSettings.displayNavigationRail.value &&
+          !FluffyThemes.isColumnMode(context))
+        ActiveFilter.spaces,
+    ];
     return StreamBuilder(
       key: ValueKey(client.userID.toString()),
       stream: client.onSync.stream
@@ -131,45 +144,12 @@ class ChatListViewBody extends StatelessWidget {
                   if (client.rooms.isNotEmpty && !controller.isSearchMode)
                     SizedBox(
                       height: 64,
-                      child: ListView(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0,
-                          vertical: 12.0,
-                        ),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children:
-                            [
-                                  if (AppSettings.separateChatTypes.value)
-                                    ActiveFilter.messages
-                                  else
-                                    ActiveFilter.allChats,
-                                  ActiveFilter.groups,
-                                  ActiveFilter.unread,
-                                  if (spaceDelegateCandidates.isNotEmpty &&
-                                      !AppSettings
-                                          .displayNavigationRail
-                                          .value &&
-                                      !FluffyThemes.isColumnMode(context))
-                                    ActiveFilter.spaces,
-                                ]
-                                .map(
-                                  (filter) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 4.0,
-                                    ),
-                                    child: FilterChip(
-                                      selected:
-                                          filter == controller.activeFilter,
-                                      onSelected: (_) =>
-                                          controller.setActiveFilter(filter),
-                                      label: Text(
-                                        filter.toLocalizedString(context),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
+                      child: OnlyTabBar(
+                        selected: controller.activeFilter,
+                        onSelected: (filter) =>
+                            controller.setActiveFilter(filter),
+                        label: (filter) => filter.toLocalizedString(context),
+                        items: filterItems,
                       ),
                     ),
                   if (controller.isSearchMode)
@@ -234,15 +214,25 @@ class ChatListViewBody extends StatelessWidget {
                   itemBuilder: (BuildContext context, int i) {
                     final room = rooms[i];
                     final space = spaceDelegateCandidates[room.id];
-                    return ChatListItem(
-                      room,
-                      space: space,
-                      key: Key('chat_list_item_${room.id}'),
-                      filter: filter,
-                      onTap: () => controller.onChatTap(room),
-                      onLongPress: (context) =>
-                          controller.chatContextAction(room, context, space),
-                      activeChat: controller.activeChat == room.id,
+                    return Column(
+                      children: [
+                        // INFO: Uchar: Line under the chat
+                        if (i != 0)
+                          Padding(
+                            padding: EdgeInsets.only(left: 76),
+                            child: Divider(thickness: 1, height: 3),
+                          ),
+                        ChatListItem(
+                          room,
+                          space: space,
+                          key: Key('chat_list_item_${room.id}'),
+                          filter: filter,
+                          onTap: () => controller.onChatTap(room),
+                          onLongPress: (context) => controller
+                              .chatContextAction(room, context, space),
+                          activeChat: controller.activeChat == room.id,
+                        ),
+                      ],
                     );
                   },
                 ),

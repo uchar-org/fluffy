@@ -208,7 +208,7 @@ class ClientChooserButton extends StatelessWidget {
           FluffyShare.shareInviteLink(context);
           break;
         case SettingsAction.support:
-          launchUrlString(AppConfig.donationUrl);
+          // launchUrlString(AppConfig.donationUrl);
           break;
         case SettingsAction.settings:
           context.go('/rooms/settings');
