@@ -126,6 +126,22 @@ void showMemberActionsPopupMenu({
           ],
         ),
       ),
+      // Show grant call permission only if admin can change power levels
+      // and target user doesn't have call permission yet
+      if (user.room.canChangePowerLevel &&
+          user.canChangeUserPowerLevel &&
+          !isMe &&
+          user.powerLevel < _getCallPermissionLevel(user.room))
+        PopupMenuItem(
+          value: _MemberActions.grantCallPermission,
+          child: Row(
+            children: [
+              const Icon(Icons.call_outlined),
+              const SizedBox(width: 18),
+              Text(L10n.of(context).grantCallPermission),
+            ],
+          ),
+        ),
       if (user.canKick)
         PopupMenuItem(
           value: _MemberActions.kick,
@@ -219,6 +235,14 @@ void showMemberActionsPopupMenu({
         future: () => user.setPower(power),
       );
       return;
+    case _MemberActions.grantCallPermission:
+      // Grant user the minimum power level needed for calls
+      final requiredLevel = _getCallPermissionLevel(user.room);
+      await showFutureLoadingDialog(
+        context: context,
+        future: () => user.setPower(requiredLevel),
+      );
+      return;
     case _MemberActions.approve:
       await showFutureLoadingDialog(
         context: context,
@@ -305,9 +329,23 @@ enum _MemberActions {
   info,
   mention,
   setRole,
+  grantCallPermission,
   kick,
   ban,
   approve,
   unban,
   report,
+}
+
+/// Get required power level for call.member state events
+int _getCallPermissionLevel(Room room) {
+  final powerLevels = room.getState(EventTypes.RoomPowerLevels);
+  if (powerLevels == null) return 0;
+
+  final content = powerLevels.content;
+  final stateDefault = content['state_default'] as int? ?? 0;
+  final events = content['events'] as Map<String, dynamic>? ?? {};
+  final callMemberLevel = events['org.matrix.msc3401.call.member'] as int?;
+
+  return callMemberLevel ?? stateDefault;
 }

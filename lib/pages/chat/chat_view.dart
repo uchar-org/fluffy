@@ -132,11 +132,22 @@ class ChatView extends StatelessWidget {
       ];
     } else if (!controller.room.isArchived) {
       return [
-        IconButton(
-          onPressed: controller.onPhoneButtonTap,
-          icon: Icon(controller.hasActiveCall ? Icons.call : Icons.call_outlined),
-          tooltip: L10n.of(context).placeCall,
-        ),
+        if (controller.hasActiveCall)
+          FilledButton.icon(
+            onPressed: controller.onPhoneButtonTap,
+            icon: const Icon(Icons.call),
+            label: Text(L10n.of(context).joinCall),
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+            ),
+          )
+        else
+          IconButton(
+            onPressed: controller.onPhoneButtonTap,
+            icon: const Icon(Icons.call_outlined),
+            tooltip: L10n.of(context).placeCall,
+          ),
         EncryptionButton(controller.room),
         ChatSettingsPopupMenu(controller.room, true),
       ];

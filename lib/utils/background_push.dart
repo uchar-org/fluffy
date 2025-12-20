@@ -135,6 +135,14 @@ class BackgroundPush {
           activeRoomId: matrix?.activeRoomId,
           flutterLocalNotificationsPlugin: _flutterLocalNotificationsPlugin,
         ),
+        onNewToken: (token) {
+          Logs().i('[Push] FCM token refreshed');
+          _fcmToken = token;
+          setupPusher(
+            gatewayUrl: AppSettings.pushNotificationsGatewayUrl.value,
+            token: token,
+          );
+        },
       );
       if (Platform.isAndroid) {
         await UnifiedPush.initialize(
@@ -219,9 +227,6 @@ class BackgroundPush {
     if (deviceAppId.length > 64) {
       deviceAppId = deviceAppId.substring(0, 64);
     }
-    if (!useDeviceSpecificAppId && PlatformInfos.isAndroid) {
-      appId += '.data_message';
-    }
     final thisAppId = useDeviceSpecificAppId ? deviceAppId : appId;
     if (gatewayUrl != null && token != null) {
       final currentPushers = pushers.where((pusher) => pusher.pushkey == token);
@@ -279,6 +284,7 @@ class BackgroundPush {
           ),
           append: false,
         );
+        Logs().i('[Push] Pusher is set');
       } catch (e, s) {
         Logs().e('[Push] Unable to set pushers', e, s);
       }

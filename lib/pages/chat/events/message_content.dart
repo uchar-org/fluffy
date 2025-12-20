@@ -19,6 +19,7 @@ import '../../../utils/event_checkbox_extension.dart';
 import '../../../utils/platform_infos.dart';
 import '../../../utils/url_launcher.dart';
 import 'audio_player.dart';
+import 'call_notify_event.dart';
 import 'cute_events.dart';
 import 'html_message.dart';
 import 'image_bubble.dart';
@@ -308,6 +309,13 @@ class MessageContent extends StatelessWidget {
               fontSize: fontSize,
             );
           },
+        );
+      case 'org.matrix.msc4075.call.notify':
+      case 'org.matrix.msc4075.rtc.notification':
+        return CallNotifyEventWidget(
+          event: event,
+          textColor: textColor,
+          fontSize: fontSize,
         );
       default:
         return FutureBuilder<User?>(

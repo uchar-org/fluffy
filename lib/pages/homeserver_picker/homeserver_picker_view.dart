@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/locale_provide.dart';
+import 'package:fluffychat/widgets/theme_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -24,6 +25,15 @@ class HomeserverPickerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final localeProvider = context.read<LocaleProvider>();
+    final themeMode = ThemeController.of(context).themeMode;
+
+    final icon = switch (themeMode) {
+      ThemeMode.dark => Image.asset(
+        './assets/info-logo-dark.png',
+        fit: BoxFit.fitWidth,
+      ),
+      _ => Image.asset('./assets/info-logo.png', fit: BoxFit.fitWidth),
+    };
 
     return LoginScaffold(
       enforceMobileMode: Matrix.of(
@@ -88,14 +98,8 @@ class HomeserverPickerView extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Hero(
-                        tag: 'info-logo',
-                        child: Image.asset(
-                          './assets/banner_transparent.png',
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                      child: icon,
                     ),
                     const SizedBox(height: 32),
                     Padding(

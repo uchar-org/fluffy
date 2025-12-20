@@ -5,10 +5,12 @@ import 'dart:async';
 
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:fluffychat/widgets/theme_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart';
 
 import '../../utils/callkit/call_store.dart';
@@ -22,10 +24,7 @@ const parentUrl = 'https://call.element.io';
 class CallScreen extends StatefulWidget {
   final String roomId;
 
-  const CallScreen({
-    super.key,
-    required this.roomId,
-  });
+  const CallScreen({super.key, required this.roomId});
 
   @override
   State<CallScreen> createState() => _CallScreenState();
@@ -38,6 +37,7 @@ class _CallScreenState extends State<CallScreen> {
   bool _isLoading = true;
   String? _error;
   final bool _isClosing = false;
+  String? _callKitUuid;
 
   StreamSubscription? _connectionStateSubscription;
 
@@ -49,12 +49,25 @@ class _CallScreenState extends State<CallScreen> {
       return;
     }
 
-    _initializeCall();
+    // Extract CallKit UUID from route extra
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final extra = GoRouterState.of(context).extra;
+      if (extra is Map<String, dynamic>) {
+        _callKitUuid = extra['callKitUuid'] as String?;
+      }
+      _initializeCall();
+    });
   }
 
   Future<void> _initializeCall() async {
     try {
       Logs().i('CallScreen: Initializing call for room ${room!.id}');
+
+      final theme = switch (ThemeController.of(context).themeMode) {
+        ThemeMode.system => null,
+        ThemeMode.light => "light",
+        ThemeMode.dark => "dark",
+      };
 
       // Get or create GroupCall from CallStore
       _groupCall = CallStore.instance.getOrCreateCall(
@@ -63,13 +76,13 @@ class _CallScreenState extends State<CallScreen> {
         autoReconnect: false,
         baseUrl: baseUrl,
         parentUrl: parentUrl,
+        callKitUuid: _callKitUuid,
+        theme: theme,
       );
 
       // Listen to connection state changes
-      _connectionStateSubscription =
-          _groupCall!.onConnectionStateChanged.listen(
-        _handleConnectionStateChanged,
-      );
+      _connectionStateSubscription = _groupCall!.onConnectionStateChanged
+          .listen(_handleConnectionStateChanged);
 
       setState(() {
         _isLoading = false;
@@ -170,31 +183,21 @@ class _CallScreenState extends State<CallScreen> {
 
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Loading Call...'),
-        ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
+        appBar: AppBar(title: const Text('Loading Call...')),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_error != null) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Call Error'),
-        ),
+        appBar: AppBar(title: const Text('Call Error')),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.error_outline,
-                  size: 64,
-                  color: Colors.red,
-                ),
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
                 const SizedBox(height: 16),
                 Text(
                   _error!,
@@ -258,8 +261,9 @@ class _CallScreenState extends State<CallScreen> {
             _webViewController = controller;
 
             // Load wrapper HTML with proper origin
-            final wrapperHtml =
-                await rootBundle.loadString('assets/widget_wrapper.html');
+            final wrapperHtml = await rootBundle.loadString(
+              'assets/widget_wrapper.html',
+            );
             await controller.loadData(
               data: wrapperHtml,
               baseUrl: WebUri(parentUrl),

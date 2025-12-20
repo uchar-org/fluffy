@@ -133,6 +133,11 @@ Future<void> _tryPushHelper(
       final content = event.content;
       if (content.isEmpty) {
         Logs().v('Call member removed - call ended');
+        // End CallKit if still ringing (remote hangup before answer)
+        final roomId = notification.roomId;
+        if (roomId != null) {
+          await CallKitService.instance.endCallByRoomId(roomId);
+        }
         return;
       }
 
@@ -214,6 +219,54 @@ Future<void> _tryPushHelper(
     } catch (e, s) {
       Logs().e('Failed to show CallKit for call event', e, s);
       // Fall through to show regular notification on error
+    }
+  }
+
+  // Handle call.notify events (MSC4075) with CallKit
+  if ((event.type == 'org.matrix.msc4075.call.notify' ||
+          event.type == 'org.matrix.msc4075.rtc.notification') &&
+      PlatformInfos.isMobile) {
+    Logs().i('Push helper: call.notify event detected');
+    try {
+      final content = event.content;
+      final notifyType = content['notify_type'] as String?;
+
+      // Only show CallKit for "ring" type notifications
+      if (notifyType == 'ring') {
+        final roomId = notification.roomId;
+        if (roomId == null) {
+          Logs().w('No room ID in call.notify event');
+        } else {
+          // Check de-duplication
+          final lastSeen = _seenCalls[roomId];
+          if (lastSeen == null ||
+              DateTime.now().difference(lastSeen).inSeconds >= 5) {
+            _seenCalls[roomId] = DateTime.now();
+
+            final room = client.getRoomById(roomId);
+            if (room != null) {
+              // Get caller details
+              final senderId = event.senderId;
+              final caller = room.getState('m.room.member', senderId);
+              final callerName = caller?.content['displayname'] as String?;
+              final callerAvatarUrl = caller?.content['avatar_url'] as String?;
+              final callerAvatar =
+                  callerAvatarUrl != null ? Uri.tryParse(callerAvatarUrl) : null;
+
+              await CallKitService.instance.showIncomingCall(
+                room: room,
+                callerName: callerName,
+                callerAvatar: callerAvatar,
+              );
+
+              Logs().i('CallKit displayed for call.notify in room: $roomId');
+              return; // Don't show regular notification
+            }
+          }
+        }
+      }
+    } catch (e, s) {
+      Logs().e('Failed to show CallKit for call.notify event', e, s);
     }
   }
 

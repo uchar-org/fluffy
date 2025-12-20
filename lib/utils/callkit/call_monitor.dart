@@ -61,21 +61,95 @@ class CallMonitor {
 
       // Check state events for call.member
       final stateEvents = roomUpdate.state;
-      if (stateEvents == null) continue;
+      if (stateEvents != null) {
+        for (final event in stateEvents) {
+          if (event.type == 'org.matrix.msc3401.call.member') {
+            _handleCallMemberEvent(client, roomId, event);
+          }
+        }
+      }
 
-      for (final event in stateEvents) {
-        if (event.type == 'org.matrix.msc3401.call.member') {
-          _handleCallMemberEvent(client, roomId, event);
+      // Check timeline events for call.notify (MSC4075)
+      final timelineEvents = roomUpdate.timeline?.events;
+      if (timelineEvents != null) {
+        for (final event in timelineEvents) {
+          if (event.type == 'org.matrix.msc4075.call.notify' ||
+              event.type == 'org.matrix.msc4075.rtc.notification') {
+            _handleCallNotifyEvent(client, roomId, event);
+          }
         }
       }
     }
   }
 
-  void _handleCallMemberEvent(
+  void _handleCallNotifyEvent(
     Client client,
     String roomId,
     MatrixEvent event,
   ) {
+    Logs().d('[CallMonitor] call.notify event in room $roomId');
+
+    final content = event.content;
+    final notifyType = content['notify_type'] as String?;
+
+    // Only show CallKit for "ring" type
+    if (notifyType != 'ring') {
+      Logs().v('[CallMonitor] Ignoring non-ring notify: $notifyType');
+      return;
+    }
+
+    // Skip own events
+    final senderId = event.senderId;
+    if (senderId == client.userID) {
+      Logs().v('[CallMonitor] Skipping own call.notify event');
+      return;
+    }
+
+    // De-duplication check
+    final lastSeen = _seenCalls[roomId];
+    if (lastSeen != null &&
+        DateTime.now().difference(lastSeen).inSeconds < 5) {
+      Logs().v('[CallMonitor] Already processed call.notify in room $roomId');
+      return;
+    }
+
+    // Mark as seen
+    _seenCalls[roomId] = DateTime.now();
+
+    // Clean up old seen calls
+    _seenCalls.removeWhere(
+      (key, value) => DateTime.now().difference(value).inMinutes > 1,
+    );
+
+    // Get room and show CallKit
+    final room = client.getRoomById(roomId);
+    if (room == null) {
+      Logs().w('[CallMonitor] Room not found: $roomId');
+      return;
+    }
+
+    // Get caller details
+    final caller = room.getState('m.room.member', senderId);
+    final callerName = caller?.content['displayname'] as String?;
+    final callerAvatarUrl = caller?.content['avatar_url'] as String?;
+    final callerAvatar =
+        callerAvatarUrl != null ? Uri.tryParse(callerAvatarUrl) : null;
+
+    Logs().i('[CallMonitor] Showing CallKit for call.notify in room $roomId');
+
+    // Show CallKit
+    CallKitService.instance.showIncomingCall(
+      room: room,
+      callerName: callerName,
+      callerAvatar: callerAvatar,
+    );
+  }
+
+  Future<void> _handleCallMemberEvent(
+    Client client,
+    String roomId,
+    MatrixEvent event,
+  ) async {
     Logs().d('[CallMonitor] call.member event in room $roomId');
 
     final content = event.content;
@@ -84,6 +158,8 @@ class CallMonitor {
     if (content.isEmpty) {
       Logs().v('[CallMonitor] Call ended in room $roomId');
       _roomsWithActiveCall.remove(roomId);
+      // End CallKit if still ringing (remote hangup before answer)
+      await CallKitService.instance.endCallByRoomId(roomId);
       return;
     }
 

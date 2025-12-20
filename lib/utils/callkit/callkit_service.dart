@@ -144,20 +144,21 @@ class CallKitService {
   }
 
   /// Show outgoing call UI
-  Future<void> showOutgoingCall({
+  /// Returns the call UUID if successful, null otherwise
+  Future<String?> showOutgoingCall({
     required Room room,
   }) async {
     if (!_initialized) {
       Logs().w('[CallKitService] Not initialized, skipping showOutgoingCall');
-      return;
+      return null;
     }
 
-    // Check if already showing call for this room
+    // Check if already showing call for this room - return existing UUID
     if (_roomIdToCallUuid.containsKey(room.id)) {
       Logs().w(
         '[CallKitService] Already showing call for roomId=${room.id}',
       );
-      return;
+      return _roomIdToCallUuid[room.id];
     }
 
     final callUuid = _uuid.v4();
@@ -227,6 +228,8 @@ class CallKitService {
     );
 
     Logs().d('[CallKitService] showOutgoingCall: CallKit UI displayed');
+
+    return callUuid;
   }
 
   /// End call by UUID

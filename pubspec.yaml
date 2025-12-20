@@ -108,10 +108,10 @@ import_sorter:
     - \/lib\/l10n
 
 flutter_native_splash:
-  color: "#ffffff"
-  color_dark: "#000000"
-  image: "assets/info-logo.png"
-  image_dark: "assets/info-logo-dark.png"
+  color: "#0E338A"
+  color_dark: "#0E338A"
+  image: "assets/logo-icon-only.png"
+  image_dark: "assets/logo-icon-only.png"
 
 flutter:
   generate: true

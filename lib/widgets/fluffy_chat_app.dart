@@ -48,6 +48,7 @@ class FluffyChatApp extends StatelessWidget {
       child: ThemeBuilder(
         builder: (context, themeMode, primaryColor) {
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             title: AppSettings.applicationName.value,
             themeMode: themeMode,
             theme: FluffyThemes.buildTheme(

@@ -22,6 +22,7 @@ class GroupCall {
     required this.baseUrl,
     required this.parentUrl,
     this.autoReconnect = false,
+    this.theme,
   });
 
   final Room room;
@@ -29,6 +30,7 @@ class GroupCall {
   final bool autoReconnect;
   final String baseUrl;
   final String parentUrl;
+  final String? theme;
 
   // State
   CallConnectionState _connectionState = CallConnectionState.disconnected;
@@ -99,6 +101,7 @@ class GroupCall {
         parentUrl: parentUrl,
         room: room,
         deviceId: deviceId,
+        theme: theme,
       );
 
       // Create transport
@@ -282,7 +285,9 @@ class GroupCall {
       'scope': 'm.room',
       'device_id': deviceId,
       'expires_ts': expiresTs,
-      'm.encryption': 'perParticipantKeys',
+      // Always signal E2EE capability if room is encrypted (room-level)
+      // Device-level E2EE participation is controlled via perParticipantE2EE URL param
+      if (room.encrypted) 'm.encryption': 'perParticipantKeys',
       'focus_active': {
         'type': 'livekit',
         'focus_selection': 'oldest_membership',

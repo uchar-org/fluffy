@@ -1757,6 +1757,34 @@
             }
         }
     },
+    "callNotification": "Уведомление о звонке",
+    "@callNotification": {},
+    "missedCall": "Пропущенный звонок от {senderName}",
+    "@missedCall": {
+        "type": "String",
+        "placeholders": {
+            "senderName": {
+                "type": "String"
+            }
+        }
+    },
+    "incomingCall": "{senderName} звонит",
+    "@incomingCall": {
+        "type": "String",
+        "placeholders": {
+            "senderName": {
+                "type": "String"
+            }
+        }
+    },
+    "joinCall": "Присоединиться",
+    "@joinCall": {},
+    "callBack": "Перезвонить",
+    "@callBack": {},
+    "callInProgress": "Звонок в процессе",
+    "@callInProgress": {},
+    "callEnded": "Звонок завершён",
+    "@callEnded": {},
     "status": "Статус",
     "@status": {
         "type": "String",
@@ -2198,6 +2226,10 @@
     "@unsupportedAndroidVersionLong": {},
     "placeCall": "Совершить звонок",
     "@placeCall": {},
+    "noCallPermission": "У вас нет прав для совершения или присоединения к звонкам. Попросите администратора предоставить вам права на звонки.",
+    "@noCallPermission": {},
+    "grantCallPermission": "Дать право на звонки",
+    "@grantCallPermission": {},
     "videoCallsBetaWarning": "Обратите внимание, что видеозвонки в настоящее время находятся в бета-версии. Они могут работать не так, как ожидалось, или вообще не работать на всех платформах.",
     "@videoCallsBetaWarning": {},
     "experimentalVideoCalls": "Экспериментальные видеозвонки",
@@ -3321,5 +3353,190 @@
                 "type": "int"
             }
         }
-    }
+    },
+    "notificationRuleMemberEvent": "Событие участника",
+    "@notificationRuleMemberEvent": {},
+    "notificationRuleIsUserMentionDescription": "Уведомляет пользователя при прямом упоминании в сообщении.",
+    "@notificationRuleIsUserMentionDescription": {},
+    "notificationRuleContainsDisplayNameDescription": "Уведомляет пользователя, когда сообщение содержит его отображаемое имя.",
+    "@notificationRuleContainsDisplayNameDescription": {},
+    "notificationRuleIsRoomMentionDescription": "Уведомляет пользователя при упоминании комнаты.",
+    "@notificationRuleIsRoomMentionDescription": {},
+    "notificationRuleRoomnotif": "Уведомление комнаты",
+    "@notificationRuleRoomnotif": {},
+    "notificationRuleRoomnotifDescription": "Уведомляет пользователя, когда сообщение содержит '@room'.",
+    "@notificationRuleRoomnotifDescription": {},
+    "notificationRuleTombstone": "Архивирование",
+    "@notificationRuleTombstone": {},
+    "notificationRuleTombstoneDescription": "Уведомляет пользователя о сообщениях деактивации комнаты.",
+    "@notificationRuleTombstoneDescription": {},
+    "notificationRuleRoomServerAcl": "ACL сервера комнаты",
+    "@notificationRuleRoomServerAcl": {},
+    "notificationRuleRoomServerAclDescription": "Подавляет уведомления для списков контроля доступа сервера комнаты (ACL).",
+    "@notificationRuleRoomServerAclDescription": {},
+    "notificationRuleSuppressEdits": "Подавить редактирования",
+    "@notificationRuleSuppressEdits": {},
+    "notificationRuleRoomOneToOneDescription": "Уведомляет пользователя о сообщениях в личных чатах.",
+    "@notificationRuleRoomOneToOneDescription": {},
+    "notificationRuleMessageDescription": "Уведомляет пользователя об общих сообщениях.",
+    "@notificationRuleMessageDescription": {},
+    "notificationRuleEncryptedDescription": "Уведомляет пользователя о сообщениях в зашифрованных комнатах.",
+    "@notificationRuleEncryptedDescription": {},
+    "notificationRuleJitsi": "Jitsi",
+    "@notificationRuleJitsi": {},
+    "notificationRuleJitsiDescription": "Уведомляет пользователя о событиях виджета Jitsi.",
+    "@notificationRuleJitsiDescription": {},
+    "notificationRuleServerAcl": "Подавить события ACL сервера",
+    "@notificationRuleServerAcl": {},
+    "notificationRuleServerAclDescription": "Подавляет уведомления для событий ACL сервера.",
+    "@notificationRuleServerAclDescription": {},
+    "sentVoiceMessage": "🎙️ {duration} - Голосовое сообщение от {sender}",
+    "@sentVoiceMessage": {
+        "placeholders": {
+            "sender": {
+                "type": "String"
+            },
+            "duration": {
+                "type": "String"
+            }
+        }
+    },
+    "deletePushRuleCanNotBeUndone": "Если вы удалите эту настройку уведомлений, это нельзя будет отменить.",
+    "@deletePushRuleCanNotBeUndone": {},
+    "shareKeysWith": "Поделиться ключами с...",
+    "@shareKeysWith": {},
+    "shareKeysWithDescription": "Каким устройствам следует доверять, чтобы они могли читать ваши сообщения в зашифрованных чатах?",
+    "@shareKeysWithDescription": {},
+    "crossVerifiedDevicesIfEnabled": "Перекрёстно проверенные устройства, если включено",
+    "@crossVerifiedDevicesIfEnabled": {},
+    "crossVerifiedDevices": "Перекрёстно проверенные устройства",
+    "@crossVerifiedDevices": {},
+    "verifiedDevicesOnly": "Только проверенные устройства",
+    "@verifiedDevicesOnly": {},
+    "optionalMessage": "(Необязательно) сообщение...",
+    "@optionalMessage": {},
+    "notSupportedOnThisDevice": "Не поддерживается на этом устройстве",
+    "@notSupportedOnThisDevice": {},
+    "approve": "Одобрить",
+    "@approve": {},
+    "youHaveKnocked": "Вы постучались",
+    "@youHaveKnocked": {},
+    "pleaseWaitUntilInvited": "Пожалуйста, подождите, пока кто-нибудь из комнаты не пригласит вас.",
+    "@pleaseWaitUntilInvited": {},
+    "commandHint_logout": "Выйти с текущего устройства",
+    "@commandHint_logout": {},
+    "commandHint_logoutall": "Выйти со всех активных устройств",
+    "@commandHint_logoutall": {},
+    "displayNavigationRail": "Показывать панель навигации на мобильном",
+    "@displayNavigationRail": {},
+    "customReaction": "Пользовательская реакция",
+    "@customReaction": {},
+    "moreEvents": "Больше событий",
+    "@moreEvents": {},
+    "declineInvitation": "Отклонить приглашение",
+    "@declineInvitation": {},
+    "noMessagesYet": "Пока нет сообщений",
+    "@noMessagesYet": {},
+    "longPressToRecordVoiceMessage": "Удерживайте для записи голосового сообщения.",
+    "@longPressToRecordVoiceMessage": {},
+    "pause": "Пауза",
+    "@pause": {},
+    "resume": "Продолжить",
+    "@resume": {},
+    "newSubSpace": "Новое подпространство",
+    "@newSubSpace": {},
+    "moveToDifferentSpace": "Переместить в другое пространство",
+    "@moveToDifferentSpace": {},
+    "moveUp": "Переместить вверх",
+    "@moveUp": {},
+    "moveDown": "Переместить вниз",
+    "@moveDown": {},
+    "removeFromSpaceDescription": "Чат будет удалён из пространства, но останется в вашем списке чатов.",
+    "@removeFromSpaceDescription": {},
+    "countChats": "{chats} чатов",
+    "@countChats": {
+        "placeholders": {
+            "chats": {
+                "type": "int"
+            }
+        }
+    },
+    "spaceMemberOf": "Участник пространства {spaces}",
+    "@spaceMemberOf": {
+        "placeholders": {
+            "spaces": {
+                "type": "String"
+            }
+        }
+    },
+    "spaceMemberOfCanKnock": "Участник пространства {spaces} может постучаться",
+    "@spaceMemberOfCanKnock": {
+        "placeholders": {
+            "spaces": {
+                "type": "String"
+            }
+        }
+    },
+    "donate": "Пожертвовать",
+    "@donate": {},
+    "startedAPoll": "{username} начал(а) опрос.",
+    "@startedAPoll": {
+        "placeholders": {
+            "username": {
+                "type": "String"
+            }
+        }
+    },
+    "poll": "Опрос",
+    "@poll": {},
+    "startPoll": "Начать опрос",
+    "@startPoll": {},
+    "endPoll": "Завершить опрос",
+    "@endPoll": {},
+    "answersVisible": "Ответы видны",
+    "@answersVisible": {},
+    "answersHidden": "Ответы скрыты",
+    "@answersHidden": {},
+    "pollQuestion": "Вопрос опроса",
+    "@pollQuestion": {},
+    "answerOption": "Вариант ответа",
+    "@answerOption": {},
+    "addAnswerOption": "Добавить вариант ответа",
+    "@addAnswerOption": {},
+    "allowMultipleAnswers": "Разрешить несколько ответов",
+    "@allowMultipleAnswers": {},
+    "pollHasBeenEnded": "Опрос завершён",
+    "@pollHasBeenEnded": {},
+    "answersWillBeVisibleWhenPollHasEnded": "Ответы станут видны после завершения опроса",
+    "@answersWillBeVisibleWhenPollHasEnded": {},
+    "replyInThread": "Ответить в ветке",
+    "@replyInThread": {},
+    "thread": "Ветка",
+    "@thread": {},
+    "backToMainChat": "Вернуться к основному чату",
+    "@backToMainChat": {},
+    "saveChanges": "Сохранить изменения",
+    "@saveChanges": {},
+    "createSticker": "Создать стикер или эмодзи",
+    "@createSticker": {},
+    "useAsSticker": "Использовать как стикер",
+    "@useAsSticker": {},
+    "useAsEmoji": "Использовать как эмодзи",
+    "@useAsEmoji": {},
+    "stickerPackNameAlreadyExists": "Набор стикеров с таким именем уже существует",
+    "@stickerPackNameAlreadyExists": {},
+    "newStickerPack": "Новый набор стикеров",
+    "@newStickerPack": {},
+    "stickerPackName": "Название набора стикеров",
+    "@stickerPackName": {},
+    "attribution": "Атрибуция",
+    "@attribution": {},
+    "skipChatBackup": "Пропустить резервное копирование чата",
+    "@skipChatBackup": {},
+    "skipChatBackupWarning": "Вы уверены? Без резервного копирования вы можете потерять доступ к своим сообщениям при смене устройства.",
+    "@skipChatBackupWarning": {},
+    "loadingMessages": "Загрузка сообщений",
+    "@loadingMessages": {},
+    "setupChatBackup": "Настроить резервное копирование чата",
+    "@setupChatBackup": {}
 }

@@ -15,6 +15,7 @@ class ElementCallWidget {
     required String baseUrl,
     required String parentUrl,
     String? widgetId,
+    String? theme,
   }) {
     final id = widgetId ?? _uuid.v4();
     Logs().i(
@@ -27,6 +28,7 @@ class ElementCallWidget {
       deviceId: deviceId,
       baseUrl: baseUrl,
       parentUrl: parentUrl,
+      theme: theme,
     );
     Logs().d('[WidgetAPI.ElementCallWidget] create: url=$url');
 

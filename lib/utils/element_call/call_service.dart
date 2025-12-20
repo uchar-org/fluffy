@@ -13,45 +13,132 @@ class CallService {
   static Client? _activeClient;
   static Room? _activeRoom;
 
+  /// Check if user has permission to join/start calls in this room.
+  /// Requires permission to send org.matrix.msc3401.call.member state events.
+  static bool canJoinCall(Room room) {
+    final powerLevels = room.getState(EventTypes.RoomPowerLevels);
+    if (powerLevels == null) return true; // Default allows
+
+    final content = powerLevels.content;
+    final stateDefault = content['state_default'] as int? ?? 0;
+    final events = content['events'] as Map<String, dynamic>? ?? {};
+    final callMemberLevel = events['org.matrix.msc3401.call.member'] as int?;
+
+    final requiredLevel = callMemberLevel ?? stateDefault;
+    final userPowerLevel = room.ownPowerLevel;
+
+    Logs().d(
+      '[ElementCall.CallService] canJoinCall: userPowerLevel=$userPowerLevel, requiredLevel=$requiredLevel',
+    );
+    return userPowerLevel >= requiredLevel;
+  }
+
   /// Detect if group call is already started in room.
   static bool hasActiveCall(Room room) {
     Logs().v(
         '[ElementCall.CallService] hasActiveCall: checking roomId=${room.id}');
+    return getActiveCallIds(room).isNotEmpty;
+  }
+
+  /// Get active call_id(s) from call.member states in room.
+  static Set<String> getActiveCallIds(Room room) {
+    final callIds = <String>{};
     final callMembers = room.states['org.matrix.msc3401.call.member'];
     if (callMembers == null || callMembers.isEmpty) {
-      Logs()
-          .v('[ElementCall.CallService] hasActiveCall: no call.member states');
-      return false;
+      return callIds;
     }
 
     final now = DateTime.now().millisecondsSinceEpoch;
 
-    final hasActive = callMembers.values.any((event) {
+    for (final event in callMembers.values) {
       final content = event.content;
-      if (content.isEmpty) return false;
+      if (content.isEmpty) continue;
 
       // Check expiry timestamp
       final expiresTs = content['expires_ts'];
       if (expiresTs != null && expiresTs is int && expiresTs < now) {
-        return false; // Expired membership
+        continue; // Expired membership
       }
 
       // Legacy MSC3401 format: application as string, call_id at top level
       final app = content['application'];
       if (app is String && app == 'm.call' && content.containsKey('call_id')) {
-        return true;
+        final callId = content['call_id'] as String?;
+        if (callId != null) callIds.add(callId);
       }
 
       // MSC4143 format: application as object with type field
       if (app is Map && app['type'] == 'm.call') {
-        return true;
+        final callId = content['call_id'] as String?;
+        if (callId != null) callIds.add(callId);
+      }
+    }
+
+    Logs().d(
+        '[ElementCall.CallService] getActiveCallIds: callIds=$callIds');
+    return callIds;
+  }
+
+  /// Check if specific call_id is active in room.
+  static bool isCallIdActive(Room room, String? callId) {
+    if (callId == null) return hasActiveCall(room);
+    return getActiveCallIds(room).contains(callId);
+  }
+
+  /// Get the earliest active call start time in the room.
+  /// Returns null if no active call.
+  static DateTime? getActiveCallStartTime(Room room) {
+    Logs().d('[CallService] getActiveCallStartTime for room=${room.id}');
+
+    final callMembers = room.states['org.matrix.msc3401.call.member'];
+    Logs().d('[CallService] callMembers count=${callMembers?.length ?? 0}');
+
+    if (callMembers == null || callMembers.isEmpty) {
+      Logs().d('[CallService] No call.member states → returning null');
+      return null;
+    }
+
+    final now = DateTime.now().millisecondsSinceEpoch;
+    DateTime? earliest;
+
+    for (final stateEvent in callMembers.values) {
+      final content = stateEvent.content;
+      final stateKey = stateEvent.stateKey;
+      Logs().d('[CallService] Checking stateKey=$stateKey, content=$content');
+
+      if (content.isEmpty) {
+        Logs().d('[CallService] Empty content, skipping');
+        continue;
       }
 
-      return false;
-    });
+      final expiresTs = content['expires_ts'];
+      Logs().d('[CallService] expiresTs=$expiresTs, now=$now');
 
-    Logs().d('[ElementCall.CallService] hasActiveCall: hasActive=$hasActive');
-    return hasActive;
+      if (expiresTs != null && expiresTs is int && expiresTs < now) {
+        Logs().d('[CallService] Expired, skipping');
+        continue;
+      }
+
+      final app = content['application'];
+      final isActiveCall = (app is String && app == 'm.call') ||
+          (app is Map && app['type'] == 'm.call');
+      Logs().d('[CallService] app=$app, isActiveCall=$isActiveCall');
+
+      if (isActiveCall) {
+        // Estimate call start time from expires_ts (usually set 2-5 hours ahead)
+        final expiryMs = (expiresTs is int) ? expiresTs : now;
+        final callStart = DateTime.fromMillisecondsSinceEpoch(
+          expiryMs - (2 * 60 * 60 * 1000),
+        );
+        Logs().d('[CallService] Active! callStart=$callStart');
+        if (earliest == null || callStart.isBefore(earliest)) {
+          earliest = callStart;
+        }
+      }
+    }
+
+    Logs().d('[CallService] getActiveCallStartTime result: $earliest');
+    return earliest;
   }
 
   /// Create call.member state event to start group call.

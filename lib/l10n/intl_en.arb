@@ -2061,6 +2061,34 @@
       }
     }
   },
+  "callNotification": "Call notification",
+  "@callNotification": {},
+  "missedCall": "Missed call from {senderName}",
+  "@missedCall": {
+    "type": "String",
+    "placeholders": {
+      "senderName": {
+        "type": "String"
+      }
+    }
+  },
+  "incomingCall": "{senderName} is calling",
+  "@incomingCall": {
+    "type": "String",
+    "placeholders": {
+      "senderName": {
+        "type": "String"
+      }
+    }
+  },
+  "joinCall": "Join",
+  "@joinCall": {},
+  "callBack": "Call back",
+  "@callBack": {},
+  "callInProgress": "Call in progress",
+  "@callInProgress": {},
+  "callEnded": "Call ended",
+  "@callEnded": {},
   "startFirstChat": "Start your first chat",
   "@startFirstChat": {},
   "status": "Status",
@@ -2456,6 +2484,10 @@
   "@emojis": {},
   "placeCall": "Place call",
   "@placeCall": {},
+  "noCallPermission": "You don't have permission to start or join calls. Ask an admin to grant you call permissions.",
+  "@noCallPermission": {},
+  "grantCallPermission": "Grant call permission",
+  "@grantCallPermission": {},
   "voiceCall": "Voice call",
   "@voiceCall": {},
   "unsupportedAndroidVersion": "Unsupported Android version",

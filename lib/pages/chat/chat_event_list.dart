@@ -31,9 +31,9 @@ class ChatEventList extends StatelessWidget {
 
     final horizontalPadding = FluffyThemes.isColumnMode(context) ? 8.0 : 0.0;
 
-    final events = timeline.events.filterByVisibleInGui(
-      threadId: controller.activeThreadId,
-    );
+    final events = timeline.events
+        .filterByVisibleInGui(threadId: controller.activeThreadId)
+        .deduplicateCallEvents();
     final animateInEventIndex = controller.animateInEventIndex;
 
     // create a map of eventId --> index to greatly improve performance of
@@ -91,7 +91,9 @@ class ChatEventList extends StatelessWidget {
                       (event) =>
                           !event.isCollapsedState && event.isVisibleInGui,
                     );
-                    if (visibleIndex > timeline.events.length - 50) {
+                    if (timeline.canRequestHistory &&
+                        visibleIndex >= 0 &&
+                        visibleIndex > timeline.events.length - 50) {
                       WidgetsBinding.instance.addPostFrameCallback(
                         controller.requestHistory,
                       );

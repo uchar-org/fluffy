@@ -1,5 +1,7 @@
 import 'package:matrix/matrix.dart';
 
+import 'package:fluffychat/utils/element_call/call_service.dart';
+
 /// Build Element Call widget URL
 class CallUrlBuilder {
   /// Build Element Call URL for a room
@@ -9,6 +11,7 @@ class CallUrlBuilder {
     required String deviceId,
     required String baseUrl,
     required String parentUrl,
+    String? theme,
   }) {
     final callUrl = baseUrl;
     final homeserver = room.client.homeserver;
@@ -17,21 +20,26 @@ class CallUrlBuilder {
       throw Exception('Client homeserver is null');
     }
 
+    // Enable E2EE if room is encrypted (cross-signing not required)
+    final enableE2EE = room.encrypted;
+
     final params = {
       'roomId': room.id,
       'userId': room.client.userID!,
       'deviceId': deviceId,
       'baseUrl': homeserver.toString(),
       'widgetId': widgetId,
-      'perParticipantE2EE': room.encrypted.toString(),
-      'intent': room.isDirectChat ? 'start_call_dm' : 'start_call',
+      'perParticipantE2EE': enableE2EE.toString(),
+      'intent': CallService.hasActiveCall(room)
+          ? 'join'
+          : (room.isDirectChat ? 'start_call_dm' : 'start_call'),
       'confineToRoom': 'true',
       'hideHeader': 'true',
       'preload': 'false',
       'appPrompt': 'false',
       'fontScale': '1',
       'lang': 'en',
-      'theme': '\$org.matrix.msc2873.client_theme',
+      'theme': theme ?? '\$org.matrix.msc2873.client_theme',
       'parentUrl': parentUrl,
     };
 

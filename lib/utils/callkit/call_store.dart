@@ -39,6 +39,7 @@ class CallStore {
     required String baseUrl,
     required String parentUrl,
     String? callKitUuid,
+    String? theme,
   }) {
     final existing = _calls[room.id];
     if (existing != null) {
@@ -62,6 +63,7 @@ class CallStore {
       autoReconnect: autoReconnect,
       baseUrl: baseUrl,
       parentUrl: parentUrl,
+      theme: theme,
     );
 
     // Set CallKit UUID if provided
@@ -76,8 +78,9 @@ class CallStore {
     _calls[room.id] = call;
     _callsController.add(_calls);
 
-    Logs()
-        .d('[CallKit.CallStore] getOrCreateCall: total calls=${_calls.length}');
+    Logs().d(
+      '[CallKit.CallStore] getOrCreateCall: total calls=${_calls.length}',
+    );
     return call;
   }
 
@@ -88,9 +91,7 @@ class CallStore {
     required String baseUrl,
     required String parentUrl,
   }) async {
-    Logs().i(
-      '[CallKit.CallStore] handleCallAccepted: callUuid=$callUuid',
-    );
+    Logs().i('[CallKit.CallStore] handleCallAccepted: callUuid=$callUuid');
 
     // Get room ID from CallKit service
     final roomId = CallKitService.instance.getRoomIdForCall(callUuid);
@@ -149,8 +150,9 @@ class CallStore {
     _callsController.add(_calls);
     _connectedCallsController.add(_connectedCalls);
 
-    Logs()
-        .d('[CallKit.CallStore] removeCall: remaining calls=${_calls.length}');
+    Logs().d(
+      '[CallKit.CallStore] removeCall: remaining calls=${_calls.length}',
+    );
   }
 
   void _handleConnectionStateChanged(String roomId, CallConnectionState state) {

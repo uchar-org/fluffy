@@ -87,6 +87,8 @@ class Message extends StatelessWidget {
       EventTypes.Encrypted,
       EventTypes.CallInvite,
       PollEventContent.startType,
+      'org.matrix.msc4075.call.notify',
+      'org.matrix.msc4075.rtc.notification',
     }.contains(event.type)) {
       if (event.type.startsWith('m.call.')) {
         return const SizedBox.shrink();

@@ -42,7 +42,6 @@ import 'package:fluffychat/widgets/share_scaffold_dialog.dart';
 import '../../utils/account_bundles.dart';
 import '../../utils/localized_exception_extension.dart';
 import '../../utils/element_call/call_service.dart';
-import '../call/call_screen.dart';
 import 'send_file_dialog.dart';
 import 'send_location_dialog.dart';
 
@@ -1316,6 +1315,18 @@ class ChatController extends State<ChatPageWithRoom>
       (event ?? selectedEvents.single).showInfoDialog(context);
 
   void onPhoneButtonTap() async {
+    // Check if user has permission to join/start calls
+    if (!CallService.canJoinCall(room)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(L10n.of(context).noCallPermission),
+          ),
+        );
+      }
+      return;
+    }
+
     // Request camera and microphone permissions
     final cameraStatus = await Permission.camera.request();
     final micStatus = await Permission.microphone.request();
@@ -1333,17 +1344,21 @@ class ChatController extends State<ChatPageWithRoom>
       return;
     }
 
-    // Show outgoing CallKit call on mobile
+    // Show outgoing CallKit call on mobile and capture UUID
+    String? callKitUuid;
     if (PlatformInfos.isMobile && !hasActiveCall) {
       try {
-        await CallKitService.instance.showOutgoingCall(room: room);
+        callKitUuid = await CallKitService.instance.showOutgoingCall(room: room);
       } catch (e, s) {
         Logs().e('[Chat] Failed to show outgoing CallKit call', e, s);
         // Continue anyway - will still navigate to call screen
       }
     }
 
-    FluffyChatApp.router.go('/rooms/$roomId/call');
+    FluffyChatApp.router.go(
+      '/rooms/$roomId/call',
+      extra: {'callKitUuid': callKitUuid},
+    );
   }
 
   void cancelReplyEventAction() => setState(() {

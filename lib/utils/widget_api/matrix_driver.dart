@@ -263,6 +263,11 @@ class MatrixDriver {
 
     // Send to-device messages
     if (encrypted) {
+      // Download device keys for all target users first
+      final userIds = messages.keys.toSet();
+      Logs().d('[MatrixDriver] Downloading device keys for users: $userIds');
+      await client.updateUserDeviceKeys(additionalUsers: userIds);
+
       // For encrypted, use encryption methods
       for (final userId in messages.keys) {
         for (final deviceId in messages[userId]!.keys) {
@@ -270,16 +275,22 @@ class MatrixDriver {
 
           // Get device keys
           final userDeviceKeys = client.userDeviceKeys[userId];
-          if (userDeviceKeys != null) {
-            final deviceKey = userDeviceKeys.deviceKeys[deviceId];
-            if (deviceKey != null) {
-              await client.sendToDeviceEncrypted(
-                [deviceKey],
-                eventType,
-                content,
-              );
-            }
+          if (userDeviceKeys == null) {
+            Logs().w('[MatrixDriver] No device keys for user $userId');
+            continue;
           }
+
+          final deviceKey = userDeviceKeys.deviceKeys[deviceId];
+          if (deviceKey == null) {
+            Logs().w('[MatrixDriver] No device key for $userId:$deviceId');
+            continue;
+          }
+
+          await client.sendToDeviceEncrypted(
+            [deviceKey],
+            eventType,
+            content,
+          );
         }
       }
     } else {

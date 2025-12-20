@@ -14,13 +14,13 @@ import 'package:matrix/matrix.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/callkit/call_monitor.dart';
 import 'package:fluffychat/utils/callkit/callkit_service.dart';
 import 'package:fluffychat/utils/client_manager.dart';
-import 'package:fluffychat/utils/callkit/call_store.dart';
 import 'package:fluffychat/utils/init_with_restore.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
@@ -306,18 +306,31 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     onNotification.remove(name);
   }
 
-  void initMatrix() {
+  Future<void> initMatrix() async {
     // Initialize CallKit service
     if (PlatformInfos.isMobile) {
-      CallKitService.instance.initialize();
+      await CallKitService.instance.initialize();
 
       // Set up call accepted callback
       CallKitService.instance.onCallAccepted = (roomId, callUuid) async {
         Logs().i(
           '[Matrix] CallKit call accepted: roomId=$roomId, uuid=$callUuid',
         );
-        // Navigate to call screen
-        FluffyChatApp.router.go('/rooms/$roomId/call');
+
+        // Request camera and microphone permissions BEFORE navigating
+        final cameraStatus = await Permission.camera.request();
+        final micStatus = await Permission.microphone.request();
+
+        if (!cameraStatus.isGranted || !micStatus.isGranted) {
+          Logs().w('[Matrix] Permissions not granted for call');
+          // Still navigate - Element Call may prompt again
+        }
+
+        // Navigate to call screen with CallKit UUID
+        FluffyChatApp.router.go(
+          '/rooms/$roomId/call',
+          extra: {'callKitUuid': callUuid},
+        );
       };
 
       // Start call monitor for sync-based incoming call detection

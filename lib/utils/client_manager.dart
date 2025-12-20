@@ -141,7 +141,10 @@ abstract class ClientManager {
       onSoftLogout: enableSoftLogout
           ? (client) => client.refreshAccessToken()
           : null,
-    );
+    )..roomPreviewLastEvents.addAll([
+        'org.matrix.msc4075.call.notify',
+        'org.matrix.msc4075.rtc.notification',
+      ]);
   }
 
   static void sendInitNotification(String title, String body) async {

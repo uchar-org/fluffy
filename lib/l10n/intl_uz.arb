@@ -208,7 +208,7 @@
     "@sendTypingNotifications": {},
     "swipeRightToLeftToReply": "Javob berish uchun o‘ngdan chapga suring",
     "@swipeRightToLeftToReply": {},
-    "badServerLoginTypesException": "Homeserver quyidagi kirish turlarini qo'llab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat quyidagi turlarni qo'llab-quvvatlaydi:\n{supportedVersions}",
+    "badServerLoginTypesException": "Homeserver quyidagi kirish turlarini qoʻllab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat quyidagi turlarni qoʻllab-quvvatlaydi:\n{supportedVersions}",
     "@badServerLoginTypesException": {
         "type": "String",
         "placeholders": {
@@ -222,7 +222,7 @@
     },
     "sendOnEnter": "Enterda yuborish",
     "@sendOnEnter": {},
-    "badServerVersionsException": "Homeserver quyidagi Spec versiyalarini qo'llab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat {supportedVersions} versiyalarini qo'llab-quvvatlaydi",
+    "badServerVersionsException": "Homeserver quyidagi Spec versiyalarini qoʻllab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat {supportedVersions} versiyalarini qoʻllab-quvvatlaydi",
     "@badServerVersionsException": {
         "type": "String",
         "placeholders": {
@@ -250,7 +250,7 @@
     "@noMoreChatsFound": {},
     "noChatsFoundHere": "Bu yerda hali chat topilmadi. Quyidagi tugmadan foydalanib, kimdir bilan yangi suhbat boshlang. ⤵️",
     "@noChatsFoundHere": {},
-    "joinedChats": "Qo'shilgan suhbatlar",
+    "joinedChats": "Qoʻshilgan suhbatlar",
     "@joinedChats": {},
     "unread": "Oʻqilmagan",
     "@unread": {},
@@ -1385,7 +1385,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newVerificationRequest": "Yangi tasdiqlash so'rovi!",
+    "newVerificationRequest": "Yangi tasdiqlash soʻrovi!",
     "@newVerificationRequest": {
         "type": "String",
         "placeholders": {}
@@ -1410,17 +1410,17 @@
         "type": "String",
         "placeholders": {}
     },
-    "noEncryptionForPublicRooms": "Shifrlashni faqat guruh endi hamma uchun ochiq bo'lmay qolgandan keyingina faollashtirishingiz mumkin.",
+    "noEncryptionForPublicRooms": "Shifrlashni faqat guruh endi hamma uchun ochiq boʻlmay qolgandan keyingina faollashtirishingiz mumkin.",
     "@noEncryptionForPublicRooms": {
         "type": "String",
         "placeholders": {}
     },
-    "noGoogleServicesWarning": "Firebase Cloud Messaging qurilmangizda mavjud emasga o'xshaydi. Push-bildirishnomalarni olishda davom etish uchun ntfy-ni o'rnatishingizni tavsiya qilamiz. NTFY yoki boshqa Unified Push provayderi yordamida siz ma'lumotlar xavfsizligini ta'minlash orqali push-bildirishnomalarni olishingiz mumkin. Siz ntfy-ni PlayStore yoki F-Droid-dan yuklab olishingiz mumkin.",
+    "noGoogleServicesWarning": "Firebase Cloud Messaging qurilmangizda mavjud emasga oʻxshaydi. Push-bildirishnomalarni olishda davom etish uchun ntfy-ni oʻrnatishingizni tavsiya qilamiz. NTFY yoki boshqa Unified Push provayderi yordamida siz ma'lumotlar xavfsizligini ta'minlash orqali push-bildirishnomalarni olishingiz mumkin. Siz ntfy-ni PlayStore yoki F-Droid-dan yuklab olishingiz mumkin.",
     "@noGoogleServicesWarning": {
         "type": "String",
         "placeholders": {}
     },
-    "noMatrixServer": "{server1} matrix serveri emas, buning o'rniga {server2} dan foydalanilsinmi?",
+    "noMatrixServer": "{server1} matrix serveri emas, buning oʻrniga {server2} dan foydalanilsinmi?",
     "@noMatrixServer": {
         "type": "String",
         "placeholders": {
@@ -2054,6 +2054,34 @@
             }
         }
     },
+    "callNotification": "Qoʻngʻiroq xabarnomasi",
+    "@callNotification": {},
+    "missedCall": "{senderName} dan oʻtkazib yuborilgan qoʻngʻiroq",
+    "@missedCall": {
+        "type": "String",
+        "placeholders": {
+            "senderName": {
+                "type": "String"
+            }
+        }
+    },
+    "incomingCall": "{senderName} qoʻngʻiroq qilmoqda",
+    "@incomingCall": {
+        "type": "String",
+        "placeholders": {
+            "senderName": {
+                "type": "String"
+            }
+        }
+    },
+    "joinCall": "Qoʻshilish",
+    "@joinCall": {},
+    "callBack": "Qayta qoʻngʻiroq qilish",
+    "@callBack": {},
+    "callInProgress": "Qoʻngʻiroq davom etmoqda",
+    "@callInProgress": {},
+    "callEnded": "Qoʻngʻiroq tugadi",
+    "@callEnded": {},
     "startFirstChat": "Birinchi suhbatni boshlash",
     "@startFirstChat": {},
     "status": "Holati",
@@ -2510,7 +2538,7 @@
     "@newSpaceDescription": {},
     "openChat": "Suhbatni ochish",
     "@openChat": {},
-    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut bo'yicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, Uchar ni ishga tushirish mumkin emas.",
+    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut boʻyicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, Uchar ni ishga tushirish mumkin emas.",
     "@indexedDbErrorLong": {},
     "youJoinedTheChat": "Siz suhbatga qoʻshildingiz",
     "@youJoinedTheChat": {},
@@ -2592,7 +2620,7 @@
     "@chatPermissionsDescription": {},
     "noticeChatBackupDeviceVerification": "Eslatma: Barcha qurilmalaringizni suhbat zaxira nusxasiga ulaganingizda, ular avtomatik ravishda tasdiqlanadi.",
     "@noticeChatBackupDeviceVerification": {},
-    "welcomeText": "Hey Hey 👋 Bu Uchar. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmog'i!",
+    "welcomeText": "Hey Hey 👋 Bu Uchar. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmogʻi!",
     "@welcomeText": {},
     "unableToJoinChat": "Chatga qoʻshilib boʻlmadi. Ehtimol, boshqa tomon suhbatni allaqachon yopib qoʻygan.",
     "@unableToJoinChat": {},
@@ -2654,6 +2682,10 @@
     "@confirmEventUnpin": {},
     "placeCall": "Qoʻngʻiroq qilish",
     "@placeCall": {},
+    "noCallPermission": "Sizda qoʻngʻiroq qilish yoki qoʻshilish huquqi yoʻq. Administratordan huquq soʻrang.",
+    "@noCallPermission": {},
+    "grantCallPermission": "Qoʻngʻiroq huquqi berish",
+    "@grantCallPermission": {},
     "voiceCall": "Ovozli qoʻngʻiroq",
     "@voiceCall": {},
     "unsupportedAndroidVersion": "Qoʻllab-quvvatlanmaydigan Android versiyasi",
@@ -3474,5 +3506,29 @@
         "placeholders": {}
     },
     "emojis": "Emojilar",
-    "@emojis": {}
+    "@emojis": {},
+    "saveChanges": "Oʻzgarishlarni saqlash",
+    "@saveChanges": {},
+    "createSticker": "Stiker yoki emoji yaratish",
+    "@createSticker": {},
+    "useAsSticker": "Stiker sifatida ishlatish",
+    "@useAsSticker": {},
+    "useAsEmoji": "Emoji sifatida ishlatish",
+    "@useAsEmoji": {},
+    "stickerPackNameAlreadyExists": "Bunday nomdagi stiker toʻplami mavjud",
+    "@stickerPackNameAlreadyExists": {},
+    "newStickerPack": "Yangi stiker toʻplami",
+    "@newStickerPack": {},
+    "stickerPackName": "Stiker toʻplami nomi",
+    "@stickerPackName": {},
+    "attribution": "Manba",
+    "@attribution": {},
+    "skipChatBackup": "Chat zaxirasini oʻtkazib yuborish",
+    "@skipChatBackup": {},
+    "skipChatBackupWarning": "Ishonchingiz komilmi? Chat zaxirasini yoqmasangiz, qurilmani almashtirganda xabarlaringizga kirishni yoʻqotishingiz mumkin.",
+    "@skipChatBackupWarning": {},
+    "loadingMessages": "Xabarlar yuklanmoqda",
+    "@loadingMessages": {},
+    "setupChatBackup": "Chat zaxirasini sozlash",
+    "@setupChatBackup": {}
 }

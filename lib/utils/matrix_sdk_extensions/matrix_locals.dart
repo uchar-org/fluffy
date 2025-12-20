@@ -256,6 +256,11 @@ class MatrixLocals extends MatrixLocalizations {
 
   @override
   String unknownEvent(String typeKey) {
+    // Handle call notification events with proper descriptions
+    if (typeKey == 'org.matrix.msc4075.call.notify' ||
+        typeKey == 'org.matrix.msc4075.rtc.notification') {
+      return l10n.callNotification;
+    }
     return l10n.userSentUnknownEvent('User', typeKey);
   }
 
