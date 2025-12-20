@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:fluffychat/config/themes.dart';
+import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -33,6 +35,7 @@ class MessageContent extends StatelessWidget {
   final BorderRadius borderRadius;
   final Timeline timeline;
   final bool selected;
+  final MessageStatus? messageStatus;
 
   const MessageContent(
     this.event, {
@@ -43,6 +46,7 @@ class MessageContent extends StatelessWidget {
     required this.linkColor,
     required this.borderRadius,
     required this.selected,
+    required this.messageStatus,
   });
 
   void _verifyOrRequestKey(BuildContext context) async {
@@ -252,29 +256,80 @@ class MessageContent extends StatelessWidget {
                 event.numberEmotes <= 3;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: HtmlMessage(
-                html: html,
-                textColor: textColor,
-                room: event.room,
-                fontSize:
-                    AppSettings.fontSizeFactor.value *
-                    AppConfig.messageFontSize *
-                    (bigEmotes ? 5 : 1),
-                limitHeight: !selected,
-                linkStyle: TextStyle(
-                  color: linkColor,
-                  fontSize:
-                      AppSettings.fontSizeFactor.value *
-                      AppConfig.messageFontSize,
-                  decoration: TextDecoration.underline,
-                  decorationColor: linkColor,
-                ),
-                onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
-                eventId: event.eventId,
-                checkboxCheckedEvents: event.aggregatedEvents(
-                  timeline,
-                  EventCheckboxRoomExtension.relationshipType,
-                ),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: HtmlMessage(
+                      html: html,
+                      textColor: textColor,
+                      room: event.room,
+                      fontSize:
+                          AppSettings.fontSizeFactor.value *
+                          AppConfig.messageFontSize *
+                          (bigEmotes ? 5 : 1),
+                      limitHeight: !selected,
+                      linkStyle: TextStyle(
+                        color: linkColor,
+                        fontSize:
+                            AppSettings.fontSizeFactor.value *
+                            AppConfig.messageFontSize,
+                        decoration: TextDecoration.underline,
+                        decorationColor: linkColor,
+                      ),
+                      onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
+                      eventId: event.eventId,
+                      checkboxCheckedEvents: event.aggregatedEvents(
+                        timeline,
+                        EventCheckboxRoomExtension.relationshipType,
+                      ),
+                    ),
+                  ),
+            
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Builder(
+                        builder: (context) {
+                          debugPrint(messageStatus.toString());
+
+                          switch (messageStatus) {
+                            case null: {
+                              return SizedBox.shrink();
+                            }
+                            case MessageStatus.seen: {
+                              return Icon(
+                                Icons.done_all,
+                                size: 16,
+                              );
+                            }
+                            case MessageStatus.pending: {
+                              return Icon(
+                                Icons.schedule,
+                                size: 16,
+                              );
+                            }
+                            case MessageStatus.sent: {
+                              return Icon(
+                                Icons.check,
+                                size: 16,
+                              );
+                            }
+                            case MessageStatus.error: {
+                              return Icon(
+                                Icons.error,
+                                size: 16,
+                                color: Theme.of(context).colorScheme.error,
+                              );
+                            }
+                          }
+            
+                        },
+                      ),
+                    )
+                  )
+                ],
               ),
             );
         }
