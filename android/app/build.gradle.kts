@@ -34,7 +34,7 @@ configurations.all {
 
 
 android {
-    namespace = "uz.uzinfocom.ucharmessenger"
+    namespace = "uz.uzinfocom.berk"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -63,7 +63,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "uz.uzinfocom.ucharmessenger"
+        applicationId = "uz.uzinfocom.berk"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

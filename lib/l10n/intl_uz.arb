@@ -908,7 +908,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "Uchar",
+    "fluffychat": "Berk",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -1090,7 +1090,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} sizni Uchar’ga taklif qildi.\n1. uchar.uz saytiga tashrif buyuring va ilovani oʻrnating.\n2. Roʻyxatdan oʻting yoki tizimga kiring.\n3. Taklif havolasini oching:\n{link}",
+    "inviteText": "{username} sizni Berk’ga taklif qildi.\n1. uzberk.uz saytiga tashrif buyuring va ilovani oʻrnating.\n2. Roʻyxatdan oʻting yoki tizimga kiring.\n3. Taklif havolasini oching:\n{link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1380,7 +1380,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Uchar yangi xabarlar",
+    "newMessageInFluffyChat": "💬 Berk yangi xabarlar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -2128,7 +2128,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "Uchar",
+    "title": "Berk",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2488,13 +2488,13 @@
     "@callingPermissions": {},
     "callingAccount": "Qoʻngʻiroq qilishi hisobi",
     "@callingAccount": {},
-    "callingAccountDetails": "Uchar’ga mahalliy android terish ilovasidan foydalanishga ruxsat beradi.",
+    "callingAccountDetails": "Berk’ga mahalliy android terish ilovasidan foydalanishga ruxsat beradi.",
     "@callingAccountDetails": {},
     "appearOnTop": "Teppada paydo boʻladi",
     "@appearOnTop": {},
-    "appearOnTopDetails": "Ilovaning yuqori qismida koʻrinishiga ruxsat beradi (agar sizda Uchar qoʻngʻiroq qiluvchi hisobi sifatida oʻrnatilgan boʻlsa, kerak emas)",
+    "appearOnTopDetails": "Ilovaning yuqori qismida koʻrinishiga ruxsat beradi (agar sizda Berk qoʻngʻiroq qiluvchi hisobi sifatida oʻrnatilgan boʻlsa, kerak emas)",
     "@appearOnTopDetails": {},
-    "otherCallingPermissions": "Mikrofon, kamera va boshqa Uchar ruxsatnomalari",
+    "otherCallingPermissions": "Mikrofon, kamera va boshqa Berk ruxsatnomalari",
     "@otherCallingPermissions": {},
     "whyIsThisMessageEncrypted": "Nima uchun bu xabarni oʻqib boʻlmaydi?",
     "@whyIsThisMessageEncrypted": {},
@@ -2538,7 +2538,7 @@
     "@newSpaceDescription": {},
     "openChat": "Suhbatni ochish",
     "@openChat": {},
-    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut boʻyicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, Uchar ni ishga tushirish mumkin emas.",
+    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut boʻyicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, Berk ni ishga tushirish mumkin emas.",
     "@indexedDbErrorLong": {},
     "youJoinedTheChat": "Siz suhbatga qoʻshildingiz",
     "@youJoinedTheChat": {},
@@ -2620,11 +2620,11 @@
     "@chatPermissionsDescription": {},
     "noticeChatBackupDeviceVerification": "Eslatma: Barcha qurilmalaringizni suhbat zaxira nusxasiga ulaganingizda, ular avtomatik ravishda tasdiqlanadi.",
     "@noticeChatBackupDeviceVerification": {},
-    "welcomeText": "Hey Hey 👋 Bu Uchar. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmogʻi!",
+    "welcomeText": "Hey Hey 👋 Bu Berk. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmogʻi!",
     "@welcomeText": {},
     "unableToJoinChat": "Chatga qoʻshilib boʻlmadi. Ehtimol, boshqa tomon suhbatni allaqachon yopib qoʻygan.",
     "@unableToJoinChat": {},
-    "appIntroduction": "Uchar sizga turli messenjerlar orqali doʻstlaringiz bilan suhbatlashish imkonini beradi. Batafsil maʼlumotni https://matrix.org saytida oling yoki shunchaki *Davom etish* tugmasini bosing.",
+    "appIntroduction": "Berk sizga turli messenjerlar orqali doʻstlaringiz bilan suhbatlashish imkonini beradi. Batafsil maʼlumotni https://matrix.org saytida oling yoki shunchaki *Davom etish* tugmasini bosing.",
     "@appIntroduction": {},
     "newChatRequest": "📩 Yangi suhbat uchun soʻrov",
     "@newChatRequest": {},

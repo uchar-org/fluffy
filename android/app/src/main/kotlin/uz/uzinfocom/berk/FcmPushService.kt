@@ -1,4 +1,4 @@
-package uz.uzinfocom.ucharmessenger
+package uz.uzinfocom.berk
 
 import com.famedly.fcm_shared_isolate.FcmSharedIsolateService
 

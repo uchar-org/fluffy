@@ -22,7 +22,7 @@ enum AppSettings<T> {
   unifiedPushEndpoint<String>('chat.fluffy.unifiedpush.endpoint', ''),
   pushNotificationsGatewayUrl<String>(
     'pushNotificationsGatewayUrl',
-    'https://push.uchar.uz/_matrix/push/v1/notify',
+    'https://push.uzberk.uz/_matrix/push/v1/notify',
   ),
   pushNotificationsPusherFormat<String>(
     'pushNotificationsPusherFormat',
@@ -48,13 +48,10 @@ enum AppSettings<T> {
   ),
   displayChatDetailsColumn('chat.fluffy.display_chat_details_column', false),
   // AppConfig-mirrored settings
-  applicationName<String>('chat.fluffy.application_name', 'Uchar'),
-  defaultHomeserver<String>('chat.fluffy.default_homeserver', 'uchar.uz'),
+  applicationName<String>('chat.fluffy.application_name', 'Berk'),
+  defaultHomeserver<String>('chat.fluffy.default_homeserver', 'uzberk.uz'),
   // colorSchemeSeed stored as ARGB int
-  colorSchemeSeedInt<int>(
-    'chat.fluffy.color_scheme_seed',
-    0xFF007080,
-  ),
+  colorSchemeSeedInt<int>('chat.fluffy.color_scheme_seed', 0xFF007080),
   emojiSuggestionLocale<String>('emoji_suggestion_locale', ''),
   enableSoftLogout<bool>('chat.fluffy.enable_soft_logout', false);
 

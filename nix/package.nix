@@ -12,7 +12,7 @@
 pinnedFlutter.buildFlutterApplication (
   packageAttrs
   // rec {
-    pname = "uchar-${targetFlutterPlatform}";
+    pname = "berk-${targetFlutterPlatform}";
 
     src = ../.;
 
@@ -21,7 +21,7 @@ pinnedFlutter.buildFlutterApplication (
     meta =
       {
         description = "Chat with your friends (matrix client)";
-        homepage = "https://uchar.uz/";
+        homepage = "https://uzberk.uz/";
         license = pkgs.lib.licenses.agpl3Plus;
         maintainers = with pkgs.lib.maintainers; [
           mkg20001
@@ -31,7 +31,7 @@ pinnedFlutter.buildFlutterApplication (
         badPlatforms = pkgs.lib.platforms.darwin;
       }
       // pkgs.lib.optionalAttrs (targetFlutterPlatform == "linux") {
-        mainProgram = "uchar";
+        mainProgram = "berk";
       };
   }
   // pkgs.lib.optionalAttrs (targetFlutterPlatform == "linux") {
@@ -46,10 +46,10 @@ pinnedFlutter.buildFlutterApplication (
 
     desktopItems = [
       (pkgs.makeDesktopItem {
-        name = "Uchar";
-        exec = "uchar";
-        icon = "uchar";
-        desktopName = "Uchar";
+        name = "Berk";
+        exec = "berk";
+        icon = "berk";
+        desktopName = "Berk";
         genericName = "Chat with your friends (matrix client)";
         categories = [
           "Chat"
@@ -88,7 +88,7 @@ pinnedFlutter.buildFlutterApplication (
     };
 
     postInstall = ''
-      FAV=$out/app/uchar-linux/data/flutter_assets/assets/favicon.png
+      FAV=$out/app/berk-linux/data/flutter_assets/assets/favicon.png
       ICO=$out/share/icons
 
       for size in 24 32 42 64 128 256 512; do
@@ -97,7 +97,7 @@ pinnedFlutter.buildFlutterApplication (
         magick $FAV -resize ''${size}x''${size} $D/fluffychat.png
       done
 
-      patchelf --add-rpath ${libwebrtcRpath} $out/app/uchar-linux/lib/libwebrtc.so
+      patchelf --add-rpath ${libwebrtcRpath} $out/app/berk-linux/lib/libwebrtc.so
     '';
   }
   // pkgs.lib.optionalAttrs (targetFlutterPlatform == "web") {

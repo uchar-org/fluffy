@@ -1,4 +1,4 @@
-package uz.uzinfocom.ucharmessenger
+package uz.uzinfocom.berk
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine

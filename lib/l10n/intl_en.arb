@@ -1012,7 +1012,7 @@
     "type": "String",
     "placeholders": {}
   },
-  "fluffychat": "Uchar",
+  "fluffychat": "Berk",
   "@fluffychat": {
     "type": "String",
     "placeholders": {}
@@ -1199,7 +1199,7 @@
     "type": "String",
     "placeholders": {}
   },
-  "inviteText": "{username} invited you to Uchar.\n1. Visit uchar.uz and install the app \n2. Sign up or sign in \n3. Open the invite link: \n {link}",
+  "inviteText": "{username} invited you to Berk.\n1. Visit uzberk.uz and install the app \n2. Sign up or sign in \n3. Open the invite link: \n {link}",
   "@inviteText": {
     "type": "String",
     "placeholders": {
@@ -1387,7 +1387,7 @@
     "type": "String",
     "placeholders": {}
   },
-  "newMessageInFluffyChat": "💬 New message in Uchar",
+  "newMessageInFluffyChat": "💬 New message in Berk",
   "@newMessageInFluffyChat": {
     "type": "String",
     "placeholders": {}
@@ -2135,7 +2135,7 @@
     "type": "String",
     "placeholders": {}
   },
-  "title": "Uchar",
+  "title": "Berk",
   "@title": {
     "description": "Title for the application",
     "type": "String",
@@ -2502,7 +2502,7 @@
   "@emailOrUsername": {},
   "indexedDbErrorTitle": "Private mode issues",
   "@indexedDbErrorTitle": {},
-  "indexedDbErrorLong": "The message storage is unfortunately not enabled in private mode by default.\nPlease visit\n - about:config\n - set dom.indexedDB.privateBrowsing.enabled to true\nOtherwise, it is not possible to run Uchar.",
+  "indexedDbErrorLong": "The message storage is unfortunately not enabled in private mode by default.\nPlease visit\n - about:config\n - set dom.indexedDB.privateBrowsing.enabled to true\nOtherwise, it is not possible to run Berk.",
   "@indexedDbErrorLong": {},
   "switchToAccount": "Switch to account {number}",
   "@switchToAccount": {
@@ -2673,13 +2673,13 @@
   "@callingPermissions": {},
   "callingAccount": "Calling account",
   "@callingAccount": {},
-  "callingAccountDetails": "Allows Uchar to use the native android dialer app.",
+  "callingAccountDetails": "Allows Berk to use the native android dialer app.",
   "@callingAccountDetails": {},
   "appearOnTop": "Appear on top",
   "@appearOnTop": {},
-  "appearOnTopDetails": "Allows the app to appear on top (not needed if you already have Uchar setup as a calling account)",
+  "appearOnTopDetails": "Allows the app to appear on top (not needed if you already have Berk setup as a calling account)",
   "@appearOnTopDetails": {},
-  "otherCallingPermissions": "Microphone, camera and other Uchar permissions",
+  "otherCallingPermissions": "Microphone, camera and other Berk permissions",
   "@otherCallingPermissions": {},
   "whyIsThisMessageEncrypted": "Why is this message unreadable?",
   "@whyIsThisMessageEncrypted": {},
@@ -3187,7 +3187,7 @@
   "@noticeChatBackupDeviceVerification": {},
   "continueText": "Continue",
   "@continueText": {},
-  "welcomeText": "Hey Hey 👋 This is Uchar. You can sign in to any homeserver, which is compatible with https://matrix.org. And then chat with anyone. It's a huge decentralized messaging network!",
+  "welcomeText": "Hey Hey 👋 This is Berk. You can sign in to any homeserver, which is compatible with https://matrix.org. And then chat with anyone. It's a huge decentralized messaging network!",
   "@welcomeText": {},
   "blur": "Blur:",
   "@blur": {},
@@ -3248,7 +3248,7 @@
   "@open": {},
   "waitingForServer": "Waiting for server...",
   "@waitingForServer": {},
-  "appIntroduction": "Uchar lets you chat with your friends across different messengers. Learn more at https://matrix.org or just tap *Continue*.",
+  "appIntroduction": "Berk lets you chat with your friends across different messengers. Learn more at https://matrix.org or just tap *Continue*.",
   "@appIntroduction": {},
   "newChatRequest": "📩 New chat request",
   "@newChatRequest": {},
