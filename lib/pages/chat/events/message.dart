@@ -15,6 +15,7 @@ import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/file_description.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:fluffychat/utils/room_status_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
@@ -613,10 +614,31 @@ class Message extends StatelessWidget {
                                                                 break;
                                                               }
                                                               case EventStatus.sent: case EventStatus.synced : {
-                                                                if (displayEvent.receipts.isNotEmpty || event.receipts.isNotEmpty || displayReadMarker) {
-                                                                  myMessageStatus = MessageStatus.seen;
-                                                                } else {
+                                                                // Find latest read position across all participants
+                                                                final latestReadEventId = getLatestReadEventId(
+                                                                  timeline,
+                                                                  client.userID ?? '',
+                                                                );
+
+                                                                if (latestReadEventId == null) {
+                                                                  // No one has read anything
                                                                   myMessageStatus = MessageStatus.sent;
+                                                                } else {
+                                                                  // Compare positions: find indices in timeline
+                                                                  final latestReadIndex = timeline.events.indexWhere(
+                                                                    (e) => e.eventId == latestReadEventId,
+                                                                  );
+                                                                  final currentMessageIndex = timeline.events.indexWhere(
+                                                                    (e) => e.eventId == event.eventId,
+                                                                  );
+
+                                                                  // Lower index = newer, higher index = older
+                                                                  // If current message index >= latest read index, it's been read
+                                                                  if (currentMessageIndex >= latestReadIndex) {
+                                                                    myMessageStatus = MessageStatus.seen;
+                                                                  } else {
+                                                                    myMessageStatus = MessageStatus.sent;
+                                                                  }
                                                                 }
 
                                                                 break;
