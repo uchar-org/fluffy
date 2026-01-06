@@ -1,3 +1,5 @@
+import 'package:fluffychat/config/setting_keys.dart';
+import 'package:fluffychat/utils/room_status_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -76,10 +78,15 @@ class ChatEventList extends StatelessWidget {
                   ),
                 );
               }
-              return Column(
-                mainAxisSize: .min,
-                children: [SeenByRow(controller), TypingIndicators(controller)],
-              );
+
+              if (AppSettings.displaySeenUsers.value) {
+                return Column(
+                  mainAxisSize: .min,
+                  children: [SeenByRow(controller), TypingIndicators(controller)],
+                );
+              }
+
+              return SizedBox.shrink();
             }
 
             // Request history button or progress indicator:

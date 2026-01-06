@@ -3530,5 +3530,6 @@
     "loadingMessages": "Xabarlar yuklanmoqda",
     "@loadingMessages": {},
     "setupChatBackup": "Chat zaxirasini sozlash",
-    "@setupChatBackup": {}
+    "@setupChatBackup": {},
+    "displaySeenUsers": "Xabarni ko‘rgan foydalanuvchilarni ko‘rsatish"
 }

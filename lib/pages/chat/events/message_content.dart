@@ -301,18 +301,21 @@ class MessageContent extends StatelessWidget {
                             return Icon(
                               Icons.done_all,
                               size: 16,
+                              color: textColor,
                             );
                           }
                           case MessageStatus.pending: {
                             return Icon(
                               Icons.schedule,
                               size: 16,
+                              color: textColor,
                             );
                           }
                           case MessageStatus.sent: {
                             return Icon(
                               Icons.check,
                               size: 16,
+                              color: textColor,
                             );
                           }
                           case MessageStatus.error: {

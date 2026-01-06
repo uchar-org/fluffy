@@ -3538,5 +3538,6 @@
     "loadingMessages": "Загрузка сообщений",
     "@loadingMessages": {},
     "setupChatBackup": "Настроить резервное копирование чата",
-    "@setupChatBackup": {}
+    "@setupChatBackup": {},
+    "displaySeenUsers": "Показать пользователей, прочитавших сообщение"
 }

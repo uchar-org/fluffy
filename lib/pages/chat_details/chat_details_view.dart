@@ -55,6 +55,7 @@ class ChatDetailsView extends StatelessWidget {
         final displayname = room.getLocalizedDisplayname(
           MatrixLocals(L10n.of(context)),
         );
+
         return Scaffold(
           appBar: AppBar(
             leading:

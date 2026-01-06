@@ -41,6 +41,7 @@ enum AppSettings<T> {
   showPresences<bool>('chat.fluffy.show_presences', true),
   displayNavigationRail<bool>('chat.fluffy.display_navigation_rail', false),
   experimentalVoip<bool>('chat.fluffy.experimental_voip', false),
+  displaySeenUsers<bool>('chat.fluffy.display_seen_users', false),
   shareKeysWith<String>('chat.fluffy.share_keys_with_2', 'all'),
   noEncryptionWarningShown<bool>(
     'chat.fluffy.no_encryption_warning_shown',
