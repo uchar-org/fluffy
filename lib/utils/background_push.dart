@@ -170,6 +170,7 @@ class BackgroundPush {
     final void Function(String errorMsg, {Uri? link})? onFcmError,
   }) {
     final instance = BackgroundPush.clientOnly(matrix.client);
+    instance.client = matrix.client;
     instance.matrix = matrix;
     // ignore: prefer_initializing_formals
     instance.onFcmError = onFcmError;
@@ -301,9 +302,8 @@ class BackgroundPush {
 
   Future<void> setupPush() async {
     Logs().d("SetupPush");
-    if (client.onLoginStateChanged.value != LoginState.loggedIn ||
-        !PlatformInfos.isMobile ||
-        matrix == null) {
+    if (!client.isLogged() || !PlatformInfos.isMobile || matrix == null) {
+      Logs().w("SetupPush early return - conditions not met");
       return;
     }
     // Do not setup unifiedpush if this has been initialized by

@@ -260,6 +260,9 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
           );
         });
     onLoginStateChanged[name] ??= c.onLoginStateChanged.stream.listen((state) {
+      if (state == LoginState.loggedIn) {
+        backgroundPush?.setupPush();
+      }
       final loggedInWithMultipleClients = widget.clients.length > 1;
       if (state == LoginState.loggedOut) {
         _cancelSubs(c.clientName);
@@ -378,6 +381,13 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
           }
         },
       );
+      // Setup push after first sync when client is ready
+      client.onSync.stream.first.then((_) {
+        if (backgroundPush != null) {
+          backgroundPush!.client = client;
+          backgroundPush!.setupPush();
+        }
+      });
     }
   }
 
