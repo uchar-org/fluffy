@@ -240,8 +240,6 @@ class MessageContent extends StatelessWidget {
                 fontSize: fontSize,
               );
             }
-            
-
 
             var html = AppSettings.renderHtml.value && event.isRichMessage
                 ? event.formattedText
