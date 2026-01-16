@@ -156,6 +156,11 @@ class HtmlMessage extends StatelessWidget {
     // We must not render elements nested more than 100 elements deep:
     if (depth >= 100) return const TextSpan();
 
+    if (node is dom.Element &&
+        ignoredHtmlTags.contains(node.localName?.toLowerCase())) {
+      return const TextSpan();
+    }
+
     // This is a text node or not permitted node, so we render it as text:
     if (node is! dom.Element || !allowedHtmlTags.contains(node.localName)) {
       var text = node.text ?? '';
@@ -169,8 +174,6 @@ class HtmlMessage extends StatelessWidget {
         onOpen: onOpen,
       );
     }
-
-    if (ignoredHtmlTags.contains(node.localName)) return const TextSpan();
 
     switch (node.localName) {
       case 'br':
@@ -260,13 +263,15 @@ class HtmlMessage extends StatelessWidget {
             child: Text.rich(
               TextSpan(
                 children: [
-                  if (node.parent?.localName == 'ul')
-                    const TextSpan(text: '• '),
-                  if (node.parent?.localName == 'ol')
-                    TextSpan(
-                      text:
-                          '${(node.parent?.nodes.whereType<dom.Element>().toList().indexOf(node) ?? 0) + (int.tryParse(node.parent?.attributes['start'] ?? '1') ?? 1)}. ',
-                    ),
+                  if (!isCheckbox) ...[
+                    if (node.parent?.localName == 'ul')
+                      const TextSpan(text: '• '),
+                    if (node.parent?.localName == 'ol')
+                      TextSpan(
+                        text:
+                            '${(node.parent?.nodes.whereType<dom.Element>().toList().indexOf(node) ?? 0) + (int.tryParse(node.parent?.attributes['start'] ?? '1') ?? 1)}. ',
+                      ),
+                  ],
                   if (node.className == 'task-list-item')
                     WidgetSpan(
                       child: Padding(
@@ -539,22 +544,27 @@ class MatrixPill extends StatelessWidget {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: UrlLauncher(outerContext, uri).launchUrl,
-      child: Row(
-        mainAxisSize: .min,
-        children: [
-          Avatar(mxContent: avatar, name: name, size: 16),
-          const SizedBox(width: 6),
-          Text(
-            name,
-            style: TextStyle(
-              color: color,
-              decorationColor: color,
-              decoration: TextDecoration.underline,
-              fontSize: fontSize,
-              height: 1.25,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            WidgetSpan(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 4.0),
+                child: Avatar(mxContent: avatar, name: name, size: 16),
+              ),
             ),
-          ),
-        ],
+            TextSpan(
+              text: name,
+              style: TextStyle(
+                color: color,
+                decorationColor: color,
+                decoration: TextDecoration.underline,
+                fontSize: fontSize,
+                height: 1.25,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

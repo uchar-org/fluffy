@@ -9,12 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:matrix/matrix.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:universal_html/html.dart' as html;
 
 import 'package:fluffychat/config/setting_keys.dart';
 import 'package:fluffychat/config/themes.dart';
@@ -114,7 +114,6 @@ class ChatController extends State<ChatPageWithRoom>
   final AutoScrollController scrollController = AutoScrollController();
 
   late final FocusNode inputFocus;
-  StreamSubscription<html.Event>? onFocusSub;
   StreamSubscription<SyncUpdate>? _syncSubscription;
 
   Timer? typingCoolDown;
@@ -228,9 +227,25 @@ class ChatController extends State<ChatPageWithRoom>
     final timeline = this.timeline;
     if (timeline == null) return;
     Logs().v('Requesting future...');
-    final mostRecentEventId = timeline.events.first.eventId;
+
+    final mostRecentEvent = timeline.events.filterByVisibleInGui().firstOrNull;
+
     await timeline.requestFuture(historyCount: _loadHistoryCount);
-    setReadMarker(eventId: mostRecentEventId);
+
+    if (mostRecentEvent != null) {
+      setReadMarker(eventId: mostRecentEvent.eventId);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final index = timeline.events.filterByVisibleInGui().indexOf(
+          mostRecentEvent,
+        );
+        if (index >= 0) {
+          scrollController.scrollToIndex(
+            index,
+            preferPosition: AutoScrollPosition.begin,
+          );
+        }
+      });
+    }
   }
 
   void _updateScrollController() {
@@ -244,11 +259,6 @@ class ChatController extends State<ChatPageWithRoom>
     } else if (scrollController.position.pixels <= 0 && _scrolledUp == true) {
       setState(() => _scrolledUp = false);
       setReadMarker();
-    }
-
-    if (scrollController.position.pixels == 0 ||
-        scrollController.position.pixels == 64) {
-      requestFuture();
     }
   }
 
@@ -365,9 +375,6 @@ class ChatController extends State<ChatPageWithRoom>
         : '';
     WidgetsBinding.instance.addObserver(this);
     _tryLoadTimeline();
-    if (kIsWeb) {
-      onFocusSub = html.window.onFocus.listen((_) => setReadMarker());
-    }
 
     // Listen for call state updates
     _syncSubscription = room.client.onSync.stream.listen((_) {
@@ -475,7 +482,7 @@ class ChatController extends State<ChatPageWithRoom>
 
   void onInsert(int i) {
     // setState will be called by updateView() anyway
-    animateInEventIndex = i;
+    if (timeline?.allowNewEvent == true) animateInEventIndex = i;
   }
 
   Future<void> _getTimeline({String? eventContextId}) async {
@@ -563,7 +570,6 @@ class ChatController extends State<ChatPageWithRoom>
     timeline?.cancelSubscriptions();
     timeline = null;
     inputFocus.removeListener(_inputFocusListener);
-    onFocusSub?.cancel();
     _syncSubscription?.cancel();
     super.dispose();
   }
@@ -640,7 +646,7 @@ class ChatController extends State<ChatPageWithRoom>
     });
   }
 
-  void sendFileAction({FileSelectorType type = FileSelectorType.any}) async {
+  void sendFileAction({FileType type = FileType.any}) async {
     final files = await selectFiles(context, allowMultiple: true, type: type);
     if (files.isEmpty) return;
     await showAdaptiveDialog(
@@ -1133,19 +1139,29 @@ class ChatController extends State<ChatPageWithRoom>
   }
 
   void goToNewRoomAction() async {
-    final newRoomId = room
-        .getState(EventTypes.RoomTombstone)!
-        .parsedTombstoneContent
-        .replacementRoom;
     final result = await showFutureLoadingDialog(
       context: context,
-      future: () => room.client.joinRoom(
-        room
-            .getState(EventTypes.RoomTombstone)!
-            .parsedTombstoneContent
-            .replacementRoom,
-        via: [newRoomId.domain!],
-      ),
+      future: () async {
+        final users = await room.requestParticipants(
+          [Membership.join, Membership.leave],
+          true,
+          false,
+        );
+        users.sort((a, b) => a.powerLevel.compareTo(b.powerLevel));
+        final via = users
+            .map((user) => user.id.domain)
+            .whereType<String>()
+            .toSet()
+            .take(10)
+            .toList();
+        return room.client.joinRoom(
+          room
+              .getState(EventTypes.RoomTombstone)!
+              .parsedTombstoneContent
+              .replacementRoom,
+          via: via,
+        );
+      },
     );
     if (result.error != null) return;
     if (!mounted) return;
@@ -1195,10 +1211,10 @@ class ChatController extends State<ChatPageWithRoom>
 
     switch (choice) {
       case AddPopupMenuActions.image:
-        sendFileAction(type: FileSelectorType.images);
+        sendFileAction(type: FileType.image);
         return;
       case AddPopupMenuActions.video:
-        sendFileAction(type: FileSelectorType.videos);
+        sendFileAction(type: FileType.video);
         return;
       case AddPopupMenuActions.file:
         sendFileAction();
@@ -1319,9 +1335,7 @@ class ChatController extends State<ChatPageWithRoom>
     if (!CallService.canJoinCall(room)) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(L10n.of(context).noCallPermission),
-          ),
+          SnackBar(content: Text(L10n.of(context).noCallPermission)),
         );
       }
       return;
@@ -1348,7 +1362,9 @@ class ChatController extends State<ChatPageWithRoom>
     String? callKitUuid;
     if (PlatformInfos.isMobile && !hasActiveCall) {
       try {
-        callKitUuid = await CallKitService.instance.showOutgoingCall(room: room);
+        callKitUuid = await CallKitService.instance.showOutgoingCall(
+          room: room,
+        );
       } catch (e, s) {
         Logs().e('[Chat] Failed to show outgoing CallKit call', e, s);
         // Continue anyway - will still navigate to call screen

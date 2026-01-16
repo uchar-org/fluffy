@@ -325,6 +325,7 @@
       }
     }
   },
+  "changedTheChatDescription": "{username} changed the chat description",
   "changedTheChatDescriptionTo": "{username} changed the chat description to: '{description}'",
   "@changedTheChatDescriptionTo": {
     "type": "String",
@@ -337,6 +338,7 @@
       }
     }
   },
+  "changedTheChatName": "{username} changed the chat name",
   "changedTheChatNameTo": "{username} changed the chat name to: '{chatname}'",
   "@changedTheChatNameTo": {
     "type": "String",
@@ -3496,5 +3498,40 @@
   "skipChatBackup": "Skip chat backup",
   "skipChatBackupWarning": "Are you sure? Without enabling the chat backup you may lose access to your messages if you switch your device.",
   "loadingMessages": "Loading messages",
-  "setupChatBackup": "Set up chat backup"
+  "setupChatBackup": "Set up chat backup",
+  "noMoreResultsFound": "No more results found",
+  "chatSearchedUntil": "Chat searched until {time}",
+  "@chatSearchedUntil": {
+    "type": "String",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "federationBaseUrl": "Federation Base URL",
+  "@federationBaseUrl": {},
+  "clientWellKnownInformation": "Client-Well-Known Information:",
+  "@clientWellKnownInformation": {},
+  "baseUrl": "Base URL",
+  "@baseUrl": {},
+  "identityServer": "Identity Server:",
+  "@identityServer": {},
+  "versionWithNumber": "Version: {version}",
+  "@versionWithNumber": {
+    "type": "String",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "logs": "Logs",
+  "@logs": {},
+  "advancedConfigs": "Advanced Configs",
+  "@advancedConfigs": {},
+  "advancedConfigurations": "Advanced configurations",
+  "@advancedConfigurations": {},
+  "signInWith": "Sign in with:",
+  "@signInWith": {}
 }

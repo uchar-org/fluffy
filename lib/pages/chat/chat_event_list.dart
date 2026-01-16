@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import 'package:fluffychat/config/themes.dart';
+import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/chat/chat.dart';
 import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/pages/chat/seen_by_row.dart';
@@ -63,16 +64,16 @@ class ChatEventList extends StatelessWidget {
           (BuildContext context, int i) {
             // Footer to display typing indicator and read receipts:
             if (i == 0) {
-              if (timeline.isRequestingFuture) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-                );
-              }
               if (timeline.canRequestFuture) {
                 return Center(
-                  child: IconButton(
-                    onPressed: controller.requestFuture,
-                    icon: const Icon(Icons.refresh_outlined),
+                  child: TextButton.icon(
+                    onPressed: timeline.isRequestingFuture
+                        ? null
+                        : controller.requestFuture,
+                    icon: timeline.isRequestingFuture
+                        ? CircularProgressIndicator.adaptive(strokeWidth: 2)
+                        : const Icon(Icons.arrow_downward_outlined),
+                    label: Text(L10n.of(context).loadMore),
                   ),
                 );
               }
@@ -84,37 +85,33 @@ class ChatEventList extends StatelessWidget {
 
             // Request history button or progress indicator:
             if (i == events.length + 1) {
-              if (controller.activeThreadId == null) {
-                return Builder(
-                  builder: (context) {
-                    final visibleIndex = timeline.events.lastIndexWhere(
-                      (event) =>
-                          !event.isCollapsedState && event.isVisibleInGui,
-                    );
-                    if (timeline.canRequestHistory &&
-                        visibleIndex >= 0 &&
-                        visibleIndex > timeline.events.length - 50) {
-                      WidgetsBinding.instance.addPostFrameCallback(
-                        controller.requestHistory,
-                      );
-                    }
-                    return Center(
-                      child: AnimatedSwitcher(
-                        duration: FluffyThemes.animationDuration,
-                        child: timeline.canRequestHistory
-                            ? IconButton(
-                                onPressed: controller.requestHistory,
-                                icon: const Icon(Icons.refresh_outlined),
-                              )
-                            : const CircularProgressIndicator.adaptive(
-                                strokeWidth: 2,
-                              ),
-                      ),
-                    );
-                  },
-                );
+              if (controller.activeThreadId != null ||
+                  !timeline.canRequestHistory) {
+                return const SizedBox.shrink();
               }
-              return const SizedBox.shrink();
+              return Builder(
+                builder: (context) {
+                  final visibleIndex = timeline.events.lastIndexWhere(
+                    (event) => !event.isCollapsedState && event.isVisibleInGui,
+                  );
+                  if (visibleIndex > timeline.events.length - 50) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      controller.requestHistory,
+                    );
+                  }
+                  return Center(
+                    child: TextButton.icon(
+                      onPressed: timeline.isRequestingHistory
+                          ? null
+                          : controller.requestHistory,
+                      icon: timeline.isRequestingHistory
+                          ? CircularProgressIndicator.adaptive(strokeWidth: 2)
+                          : const Icon(Icons.arrow_upward_outlined),
+                      label: Text(L10n.of(context).loadMore),
+                    ),
+                  );
+                },
+              );
             }
             i--;
 
@@ -194,4 +191,5 @@ class ChatEventList extends StatelessWidget {
     );
   }
 }
+
 // Assuming 'client' is your Matrix client instance and 'event' is the last visible message event.

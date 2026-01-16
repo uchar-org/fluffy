@@ -4,7 +4,7 @@ publish_to: none
 # On version bump please also increase:
 # 1. The build number (for F-Droid)
 # 2. The version in /snap/snapcraft.yaml
-version: 2.3.0+3547
+version: 2.3.0+3548
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -25,12 +25,12 @@ dependencies:
   device_info_plus: ^12.3.0
   dynamic_color: ^1.8.1
   emoji_picker_flutter: ^4.4.0
-  file_picker: ^10.3.7
+  file_picker: ^10.3.8
   file_selector: ^1.1.0
   flutter:
     sdk: flutter
   flutter_callkit_incoming: ^3.0.0
-  flutter_foreground_task: ^9.1.0
+  flutter_foreground_task: ^9.2.0
   flutter_highlighter: ^0.1.1
   flutter_launcher_icons: ^0.14.4
   flutter_linkify: ^6.0.0
@@ -46,19 +46,19 @@ dependencies:
   flutter_web_auth_2: ^4.1.0
   flutter_webrtc: ^1.2.1
   geolocator: ^14.0.2
-  go_router: ^17.0.0
+  go_router: ^17.0.1
   handy_window: ^0.4.0
   highlight: ^0.7.0
   html: ^0.15.4
   http: ^1.6.0
-  image: ^4.1.7
+  image: ^4.7.2
   image_picker: ^1.2.1
   intl: any
   just_audio: ^0.10.5
   language_picker: ^0.4.5
   latlong2: ^0.9.1
   linkify: ^5.0.0
-  matrix: ^4.0.0
+  matrix: ^4.1.0
   mime: ^2.0.0
   native_imaging: ^0.2.0
   opus_caf_converter_dart: ^1.0.1
@@ -75,9 +75,9 @@ dependencies:
   record: ^6.1.2
   scroll_to_index: ^3.0.1
   share_plus: ^12.0.1
-  shared_preferences: ^2.2.0 # Pinned because https://github.com/flutter/flutter/issues/118401
+  shared_preferences: ^2.5.4 # Pinned because https://github.com/flutter/flutter/issues/118401
   slugify: ^2.0.0
-  sqflite_common_ffi: ^2.3.6
+  sqflite_common_ffi: ^2.3.7+1
   sqlcipher_flutter_libs: ^0.6.8
   swipe_to_action: ^0.3.0
   unifiedpush: ^6.2.0
@@ -98,10 +98,8 @@ dev_dependencies:
   import_sorter: ^4.6.0
   integration_test:
     sdk: flutter
-  # Waiting for https://github.com/rufman/license_checker/pull/47
-  license_checker:
-    git: https://github.com/krille-chan/license_checker.git
-  translations_cleaner: ^0.0.5
+  license_checker: ^1.6.2
+  translations_cleaner: ^0.1.0
 
 import_sorter:
   ignored_files: # Optional, defaults to []
