@@ -243,9 +243,16 @@ class MessageContent extends StatelessWidget {
                 fontSize: fontSize,
               );
             }
+
             var html = AppSettings.renderHtml.value && event.isRichMessage
                 ? event.formattedText
                 : event.body.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+
+            // clearing for reply
+            if (html.startsWith("<mx-reply>")) {
+              html = stripMxReply(html);
+            }
+
             if (event.messageType == MessageTypes.Emote) {
               html = '* $html';
             }
@@ -456,4 +463,12 @@ class _ButtonContent extends StatelessWidget {
       ),
     );
   }
+}
+
+
+String stripMxReply(String html) {
+  final endTag = '</mx-reply>';
+  final index = html.indexOf(endTag);
+  if (index == -1) return html;
+  return html.substring(index + endTag.length).trim();
 }
