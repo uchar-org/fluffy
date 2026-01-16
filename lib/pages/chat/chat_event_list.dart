@@ -194,3 +194,4 @@ class ChatEventList extends StatelessWidget {
     );
   }
 }
+// Assuming 'client' is your Matrix client instance and 'event' is the last visible message event.

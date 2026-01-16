@@ -15,6 +15,7 @@ import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/file_description.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
+import 'package:fluffychat/utils/room_status_extension.dart';
 import 'package:fluffychat/utils/string_color.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
@@ -24,6 +25,14 @@ import 'message_content.dart';
 import 'message_reactions.dart';
 import 'reply_content.dart';
 import 'state_message.dart';
+
+enum MessageStatus {
+  pending,
+  sent,
+  seen,
+  error,
+}
+
 
 class Message extends StatelessWidget {
   final Event event;
@@ -589,15 +598,69 @@ class Message extends StatelessWidget {
                                                                   );
                                                                 },
                                                           ),
-                                                        MessageContent(
-                                                          displayEvent,
-                                                          textColor: textColor,
-                                                          linkColor: linkColor,
-                                                          onInfoTab: onInfoTab,
-                                                          borderRadius:
-                                                              borderRadius,
-                                                          timeline: timeline,
-                                                          selected: selected,
+                                                        Builder(
+                                                          builder: (context) {
+                                                            MessageStatus? myMessageStatus;
+
+                                                            // debugPrint("message status: ${displayEvent.status}, ${displayEvent.content}");
+
+                                                            switch(displayEvent.status) {
+                                                              case EventStatus.sending: {
+                                                                myMessageStatus = MessageStatus.pending;
+                                                                break;
+                                                              }
+                                                              case EventStatus.error: {
+                                                                myMessageStatus = MessageStatus.error;
+                                                                break;
+                                                              }
+                                                              case EventStatus.sent: case EventStatus.synced : {
+                                                                // Find latest read position across all participants
+                                                                final latestReadEventId = getLatestReadEventId(
+                                                                  timeline,
+                                                                  client.userID ?? '',
+                                                                );
+
+                                                                if (latestReadEventId == null) {
+                                                                  // No one has read anything
+                                                                  myMessageStatus = MessageStatus.sent;
+                                                                } else {
+                                                                  // Compare positions: find indices in timeline
+                                                                  final latestReadIndex = timeline.events.indexWhere(
+                                                                    (e) => e.eventId == latestReadEventId,
+                                                                  );
+                                                                  final currentMessageIndex = timeline.events.indexWhere(
+                                                                    (e) => e.eventId == event.eventId,
+                                                                  );
+
+                                                                  // Lower index = newer, higher index = older
+                                                                  // If current message index >= latest read index, it's been read
+                                                                  if (currentMessageIndex >= latestReadIndex) {
+                                                                    myMessageStatus = MessageStatus.seen;
+                                                                  } else {
+                                                                    myMessageStatus = MessageStatus.sent;
+                                                                  }
+                                                                }
+
+                                                                break;
+                                                              } 
+                                                            }
+
+                                                            if (!ownMessage) {
+                                                              myMessageStatus = null;
+                                                            }
+
+                                                            return MessageContent(
+                                                              displayEvent,
+                                                              textColor: textColor,
+                                                              linkColor: linkColor,
+                                                              onInfoTab: onInfoTab,
+                                                              borderRadius:
+                                                                  borderRadius,
+                                                              timeline: timeline,
+                                                              selected: selected,
+                                                              messageStatus: myMessageStatus,
+                                                            );
+                                                          },
                                                         ),
                                                         if (event
                                                             .hasAggregatedEvents(
@@ -837,6 +900,8 @@ class Message extends StatelessWidget {
                                                 : const SizedBox.shrink(),
                                           ),
                                         ),
+                                      
+                                      
                                       ],
                                     ),
                                   ),

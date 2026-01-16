@@ -5,6 +5,24 @@ import 'package:matrix/matrix.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import '../config/app_config.dart';
 
+/// Find the newest event ID that any other user has read
+/// Returns null if no other users have read any messages
+String? getLatestReadEventId(Timeline timeline, String currentUserId) {
+  if (timeline.events.isEmpty) return null;
+
+  // Iterate from newest (index 0) to oldest
+  for (final event in timeline.events) {
+    // Check if ANY other user (not current user) has receipt on this event
+    final hasOtherReader = event.receipts.any((r) => r.user.id != currentUserId);
+
+    if (hasOtherReader) {
+      return event.eventId;  // This is the latest read position
+    }
+  }
+
+  return null;  // No one has read any messages
+}
+
 extension RoomStatusExtension on Room {
   String getLocalizedTypingText(BuildContext context) {
     var typingText = '';
@@ -55,4 +73,5 @@ extension RoomStatusExtension on Room {
     );
     return lastReceipts.toList();
   }
+
 }
