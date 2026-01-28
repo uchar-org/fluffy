@@ -12,6 +12,14 @@ import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 
 const _passwordStorageKey = 'database_password';
+const _maxRetries = 3;
+const _retryDelay = Duration(milliseconds: 500);
+
+// Use first_unlock (NOT this_device) to survive device restore/backup
+// first_unlock_this_device keys are NOT backed up and lost on device migration
+const _writeOptions = IOSOptions(
+  accessibility: KeychainAccessibility.first_unlock,
+);
 
 Future<String?> getDatabaseCipher() async {
   for (var attempt = 1; attempt <= _maxRetries; attempt++) {
