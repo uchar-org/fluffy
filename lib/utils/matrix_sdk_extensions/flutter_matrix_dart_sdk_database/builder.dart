@@ -16,12 +16,48 @@ import 'cipher.dart';
 import 'sqlcipher_stub.dart'
     if (dart.library.io) 'package:sqlcipher_flutter_libs/sqlcipher_flutter_libs.dart';
 
+/// Thrown when encrypted database exists but encryption key is unavailable.
+/// This typically happens when iOS keychain data is lost (device restore, etc.)
+/// but database file remains.
+class DatabaseKeyLostException implements Exception {
+  final String path;
+  DatabaseKeyLostException(this.path);
+
+  @override
+  String toString() =>
+      'DatabaseKeyLostException: Encrypted database exists at $path but encryption key is unavailable';
+}
+
 Future<DatabaseApi> flutterMatrixSdkDatabaseBuilder(String clientName) async {
   MatrixSdkDatabase? database;
   try {
     database = await _constructDatabase(clientName);
     await database.open();
     return database;
+  } on DatabaseKeyLostException catch (e) {
+    // Encryption key lost but database exists - notify user and delete DB
+    // so they can re-login. This is better than crashing with "file is not a database".
+    Logs().e('Database key lost, deleting database for recovery', e);
+
+    try {
+      final l10n = await lookupL10n(PlatformDispatcher.instance.locale);
+      ClientManager.sendInitNotification(
+        l10n.databaseKeyLost,
+        l10n.databaseKeyLostSubtitle,
+      );
+    } catch (notifError, s) {
+      Logs().e('Unable to send key lost notification', notifError, s);
+    }
+
+    // Delete the orphaned encrypted database file
+    final dbFile = File(e.path);
+    if (await dbFile.exists()) {
+      await dbFile.delete();
+      Logs().i('Deleted orphaned encrypted database at ${e.path}');
+    }
+
+    // Retry - will create fresh unencrypted database
+    return flutterMatrixSdkDatabaseBuilder(clientName);
   } catch (e, s) {
     Logs().wtf('Unable to construct database!', e, s);
 
@@ -59,6 +95,21 @@ Future<MatrixSdkDatabase> _constructDatabase(String clientName) async {
   }
 
   final cipher = await getDatabaseCipher();
+  final path = await _getDatabasePath(clientName);
+
+  // Key loss detection: if encrypted DB exists but cipher key is unavailable,
+  // we cannot open it. This typically happens after iOS device restore where
+  // keychain data is lost but app files remain.
+  final dbFile = File(path);
+  final dbExists = await dbFile.exists();
+
+  if (cipher == null && dbExists) {
+    Logs().e(
+      'Database file exists at $path but encryption key is unavailable. '
+      'This may happen after device restore or keychain corruption.',
+    );
+    throw DatabaseKeyLostException(path);
+  }
 
   Directory? fileStorageLocation;
   try {
@@ -68,8 +119,6 @@ Future<MatrixSdkDatabase> _constructDatabase(String clientName) async {
       'No temporary directory for file cache available on this platform.',
     );
   }
-
-  final path = await _getDatabasePath(clientName);
 
   // fix dlopen for old Android
   await applyWorkaroundToOpenSqlCipherOnOldAndroidVersions();
