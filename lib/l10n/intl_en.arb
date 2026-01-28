@@ -3070,6 +3070,10 @@
   },
   "noDatabaseEncryption": "Database encryption is not supported on this platform",
   "@noDatabaseEncryption": {},
+  "databaseKeyLost": "Session data lost",
+  "@databaseKeyLost": {},
+  "databaseKeyLostSubtitle": "Database encryption key was lost. Please log in again.",
+  "@databaseKeyLostSubtitle": {},
   "thereAreCountUsersBlocked": "Right now there are {count} users blocked.",
   "@thereAreCountUsersBlocked": {
     "type": "String",
