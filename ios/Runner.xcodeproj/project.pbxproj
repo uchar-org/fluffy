@@ -653,7 +653,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 26.2.0;
+				MARKETING_VERSION = 26.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = uz.uzinfocom.uchar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -798,7 +798,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 26.2.0;
+				MARKETING_VERSION = 26.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = uz.uzinfocom.uchar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -835,7 +835,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 26.2.0;
+				MARKETING_VERSION = 26.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = uz.uzinfocom.uchar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
