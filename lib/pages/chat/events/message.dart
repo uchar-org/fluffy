@@ -232,6 +232,12 @@ class Message extends StatelessWidget {
         direction: AppSettings.swipeRightToLeftToReply.value
             ? SwipeDirection.endToStart
             : SwipeDirection.startToEnd,
+        maxOffset: 0.15, 
+        dismissThresholds: const {
+          SwipeDirection.endToStart: 0.15,
+          SwipeDirection.startToEnd: 0.15,
+        },
+        movementDuration: const Duration(milliseconds: 100),
         onSwipe: (_) => onSwipe(),
         child: Container(
           constraints: const BoxConstraints(
