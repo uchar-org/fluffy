@@ -269,75 +269,99 @@ class MessageContent extends StatelessWidget {
                 event.numberEmotes <= 3;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisSize: MainAxisSize.min,
                 children: [
-                  Flexible(
-                    child: HtmlMessage(
-                      html: html,
-                      textColor: textColor,
-                      room: event.room,
+                  HtmlMessage(
+                    html: html,
+                    textColor: textColor,
+                    room: event.room,
+                    fontSize:
+                        AppSettings.fontSizeFactor.value *
+                        AppConfig.messageFontSize *
+                        (bigEmotes ? 5 : 1),
+                    limitHeight: !selected,
+                    linkStyle: TextStyle(
+                      color: linkColor,
                       fontSize:
                           AppSettings.fontSizeFactor.value *
-                          AppConfig.messageFontSize *
-                          (bigEmotes ? 5 : 1),
-                      limitHeight: !selected,
-                      linkStyle: TextStyle(
-                        color: linkColor,
-                        fontSize:
-                            AppSettings.fontSizeFactor.value *
-                            AppConfig.messageFontSize,
-                        decoration: TextDecoration.underline,
-                        decorationColor: linkColor,
-                      ),
-                      onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
-                      eventId: event.eventId,
-                      checkboxCheckedEvents: event.aggregatedEvents(
-                        timeline,
-                        EventCheckboxRoomExtension.relationshipType,
-                      ),
+                          AppConfig.messageFontSize,
+                      decoration: TextDecoration.underline,
+                      decorationColor: linkColor,
+                    ),
+                    onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
+                    eventId: event.eventId,
+                    checkboxCheckedEvents: event.aggregatedEvents(
+                      timeline,
+                      EventCheckboxRoomExtension.relationshipType,
                     ),
                   ),
             
                   Padding(
-                    padding: const EdgeInsets.only(top: 6, left: 6),
-                    child: Builder(
-                      builder: (context) {
-                        // debugPrint(messageStatus.toString());
+                    padding: const EdgeInsets.only(top: 6, left: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Builder(
+                          builder: (context) {
+                            final messageTime = event.originServerTs;
+                            final formattedTime = "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                formattedTime,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                   
-                        switch (messageStatus) {
-                          case null: {
-                            return SizedBox.shrink();
-                          }
-                          case MessageStatus.seen: {
-                            return Icon(
-                              Icons.done_all,
-                              size: 16,
-                            );
-                          }
-                          case MessageStatus.pending: {
-                            return Icon(
-                              Icons.schedule,
-                              size: 16,
-                            );
-                          }
-                          case MessageStatus.sent: {
-                            return Icon(
-                              Icons.check,
-                              size: 16,
-                            );
-                          }
-                          case MessageStatus.error: {
-                            return Icon(
-                              Icons.error,
-                              size: 16,
-                              color: Theme.of(context).colorScheme.error,
-                            );
-                          }
-                        }
-                              
-                      },
+                        Builder(
+                          builder: (context) {
+                            // debugPrint(messageStatus.toString());
+                                          
+                            switch (messageStatus) {
+                              case null: {
+                                return SizedBox.shrink();
+                              }
+                              case MessageStatus.seen: {
+                                return Icon(
+                                  Icons.done_all,
+                                  size: 16,
+                                  color: textColor,
+                                );
+                              }
+                              case MessageStatus.pending: {
+                                return Icon(
+                                  Icons.schedule,
+                                  size: 16,
+                                  color: textColor,
+                                );
+                              }
+                              case MessageStatus.sent: {
+                                return Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: textColor,
+                                );
+                              }
+                              case MessageStatus.error: {
+                                return Icon(
+                                  Icons.error,
+                                  size: 16,
+                                  color: Theme.of(context).colorScheme.error,
+                                );
+                              }
+                            }
+                                  
+                          },
+                        ),
+                      ],
                     ),
                   )
                 ],
