@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fluffychat/pages/chat/events/message.dart';
+import 'package:fluffychat/pages/chat/events/message_status.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -152,6 +153,7 @@ class MessageContent extends StatelessWidget {
               borderRadius: borderRadius,
               timeline: timeline,
               textColor: textColor,
+              messageStatus: messageStatus,
             );
           case CuteEventContent.eventType:
             return CuteContent(event);
@@ -308,58 +310,21 @@ class MessageContent extends StatelessWidget {
                           builder: (context) {
                             final messageTime = event.originServerTs;
                             final formattedTime = "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Text(
-                                formattedTime,
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 12,
-                                ),
+                            return Text(
+                              formattedTime,
+                              style: TextStyle(
+                                color: textColor,
+                                fontSize: 12,
                               ),
                             );
                           },
                         ),
+
+                        const SizedBox(width: 3,),
                   
-                        Builder(
-                          builder: (context) {
-                            // debugPrint(messageStatus.toString());
-                                          
-                            switch (messageStatus) {
-                              case null: {
-                                return SizedBox.shrink();
-                              }
-                              case MessageStatus.seen: {
-                                return Icon(
-                                  Icons.done_all,
-                                  size: 16,
-                                  color: textColor,
-                                );
-                              }
-                              case MessageStatus.pending: {
-                                return Icon(
-                                  Icons.schedule,
-                                  size: 16,
-                                  color: textColor,
-                                );
-                              }
-                              case MessageStatus.sent: {
-                                return Icon(
-                                  Icons.check,
-                                  size: 16,
-                                  color: textColor,
-                                );
-                              }
-                              case MessageStatus.error: {
-                                return Icon(
-                                  Icons.error,
-                                  size: 16,
-                                  color: Theme.of(context).colorScheme.error,
-                                );
-                              }
-                            }
-                                  
-                          },
+                        MessageStatusWidget(
+                          status: messageStatus,
+                          iconColor: textColor,
                         ),
                       ],
                     ),

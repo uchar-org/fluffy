@@ -1,3 +1,5 @@
+import 'package:fluffychat/pages/chat/events/message.dart';
+import 'package:fluffychat/pages/chat/events/message_status.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -25,6 +27,7 @@ class ImageBubble extends StatelessWidget {
   final void Function()? onTap;
   final BorderRadius? borderRadius;
   final Timeline? timeline;
+  final MessageStatus? messageStatus;
 
   const ImageBubble(
     this.event, {
@@ -40,6 +43,7 @@ class ImageBubble extends StatelessWidget {
     this.timeline,
     this.textColor,
     this.linkColor,
+    this.messageStatus,
     super.key,
   });
 
@@ -77,7 +81,7 @@ class ImageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     var borderRadius =
         this.borderRadius ?? BorderRadius.circular(AppConfig.borderRadius);
-    
+
     final imageBorderRadius = BorderRadius.only(
       topLeft: Radius.circular(AppConfig.borderRadius - 2),
       topRight: Radius.circular(AppConfig.borderRadius - 2),
@@ -95,6 +99,10 @@ class ImageBubble extends StatelessWidget {
       );
     }
 
+    final messageTime = event.originServerTs;
+    final formattedTime =
+        "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
+
     return Column(
       mainAxisSize: .min,
       spacing: 6,
@@ -102,15 +110,7 @@ class ImageBubble extends StatelessWidget {
         Material(
           color: Colors.transparent,
           clipBehavior: Clip.hardEdge,
-          shape: RoundedRectangleBorder(
-            borderRadius: borderRadius,
-            // side: BorderSide(
-            //   color: event.messageType == MessageTypes.Sticker
-            //       ? Colors.transparent
-            //       : theme.dividerColor,
-            //   width: 1.3
-            // ),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
           child: InkWell(
             onTap: () => _onTap(context),
             borderRadius: borderRadius,
@@ -120,16 +120,62 @@ class ImageBubble extends StatelessWidget {
                 tag: event.eventId,
                 child: ClipRRect(
                   borderRadius: imageBorderRadius,
-                  child: MxcImage(
-                    event: event,
-                    width: width,
-                    height: height,
-                    fit: fit,
-                    animated: animated,
-                    isThumbnail: thumbnailOnly,
-                    placeholder: event.messageType == MessageTypes.Sticker
-                        ? null
-                        : _buildPlaceholder,
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      MxcImage(
+                        event: event,
+                        width: width,
+                        height: height,
+                        fit: fit,
+                        animated: animated,
+                        isThumbnail: thumbnailOnly,
+                        placeholder: event.messageType == MessageTypes.Sticker
+                            ? null
+                            : _buildPlaceholder,
+                      ),
+
+                      if (fileDescription == null)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 8.0,
+                            bottom: 8.0,
+                          ),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: .3),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppConfig.borderRadius / 3),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 7,
+                                vertical: 3,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    formattedTime,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+
+                                  if (messageStatus != null) SizedBox(width: 6,),
+
+                                  if (messageStatus != null) MessageStatusWidget(
+                                    iconColor: Colors.white,
+                                    status: messageStatus,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
@@ -140,30 +186,68 @@ class ImageBubble extends StatelessWidget {
           SizedBox(
             width: width,
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: 6,
-                right: 6,
-                bottom: 12,
-              ),
-              child: Linkify(
-                text: fileDescription,
-                textScaleFactor: MediaQuery.textScalerOf(context).scale(1),
-                style: TextStyle(
-                  color: textColor,
-                  fontSize:
-                      AppSettings.fontSizeFactor.value *
-                      AppConfig.messageFontSize,
+              padding: const EdgeInsets.only(left: 6, right: 12,),
+              child: SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                  // alignment: WrapAlignment.end,
+                  alignment: WrapAlignment.start,
+                  children: [
+                    Linkify(
+                      text: fileDescription,
+                      textScaleFactor: MediaQuery.textScalerOf(
+                        context,
+                      ).scale(1),
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize:
+                            AppSettings.fontSizeFactor.value *
+                            AppConfig.messageFontSize,
+                      ),
+                      options: const LinkifyOptions(humanize: false),
+                      linkStyle: TextStyle(
+                        color: linkColor,
+                        fontSize:
+                            AppSettings.fontSizeFactor.value *
+                            AppConfig.messageFontSize,
+                        decoration: TextDecoration.underline,
+                        decorationColor: linkColor,
+                      ),
+                      onOpen: (url) =>
+                          UrlLauncher(context, url.url).launchUrl(),
+                    ),
+
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Transform.translate(
+                        offset: const Offset(0, -15),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              formattedTime,
+                              style: TextStyle(
+                                color: textColor,
+                                fontSize:
+                                    AppSettings.fontSizeFactor.value *
+                                    (AppConfig.messageFontSize - 5),
+                              ),
+                            ),
+                        
+                            const SizedBox(
+                              width: 6,
+                            ),
+                        
+                            MessageStatusWidget(
+                              iconColor: textColor,
+                              status: messageStatus,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                options: const LinkifyOptions(humanize: false),
-                linkStyle: TextStyle(
-                  color: linkColor,
-                  fontSize:
-                      AppSettings.fontSizeFactor.value *
-                      AppConfig.messageFontSize,
-                  decoration: TextDecoration.underline,
-                  decorationColor: linkColor,
-                ),
-                onOpen: (url) => UrlLauncher(context, url.url).launchUrl(),
               ),
             ),
           ),
