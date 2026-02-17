@@ -19,6 +19,8 @@ abstract class AppConfig {
   static const String pushNotificationsAppId = 'uz.uzinfocom.uchar';
   static const double borderRadius = 18.0;
   static const double columnWidth = 360.0;
+  static const double imageMessagePadding = 2.5;
+  static const double innerWidgetRadius = borderRadius - imageMessagePadding;
 
   static const String website = 'https://uchar.uz';
   static const String enablePushTutorial =

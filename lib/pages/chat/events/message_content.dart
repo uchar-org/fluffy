@@ -34,6 +34,7 @@ class MessageContent extends StatelessWidget {
   final Color linkColor;
   final void Function(Event)? onInfoTab;
   final BorderRadius borderRadius;
+  final BorderRadius innerBorderRadius;
   final Timeline timeline;
   final bool selected;
   final MessageStatus? messageStatus;
@@ -46,8 +47,10 @@ class MessageContent extends StatelessWidget {
     required this.textColor,
     required this.linkColor,
     required this.borderRadius,
+    required this.innerBorderRadius,
     required this.selected,
     required this.messageStatus,
+    
   });
 
   void _verifyOrRequestKey(BuildContext context) async {
@@ -114,47 +117,52 @@ class MessageContent extends StatelessWidget {
         switch (event.messageType) {
           case MessageTypes.Image:
           case MessageTypes.Sticker:
-            if (event.redacted) continue textmessage;
-            
-            final screenWidth = MediaQuery.of(context).size.width;
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                final maxBubbleWidth = constraints.maxWidth * 0.7;
 
-            final targetWidth = screenWidth * 0.7; 
-            final maxHeight = screenWidth * 0.9;
+                final info = event.content.tryGetMap<String, Object?>('info');
+                final w = info?.tryGet<int>('w')?.toDouble() ?? 1.0;
+                final h = info?.tryGet<int>('h')?.toDouble() ?? 1.0;
 
-            final info = event.content.tryGetMap<String, Object?>('info');
-            final w = info?.tryGet<int>('w')?.toDouble() ?? 1.0;
-            final h = info?.tryGet<int>('h')?.toDouble() ?? 1.0;
+                double width;
+                double height;
+                var fit = BoxFit.cover;
 
-            double width;
-            double height;
-            var fit = BoxFit.cover;
+                if (event.messageType == MessageTypes.Sticker) {
+                  width = 160;
+                  height = 160;
+                  fit = BoxFit.contain;
+                } else {
+                  final aspectRatio = w / h;
 
-            if (event.messageType == MessageTypes.Sticker) {
-              width = 160.0;
-              height = 160.0;
-              fit = BoxFit.contain;
-            } else {
-              width = targetWidth;
+                  width = maxBubbleWidth;
 
-              // We calculate the height based on the proportions of the image
-              // But we limit it from being too small or too large
-              final aspectRatio = w / h;
-              height = (width / aspectRatio).clamp(150.0, maxHeight);
-              
-              // If the image is very vertical (e.g. a screenshot),
-              // we will limit the height and center the image
-            }
+                  height = width / aspectRatio;
 
-            return ImageBubble(
-              event,
-              width: width,
-              height: height,
-              fit: fit, 
-              borderRadius: borderRadius,
-              timeline: timeline,
-              textColor: textColor,
-              messageStatus: messageStatus,
+                  const minHeight = 120.0;
+                  final maxHeight = constraints.maxHeight.isFinite
+                      ? constraints.maxHeight * 0.6
+                      : 420.0;
+
+                  height = height.clamp(minHeight, maxHeight);
+                  width = height * aspectRatio;
+                  width = width.clamp(120.0, maxBubbleWidth);
+                }
+
+                return ImageBubble(
+                  event,
+                  width: width,
+                  height: height,
+                  fit: fit,
+                  borderRadius: innerBorderRadius,
+                  timeline: timeline,
+                  textColor: textColor,
+                  messageStatus: messageStatus,
+                );
+              },
             );
+
           case CuteEventContent.eventType:
             return CuteContent(event);
           case MessageTypes.Audio:
@@ -305,6 +313,7 @@ class MessageContent extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 6, left: 8),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Builder(
                           builder: (context) {
