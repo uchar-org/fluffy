@@ -197,9 +197,13 @@ void showMemberActionsPopupMenu({
                 color: theme.colorScheme.onErrorContainer,
               ),
               const SizedBox(width: 18),
-              Text(
-                L10n.of(context).reportUser,
-                style: TextStyle(color: theme.colorScheme.onErrorContainer),
+              Flexible(
+                child: Text(
+                  L10n.of(context).reportUser,
+                  style: TextStyle(color: theme.colorScheme.onErrorContainer),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
               ),
             ],
           ),
