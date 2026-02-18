@@ -2771,15 +2771,6 @@
   "@signInWithPassword": {},
   "pleaseTryAgainLaterOrChooseDifferentServer": "Please try again later or choose a different server.",
   "@pleaseTryAgainLaterOrChooseDifferentServer": {},
-  "signInWith": "Sign in with {provider}",
-  "@signInWith": {
-    "type": "String",
-    "placeholders": {
-      "provider": {
-        "type": "String"
-      }
-    }
-  },
   "profileNotFound": "The user could not be found on the server. Maybe there is a connection problem or the user doesn't exist.",
   "@profileNotFound": {},
   "setTheme": "Set theme:",
@@ -3536,6 +3527,10 @@
   "@advancedConfigs": {},
   "advancedConfigurations": "Advanced configurations",
   "@advancedConfigurations": {},
-  "signInWith": "Sign in with:",
-  "@signInWith": {}
+  "signIn": "Sign in",
+  "createNewAccount": "Create new account",
+  "signUpGreeting": "FluffyChat is decentralized! Select a server where you want to create your account and let's go!",
+  "signInGreeting": "You already have an account in Matrix? Welcome back! Select your homeserver and sign in.",
+  "appIntro": "With FluffyChat you can chat with your friends. It's a secure decentralized [matrix] messenger! Learn more on https://matrix.org if you like or just sign up.",
+  "theProcessWasCanceled": "The process was canceled."
 }

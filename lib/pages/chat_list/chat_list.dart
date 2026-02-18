@@ -376,9 +376,7 @@ class ChatListController extends State<ChatList>
 
   @override
   void initState() {
-    activeFilter = AppSettings.separateChatTypes.value
-        ? ActiveFilter.messages
-        : ActiveFilter.allChats;
+    activeFilter = ActiveFilter.allChats;
     _initReceiveSharingIntent();
     _activeSpaceId = widget.activeSpace;
 

@@ -11,15 +11,12 @@ extension FileDescriptionExtension on Event {
     }.contains(messageType)) {
       return null;
     }
-    final formattedBody = content.tryGet<String>('formatted_body');
-    if (formattedBody != null && formattedBody.isNotEmpty) return formattedBody;
-
     final filename = content.tryGet<String>('filename');
-    final body = content.tryGet<String>('body');
+    final body = calcUnlocalizedBody(hideReply: true, plaintextBody: true);
+
     if (filename != body &&
-        body != null &&
         filename != null &&
-        body.isNotEmpty) {
+        content.tryGet<String>('body')?.isNotEmpty == true) {
       return body;
     }
     return null;

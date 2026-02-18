@@ -1,3 +1,4 @@
+import 'package:fluffychat/widgets/hover_builder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:animations/animations.dart';
@@ -19,13 +20,17 @@ import 'input_bar.dart';
 class ChatInputRow extends StatelessWidget {
   final ChatController controller;
 
+  static const double height = 56.0;
+
   const ChatInputRow(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    const height = 48.0;
+    final textMessageOnly =
+        controller.sendController.text.isNotEmpty ||
+        controller.replyEvent != null ||
+        controller.editEvent != null;
 
     if (!controller.room.otherPartyCanReceiveMessages) {
       return Center(
@@ -128,9 +133,7 @@ class ChatInputRow extends StatelessWidget {
                   AnimatedContainer(
                     duration: FluffyThemes.animationDuration,
                     curve: FluffyThemes.animationCurve,
-                    width: controller.sendController.text.isNotEmpty
-                        ? 0
-                        : height,
+                    width: textMessageOnly ? 0 : 48,
                     height: height,
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(),
@@ -221,9 +224,7 @@ class ChatInputRow extends StatelessWidget {
                     AnimatedContainer(
                       duration: FluffyThemes.animationDuration,
                       curve: FluffyThemes.animationCurve,
-                      width: controller.sendController.text.isNotEmpty
-                          ? 0
-                          : height,
+                      width: textMessageOnly ? 0 : 48,
                       height: height,
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(),
@@ -267,7 +268,7 @@ class ChatInputRow extends StatelessWidget {
                     ),
                   Container(
                     height: height,
-                    width: height,
+                    width: 48,
                     alignment: Alignment.center,
                     child: IconButton(
                       tooltip: L10n.of(context).emojis,
@@ -302,13 +303,13 @@ class ChatInputRow extends StatelessWidget {
                       Matrix.of(context).currentBundle!.length > 1)
                     Container(
                       height: height,
-                      width: height,
+                      width: 48,
                       alignment: Alignment.center,
                       child: _ChatAccountPicker(controller),
                     ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0.0),
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
                       child: InputBar(
                         room: controller.room,
                         minLines: 1,
@@ -360,26 +361,42 @@ class ChatInputRow extends StatelessWidget {
                     alignment: Alignment.center,
                     child:
                         PlatformInfos.platformCanRecord &&
-                            controller.sendController.text.isEmpty
-                        ? IconButton(
-                            tooltip: L10n.of(context).voiceMessage,
-                            onPressed: () =>
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      L10n.of(
-                                        context,
-                                      ).longPressToRecordVoiceMessage,
-                                    ),
-                                  ),
-                                ),
-                            onLongPress: () => recordingViewModel
-                                .startRecording(controller.room),
-                            style: IconButton.styleFrom(
-                              backgroundColor: theme.bubbleColor,
-                              foregroundColor: theme.onBubbleColor,
+                            !controller.sendController.text.isNotEmpty &&
+                            controller.editEvent == null
+                        ? HoverBuilder(
+                            builder: (context, hovered) => IconButton(
+                              tooltip: L10n.of(context).voiceMessage,
+                              onPressed: hovered
+                                  ? () => recordingViewModel.startRecording(
+                                      controller.room,
+                                    )
+                                  : () => ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                          SnackBar(
+                                            margin: EdgeInsets.only(
+                                              bottom: height + 16,
+                                              left: 16,
+                                              right: 16,
+                                              top: 16,
+                                            ),
+                                            showCloseIcon: true,
+                                            content: Text(
+                                              L10n.of(
+                                                context,
+                                              ).longPressToRecordVoiceMessage,
+                                            ),
+                                          ),
+                                        ),
+                              onLongPress: () => recordingViewModel
+                                  .startRecording(controller.room),
+                              style: IconButton.styleFrom(
+                                backgroundColor: theme.bubbleColor,
+                                foregroundColor: theme.onBubbleColor,
+                              ),
+                              icon: Icon(
+                                hovered ? Icons.mic : Icons.mic_none_outlined,
+                              ),
                             ),
-                            icon: const Icon(Icons.mic_none_outlined),
                           )
                         : IconButton(
                             tooltip: L10n.of(context).send,

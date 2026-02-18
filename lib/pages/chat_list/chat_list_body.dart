@@ -144,12 +144,44 @@ class ChatListViewBody extends StatelessWidget {
                   if (client.rooms.isNotEmpty && !controller.isSearchMode)
                     SizedBox(
                       height: 64,
-                      child: OnlyTabBar(
-                        selected: controller.activeFilter,
-                        onSelected: (filter) =>
-                            controller.setActiveFilter(filter),
-                        label: (filter) => filter.toLocalizedString(context),
-                        items: filterItems,
+                      child: ListView(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 12.0,
+                        ),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        children:
+                            [
+                                  ActiveFilter.allChats,
+
+                                  if (spaces.isNotEmpty &&
+                                      !AppSettings
+                                          .displayNavigationRail
+                                          .value &&
+                                      !FluffyThemes.isColumnMode(context))
+                                    ActiveFilter.spaces,
+                                  ActiveFilter.unread,
+                                  ActiveFilter.groups,
+                                  ActiveFilter.messages,
+                                ]
+                                .map(
+                                  (filter) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4.0,
+                                    ),
+                                    child: FilterChip(
+                                      selected:
+                                          filter == controller.activeFilter,
+                                      onSelected: (_) =>
+                                          controller.setActiveFilter(filter),
+                                      label: Text(
+                                        filter.toLocalizedString(context),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
                       ),
                     ),
                   if (controller.isSearchMode)

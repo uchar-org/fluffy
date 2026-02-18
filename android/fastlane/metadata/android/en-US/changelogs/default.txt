@@ -1,3 +1,0 @@
-FluffyChat 2.3.0 fixes a possible database corruption bug, also fixes a
-major performance leak and introduces polls and threads.
-Several other bugs have also been fixed including importing sticker packgs.

@@ -541,9 +541,7 @@ class ChatController extends State<ChatPageWithRoom>
     }
 
     // Do not send read markers when app is not in foreground
-    if (kIsWeb && !Matrix.of(context).webHasFocus) return;
-    if (!kIsWeb &&
-        WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
+    if (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
       return;
     }
 
@@ -735,9 +733,6 @@ class ChatController extends State<ChatPageWithRoom>
       name: fileName ?? audioFile.path,
     );
 
-    setState(() {
-      replyEvent = null;
-    });
     room
         .sendFileEvent(
           file,
@@ -758,6 +753,9 @@ class ChatController extends State<ChatPageWithRoom>
           );
           return null;
         });
+    setState(() {
+      replyEvent = null;
+    });
     return;
   }
 

@@ -112,7 +112,7 @@ class BackgroundPush {
         });
       }
       await _flutterLocalNotificationsPlugin.initialize(
-        const InitializationSettings(
+        settings: const InitializationSettings(
           android: AndroidInitializationSettings('notifications_icon'),
           iOS: DarwinInitializationSettings(),
         ),
@@ -179,7 +179,7 @@ class BackgroundPush {
 
   Future<void> cancelNotification(String roomId) async {
     Logs().v('Cancel notification for room', roomId);
-    await _flutterLocalNotificationsPlugin.cancel(roomId.hashCode);
+    await _flutterLocalNotificationsPlugin.cancel(id: roomId.hashCode);
 
     // Workaround for app icon badge not updating
     if (Platform.isIOS) {

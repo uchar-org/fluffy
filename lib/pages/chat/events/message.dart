@@ -180,7 +180,10 @@ class Message extends StatelessWidget {
       );
     }
 
-    final showReceiptsRow = event.hasAggregatedEvents(timeline, RelationshipTypes.reaction);
+    final hasReactions = event.hasAggregatedEvents(
+      timeline,
+      RelationshipTypes.reaction,
+    );
 
     final threadChildren = event.aggregatedEvents(timeline, RelationshipTypes.thread);
 
@@ -671,11 +674,11 @@ class Message extends StatelessWidget {
                 duration: FluffyThemes.animationDuration,
                 curve: FluffyThemes.animationCurve,
                 alignment: Alignment.bottomCenter,
-                child: !showReceiptsRow
+                child: !hasReactions
                     ? const SizedBox.shrink()
                     : Padding(
                         padding: EdgeInsets.only(
-                          top: 4.0,
+                          top: 1.0,
                           left: (ownMessage ? 0 : Avatar.defaultSize) + 12.0,
                           right: ownMessage ? 0 : 12.0,
                         ),
