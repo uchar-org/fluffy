@@ -49,8 +49,7 @@ class InputBar extends StatelessWidget {
   });
 
   List<Map<String, String?>> getSuggestions(TextEditingValue text) {
-    if (text.selection.baseOffset != text.selection.extentOffset ||
-        text.selection.baseOffset < 0) {
+    if (text.selection.baseOffset != text.selection.extentOffset || text.selection.baseOffset < 0) {
       return []; // no entries if there is selected text
     }
     final searchText = text.text.substring(0, text.selection.baseOffset);
@@ -104,10 +103,8 @@ class InputBar extends StatelessWidget {
               'type': 'emote',
               'name': emote.key,
               'pack': packSearch,
-              'pack_avatar_url': emotePacks[packSearch]!.pack.avatarUrl
-                  ?.toString(),
-              'pack_display_name':
-                  emotePacks[packSearch]!.pack.displayName ?? packSearch,
+              'pack_avatar_url': emotePacks[packSearch]!.pack.avatarUrl?.toString(),
+              'pack_display_name': emotePacks[packSearch]!.pack.displayName ?? packSearch,
               'mxc': emote.value.url.toString(),
             });
           }
@@ -139,26 +136,21 @@ class InputBar extends StatelessWidget {
         return indexA.compareTo(indexB);
       });
       for (final emoji in matchingUnicodeEmojis) {
-        ret.add({
-          'type': 'emoji',
-          'emoji': emoji.emoji,
-          'label': emoji.name,
-          'current_word': ':$emoteSearch',
-        });
+        ret.add({'type': 'emoji', 'emoji': emoji.emoji, 'label': emoji.name, 'current_word': ':$emoteSearch'});
         if (ret.length > maxResults) {
           break;
         }
       }
     }
     final userMatch = RegExp(r'(?:\s|^)@([-\w]+)$').firstMatch(searchText);
+    Logs().i("member search for mentioning");
+
     if (userMatch != null) {
       final userSearch = userMatch[1]!.toLowerCase();
       for (final user in room.getParticipants()) {
         if ((user.displayName != null &&
                 (user.displayName!.toLowerCase().contains(userSearch) ||
-                    slugify(
-                      user.displayName!.toLowerCase(),
-                    ).contains(userSearch))) ||
+                    slugify(user.displayName!.toLowerCase()).contains(userSearch))) ||
             user.id.split(':')[0].toLowerCase().contains(userSearch)) {
           ret.add({
             'type': 'user',
@@ -172,7 +164,22 @@ class InputBar extends StatelessWidget {
           break;
         }
       }
+    } else if (searchText.trim().startsWith('@') && searchText.trim().length == 1) {
+      for (final user in room.getParticipants()) {
+        ret.add({
+          'type': 'user',
+          'mxid': user.id,
+          'mention': user.mention,
+          'displayname': user.displayName,
+          'avatar_url': user.avatarUrl?.toString(),
+        });
+
+        if (ret.length > maxResults) {
+          break;
+        }
+      }
     }
+
     final roomMatch = RegExp(r'(?:\s|^)#([-\w]+)$').firstMatch(searchText);
     if (roomMatch != null) {
       final roomSearch = roomMatch[1]!.toLowerCase();
@@ -183,19 +190,10 @@ class InputBar extends StatelessWidget {
         final state = r.getState(EventTypes.RoomCanonicalAlias);
         if ((state != null &&
                 ((state.content['alias'] is String &&
-                        state.content
-                            .tryGet<String>('alias')!
-                            .split(':')[0]
-                            .toLowerCase()
-                            .contains(roomSearch)) ||
+                        state.content.tryGet<String>('alias')!.split(':')[0].toLowerCase().contains(roomSearch)) ||
                     (state.content['alt_aliases'] is List &&
                         (state.content['alt_aliases'] as List).any(
-                          (l) =>
-                              l is String &&
-                              l
-                                  .split(':')[0]
-                                  .toLowerCase()
-                                  .contains(roomSearch),
+                          (l) => l is String && l.split(':')[0].toLowerCase().contains(roomSearch),
                         )))) ||
             (r.name.toLowerCase().contains(roomSearch))) {
           ret.add({
@@ -218,6 +216,7 @@ class InputBar extends StatelessWidget {
     Map<String, String?> suggestion,
     void Function(Map<String, String?>) onSelected,
     Client? client,
+    double width,
   ) {
     final theme = Theme.of(context);
     const size = 30.0;
@@ -229,16 +228,8 @@ class InputBar extends StatelessWidget {
         waitDuration: const Duration(days: 1), // don't show on hover
         child: ListTile(
           onTap: () => onSelected(suggestion),
-          title: Text(
-            commandExample(command),
-            style: const TextStyle(fontFamily: 'RobotoMono'),
-          ),
-          subtitle: Text(
-            hint,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.bodySmall,
-          ),
+          title: Text(commandExample(command), style: const TextStyle(fontFamily: 'RobotoMono')),
+          subtitle: Text(hint, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodySmall),
         ),
       );
     }
@@ -251,10 +242,7 @@ class InputBar extends StatelessWidget {
           onTap: () => onSelected(suggestion),
           leading: SizedBox.square(
             dimension: size,
-            child: Text(
-              suggestion['emoji']!,
-              style: const TextStyle(fontSize: 16),
-            ),
+            child: Text(suggestion['emoji']!, style: const TextStyle(fontSize: 16)),
           ),
           title: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
         ),
@@ -266,9 +254,7 @@ class InputBar extends StatelessWidget {
         leading: MxcImage(
           // ensure proper ordering ...
           key: ValueKey(suggestion['name']),
-          uri: suggestion['mxc'] is String
-              ? Uri.parse(suggestion['mxc'] ?? '')
-              : null,
+          uri: suggestion['mxc'] is String ? Uri.parse(suggestion['mxc'] ?? '') : null,
           width: size,
           height: size,
           isThumbnail: false,
@@ -284,9 +270,7 @@ class InputBar extends StatelessWidget {
                   opacity: suggestion['pack_avatar_url'] != null ? 0.8 : 0.5,
                   child: suggestion['pack_avatar_url'] != null
                       ? Avatar(
-                          mxContent: Uri.tryParse(
-                            suggestion.tryGet<String>('pack_avatar_url') ?? '',
-                          ),
+                          mxContent: Uri.tryParse(suggestion.tryGet<String>('pack_avatar_url') ?? ''),
                           name: suggestion.tryGet<String>('pack_display_name'),
                           size: size * 0.9,
                           client: client,
@@ -305,9 +289,7 @@ class InputBar extends StatelessWidget {
         onTap: () => onSelected(suggestion),
         leading: Avatar(
           mxContent: url,
-          name:
-              suggestion.tryGet<String>('displayname') ??
-              suggestion.tryGet<String>('mxid'),
+          name: suggestion.tryGet<String>('displayname') ?? suggestion.tryGet<String>('mxid'),
           size: size,
           client: client,
         ),
@@ -318,10 +300,7 @@ class InputBar extends StatelessWidget {
   }
 
   String insertSuggestion(Map<String, String?> suggestion) {
-    final replaceText = controller!.text.substring(
-      0,
-      controller!.selection.baseOffset,
-    );
+    final replaceText = controller!.text.substring(0, controller!.selection.baseOffset);
     var startText = '';
     final afterText = replaceText == controller!.text
         ? ''
@@ -329,17 +308,11 @@ class InputBar extends StatelessWidget {
     var insertText = '';
     if (suggestion['type'] == 'command') {
       insertText = '${suggestion['name']!} ';
-      startText = replaceText.replaceAllMapped(
-        RegExp(r'^(/\w*)$'),
-        (Match m) => '/$insertText',
-      );
+      startText = replaceText.replaceAllMapped(RegExp(r'^(/\w*)$'), (Match m) => '/$insertText');
     }
     if (suggestion['type'] == 'emoji') {
       insertText = '${suggestion['emoji']!} ';
-      startText = replaceText.replaceAllMapped(
-        suggestion['current_word']!,
-        (Match m) => insertText,
-      );
+      startText = replaceText.replaceAllMapped(suggestion['current_word']!, (Match m) => insertText);
     }
     if (suggestion['type'] == 'emote') {
       var isUnique = true;
@@ -368,17 +341,11 @@ class InputBar extends StatelessWidget {
     }
     if (suggestion['type'] == 'user') {
       insertText = '${suggestion['mention']!} ';
-      startText = replaceText.replaceAllMapped(
-        RegExp(r'(\s|^)(@[-\w]+)$'),
-        (Match m) => '${m[1]}$insertText',
-      );
+      startText = replaceText.replaceAllMapped(RegExp(r'(\s|^)(@[-\w]+)$'), (Match m) => '${m[1]}$insertText');
     }
     if (suggestion['type'] == 'room') {
       insertText = '${suggestion['mxid']!} ';
-      startText = replaceText.replaceAllMapped(
-        RegExp(r'(\s|^)(#[-\w]+)$'),
-        (Match m) => '${m[1]}$insertText',
-      );
+      startText = replaceText.replaceAllMapped(RegExp(r'(\s|^)(#[-\w]+)$'), (Match m) => '${m[1]}$insertText');
     }
 
     return startText + afterText;
@@ -401,11 +368,7 @@ class InputBar extends StatelessWidget {
             final data = content.data;
             if (data == null) return;
 
-            final file = MatrixFile(
-              mimeType: content.mimeType,
-              bytes: data,
-              name: content.uri.split('/').last,
-            );
+            final file = MatrixFile(mimeType: content.mimeType, bytes: data, name: content.uri.split('/').last);
             room.sendFileEvent(file, shrinkImageMaxDimension: 1600);
           },
         ),
@@ -414,9 +377,7 @@ class InputBar extends StatelessWidget {
         keyboardType: keyboardType!,
         textInputAction: textInputAction,
         autofocus: autofocus!,
-        inputFormatters: [
-          LengthLimitingTextInputFormatter((maxPDUSize / 3).floor()),
-        ],
+        inputFormatters: [LengthLimitingTextInputFormatter((maxPDUSize / 3).floor())],
         onSubmitted: (text) {
           // fix for library for now
           // it sets the types for the callback incorrectly
@@ -433,19 +394,23 @@ class InputBar extends StatelessWidget {
       ),
       optionsViewBuilder: (c, onSelected, s) {
         final suggestions = s.toList();
-        return Material(
-          elevation: theme.appBarTheme.scrolledUnderElevation ?? 4,
-          shadowColor: theme.appBarTheme.shadowColor,
-          borderRadius: BorderRadius.circular(AppConfig.borderRadius),
-          clipBehavior: Clip.hardEdge,
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: suggestions.length,
-            itemBuilder: (context, i) => buildSuggestion(
-              c,
-              suggestions[i],
-              onSelected,
-              Matrix.of(context).client,
+        final maxWidth = MediaQuery.of(context).size.width > 300 ? 300 : MediaQuery.of(context).size.width * .7;
+
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * .3,
+            maxWidth: maxWidth.toDouble(),
+            minWidth: 300,
+          ),
+          child: Material(
+            elevation: theme.appBarTheme.scrolledUnderElevation ?? 4,
+            shadowColor: theme.appBarTheme.shadowColor,
+            borderRadius: BorderRadius.circular(AppConfig.borderRadius),
+            clipBehavior: Clip.hardEdge,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: suggestions.length,
+              itemBuilder: (context, i) => buildSuggestion(c, suggestions[i], onSelected, Matrix.of(context).client, maxWidth.toDouble()),
             ),
           ),
         );
