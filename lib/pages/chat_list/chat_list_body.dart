@@ -1,4 +1,3 @@
-import 'package:fluffychat/pages/chat_list/only_tab_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

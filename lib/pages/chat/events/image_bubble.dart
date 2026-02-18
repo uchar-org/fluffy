@@ -1,5 +1,6 @@
 import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/pages/chat/events/message_status.dart';
+import 'package:fluffychat/pages/image_viewer/image_viewer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -59,6 +60,19 @@ class ImageBubble extends StatelessWidget {
         height: height,
         fit: fit,
       ),
+    );
+  }
+
+  void _onTap(BuildContext context) {
+    if (onTap != null) {
+      onTap!();
+      return;
+    }
+    if (!tapToView) return;
+    showDialog(
+      context: context,
+      builder: (_) =>
+          ImageViewer(event, timeline: timeline, outerContext: context),
     );
   }
 

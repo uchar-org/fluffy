@@ -11,7 +11,6 @@ import 'package:fluffychat/config/setting_keys.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/chat/events/poll.dart';
 import 'package:fluffychat/pages/chat/events/video_player.dart';
-import 'package:fluffychat/pages/image_viewer/image_viewer.dart';
 import 'package:fluffychat/utils/adaptive_bottom_sheet.dart';
 import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_locals.dart';
@@ -51,17 +50,14 @@ class MessageContent extends StatelessWidget {
     required this.innerBorderRadius,
     required this.selected,
     required this.messageStatus,
-    
   });
 
   void _verifyOrRequestKey(BuildContext context) async {
     final l10n = L10n.of(context);
     if (event.content['can_request_session'] != true) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(event.calcLocalizedBodyFallback(MatrixLocals(l10n))),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(event.calcLocalizedBodyFallback(MatrixLocals(l10n)))));
       return;
     }
     final client = Matrix.of(context).client;
@@ -76,10 +72,7 @@ class MessageContent extends StatelessWidget {
       builder: (context) => Scaffold(
         appBar: AppBar(
           leading: CloseButton(onPressed: Navigator.of(context).pop),
-          title: Text(
-            l10n.whyIsThisMessageEncrypted,
-            style: const TextStyle(fontSize: 16),
-          ),
+          title: Text(l10n.whyIsThisMessageEncrypted, style: const TextStyle(fontSize: 16)),
         ),
         body: SafeArea(
           child: ListView(
@@ -108,8 +101,9 @@ class MessageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fontSize =
-        AppConfig.messageFontSize * AppSettings.fontSizeFactor.value;
+    Logs().i("message content: ${event.toJson()}");
+
+    final fontSize = AppConfig.messageFontSize * AppSettings.fontSizeFactor.value;
     final buttonTextColor = textColor;
     switch (event.type) {
       case EventTypes.Message:
@@ -142,9 +136,7 @@ class MessageContent extends StatelessWidget {
                   height = width / aspectRatio;
 
                   const minHeight = 120.0;
-                  final maxHeight = constraints.maxHeight.isFinite
-                      ? constraints.maxHeight * 0.6
-                      : 420.0;
+                  final maxHeight = constraints.maxHeight.isFinite ? constraints.maxHeight * 0.6 : 420.0;
 
                   height = height.clamp(minHeight, maxHeight);
                   width = height * aspectRatio;
@@ -167,38 +159,18 @@ class MessageContent extends StatelessWidget {
           case CuteEventContent.eventType:
             return CuteContent(event);
           case MessageTypes.Audio:
-            if (PlatformInfos.isMobile ||
-                PlatformInfos.isMacOS ||
-                PlatformInfos.isWeb
+            if (PlatformInfos.isMobile || PlatformInfos.isMacOS || PlatformInfos.isWeb
             // Disabled until https://github.com/bleonard252/just_audio_mpv/issues/3
             // is fixed
             //   || PlatformInfos.isLinux
             ) {
-              return AudioPlayerWidget(
-                event,
-                color: textColor,
-                linkColor: linkColor,
-                fontSize: fontSize,
-              );
+              return AudioPlayerWidget(event, color: textColor, linkColor: linkColor, fontSize: fontSize);
             }
-            return MessageDownloadContent(
-              event,
-              textColor: textColor,
-              linkColor: linkColor,
-            );
+            return MessageDownloadContent(event, textColor: textColor, linkColor: linkColor);
           case MessageTypes.Video:
-            return EventVideoPlayer(
-              event,
-              textColor: textColor,
-              linkColor: linkColor,
-              timeline: timeline,
-            );
+            return EventVideoPlayer(event, textColor: textColor, linkColor: linkColor, timeline: timeline);
           case MessageTypes.File:
-            return MessageDownloadContent(
-              event,
-              textColor: textColor,
-              linkColor: linkColor,
-            );
+            return MessageDownloadContent(event, textColor: textColor, linkColor: linkColor);
           case MessageTypes.BadEncrypted:
           case EventTypes.Encrypted:
             return _ButtonContent(
@@ -209,37 +181,19 @@ class MessageContent extends StatelessWidget {
               fontSize: fontSize,
             );
           case MessageTypes.Location:
-            final geoUri = Uri.tryParse(
-              event.content.tryGet<String>('geo_uri')!,
-            );
+            final geoUri = Uri.tryParse(event.content.tryGet<String>('geo_uri')!);
             if (geoUri != null && geoUri.scheme == 'geo') {
-              final latlong = geoUri.path
-                  .split(';')
-                  .first
-                  .split(',')
-                  .map((s) => double.tryParse(s))
-                  .toList();
-              if (latlong.length == 2 &&
-                  latlong.first != null &&
-                  latlong.last != null) {
+              final latlong = geoUri.path.split(';').first.split(',').map((s) => double.tryParse(s)).toList();
+              if (latlong.length == 2 && latlong.first != null && latlong.last != null) {
                 return Column(
                   mainAxisSize: .min,
                   children: [
-                    MapBubble(
-                      latitude: latlong.first!,
-                      longitude: latlong.last!,
-                    ),
+                    MapBubble(latitude: latlong.first!, longitude: latlong.last!),
                     const SizedBox(height: 6),
                     OutlinedButton.icon(
                       icon: Icon(Icons.location_on_outlined, color: textColor),
-                      onPressed: UrlLauncher(
-                        context,
-                        geoUri.toString(),
-                      ).launchUrl,
-                      label: Text(
-                        L10n.of(context).openInMaps,
-                        style: TextStyle(color: textColor),
-                      ),
+                      onPressed: UrlLauncher(context, geoUri.toString()).launchUrl,
+                      label: Text(L10n.of(context).openInMaps, style: TextStyle(color: textColor)),
                     ),
                   ],
                 );
@@ -274,31 +228,23 @@ class MessageContent extends StatelessWidget {
               html = '* $html';
             }
 
-            final bigEmotes =
-                event.onlyEmotes &&
-                event.numberEmotes > 0 &&
-                event.numberEmotes <= 3;
+            final bigEmotes = event.onlyEmotes && event.numberEmotes > 0 && event.numberEmotes <= 3;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Wrap(
                 alignment: WrapAlignment.end,
-                // crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.end,
                 // mainAxisSize: MainAxisSize.min,
                 children: [
                   HtmlMessage(
                     html: html,
                     textColor: textColor,
                     room: event.room,
-                    fontSize:
-                        AppSettings.fontSizeFactor.value *
-                        AppConfig.messageFontSize *
-                        (bigEmotes ? 5 : 1),
+                    fontSize: AppSettings.fontSizeFactor.value * AppConfig.messageFontSize * (bigEmotes ? 5 : 1),
                     limitHeight: !selected,
                     linkStyle: TextStyle(
                       color: linkColor,
-                      fontSize:
-                          AppSettings.fontSizeFactor.value *
-                          AppConfig.messageFontSize,
+                      fontSize: AppSettings.fontSizeFactor.value * AppConfig.messageFontSize,
                       decoration: TextDecoration.underline,
                       decorationColor: linkColor,
                     ),
@@ -309,36 +255,31 @@ class MessageContent extends StatelessWidget {
                       EventCheckboxRoomExtension.relationshipType,
                     ),
                   ),
-            
+
                   Padding(
                     padding: const EdgeInsets.only(top: 6, left: 8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Builder(
-                          builder: (context) {
-                            final messageTime = event.originServerTs;
-                            final formattedTime = "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
-                            return Text(
-                              formattedTime,
-                              style: TextStyle(
-                                color: textColor,
-                                fontSize: 12,
-                              ),
-                            );
-                          },
-                        ),
+                    child: Transform.translate(
+                      offset: Offset(0, 2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              final messageTime = event.originServerTs;
+                              final formattedTime =
+                                  "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
+                              return Text(formattedTime, style: TextStyle(color: textColor, fontSize: 12));
+                            },
+                          ),
 
-                        const SizedBox(width: 3,),
-                  
-                        MessageStatusWidget(
-                          status: messageStatus,
-                          iconColor: textColor,
-                        ),
-                      ],
+                          const SizedBox(width: 3),
+
+                          MessageStatusWidget(status: messageStatus, iconColor: textColor),
+                        ],
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             );
@@ -352,21 +293,15 @@ class MessageContent extends StatelessWidget {
             fontSize: fontSize,
           );
         }
-        return PollWidget(
-          event: event,
-          timeline: timeline,
-          textColor: textColor,
-          linkColor: linkColor,
-        );
+        return PollWidget(event: event, timeline: timeline, textColor: textColor, linkColor: linkColor);
       case EventTypes.CallInvite:
         return FutureBuilder<User?>(
           future: event.fetchSenderUser(),
           builder: (context, snapshot) {
             return _ButtonContent(
-              label: L10n.of(context).startedACall(
-                snapshot.data?.calcDisplayname() ??
-                    event.senderFromMemoryOrFallback.calcDisplayname(),
-              ),
+              label: L10n.of(
+                context,
+              ).startedACall(snapshot.data?.calcDisplayname() ?? event.senderFromMemoryOrFallback.calcDisplayname()),
               icon: '📞',
               textColor: buttonTextColor,
               onPressed: () => onInfoTab!(event),
@@ -376,19 +311,14 @@ class MessageContent extends StatelessWidget {
         );
       case 'org.matrix.msc4075.call.notify':
       case 'org.matrix.msc4075.rtc.notification':
-        return CallNotifyEventWidget(
-          event: event,
-          textColor: textColor,
-          fontSize: fontSize,
-        );
+        return CallNotifyEventWidget(event: event, textColor: textColor, fontSize: fontSize);
       default:
         return FutureBuilder<User?>(
           future: event.fetchSenderUser(),
           builder: (context, snapshot) {
             return _ButtonContent(
               label: L10n.of(context).userSentUnknownEvent(
-                snapshot.data?.calcDisplayname() ??
-                    event.senderFromMemoryOrFallback.calcDisplayname(),
+                snapshot.data?.calcDisplayname() ?? event.senderFromMemoryOrFallback.calcDisplayname(),
                 event.type,
               ),
               icon: 'ℹ️',
@@ -423,9 +353,7 @@ class RedactionWidget extends StatelessWidget {
       builder: (context, snapshot) {
         final reason = event.redactedBecause?.content.tryGet<String>('reason');
         final redactedBy =
-            snapshot.data?.calcDisplayname() ??
-            event.redactedBecause?.senderId.localpart ??
-            L10n.of(context).user;
+            snapshot.data?.calcDisplayname() ?? event.redactedBecause?.senderId.localpart ?? L10n.of(context).user;
         return _ButtonContent(
           label: reason == null
               ? L10n.of(context).redactedBy(redactedBy)
@@ -469,7 +397,6 @@ class _ButtonContent extends StatelessWidget {
     );
   }
 }
-
 
 String stripMxReply(String html) {
   final endTag = '</mx-reply>';

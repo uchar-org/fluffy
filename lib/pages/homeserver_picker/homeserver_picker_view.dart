@@ -36,9 +36,9 @@ class HomeserverPickerView extends StatelessWidget {
     };
 
     return LoginScaffold(
-      enforceMobileMode: Matrix.of(
-        context,
-      ).widget.clients.any((client) => client.isLogged()),
+      // enforceMobileMode: Matrix.of(
+      //   context,
+      // ).widget.clients.any((client) => client.isLogged()),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -195,7 +195,7 @@ class HomeserverPickerView extends StatelessWidget {
                               hintStyle: TextStyle(
                                 color: theme.colorScheme.surfaceTint,
                               ),
-                              labelText: L10n.of(context).signInWith,
+                              labelText: L10n.of(context).signInWith(''),
                               errorText: controller.error,
                               errorMaxLines: 4,
                               suffixIcon: IconButton(
