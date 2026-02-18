@@ -186,12 +186,8 @@
     },
     "sendTypingNotifications": "Yozish bildirishnomalarini yuborish",
     "swipeRightToLeftToReply": "Javob berish uchun o‘ngdan chapga suring",
-<<<<<<< HEAD
     "@swipeRightToLeftToReply": {},
     "badServerLoginTypesException": "Homeserver quyidagi kirish turlarini qoʻllab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat quyidagi turlarni qoʻllab-quvvatlaydi:\n{supportedVersions}",
-=======
-    "badServerLoginTypesException": "Homeserver quyidagi kirish turlarini qo'llab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat quyidagi turlarni qo'llab-quvvatlaydi:\n{supportedVersions}",
->>>>>>> main
     "@badServerLoginTypesException": {
         "type": "String",
         "placeholders": {
@@ -204,12 +200,8 @@
         }
     },
     "sendOnEnter": "Enterda yuborish",
-<<<<<<< HEAD
     "@sendOnEnter": {},
     "badServerVersionsException": "Homeserver quyidagi Spec versiyalarini qoʻllab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat {supportedVersions} versiyalarini qoʻllab-quvvatlaydi",
-=======
-    "badServerVersionsException": "Homeserver quyidagi Spec versiyalarini qo'llab-quvvatlaydi:\n{serverVersions}\nLekin bu ilova faqat {supportedVersions} versiyalarini qo'llab-quvvatlaydi",
->>>>>>> main
     "@badServerVersionsException": {
         "type": "String",
         "placeholders": {
@@ -235,13 +227,9 @@
     },
     "noMoreChatsFound": "Boshqa chatlar topilmadi...",
     "noChatsFoundHere": "Bu yerda hali chat topilmadi. Quyidagi tugmadan foydalanib, kimdir bilan yangi suhbat boshlang. ⤵️",
-<<<<<<< HEAD
     "@noChatsFoundHere": {},
     "joinedChats": "Qoʻshilgan suhbatlar",
     "@joinedChats": {},
-=======
-    "joinedChats": "Qo'shilgan suhbatlar",
->>>>>>> main
     "unread": "Oʻqilmagan",
     "space": "Boʻshliq",
     "spaces": "Boʻshliqlar",
@@ -2388,7 +2376,6 @@
     "screenSharingDetail": "Siz ekraningizni FuffyChat’da ulashmoqdasiz",
     "callingPermissions": "Qoʻngʻiroq qilish ruxsatlar",
     "callingAccount": "Qoʻngʻiroq qilishi hisobi",
-<<<<<<< HEAD
     "@callingAccount": {},
     "callingAccountDetails": "Uchar’ga mahalliy android terish ilovasidan foydalanishga ruxsat beradi.",
     "@callingAccountDetails": {},
@@ -2398,12 +2385,6 @@
     "@appearOnTopDetails": {},
     "otherCallingPermissions": "Mikrofon, kamera va boshqa Uchar ruxsatnomalari",
     "@otherCallingPermissions": {},
-=======
-    "callingAccountDetails": "FluffyChat’ga mahalliy android terish ilovasidan foydalanishga ruxsat beradi.",
-    "appearOnTop": "Teppada paydo boʻladi",
-    "appearOnTopDetails": "Ilovaning yuqori qismida koʻrinishiga ruxsat beradi (agar sizda Fluffychat qoʻngʻiroq qiluvchi hisobi sifatida oʻrnatilgan boʻlsa, kerak emas)",
-    "otherCallingPermissions": "Mikrofon, kamera va boshqa FluffyChat ruxsatnomalari",
->>>>>>> main
     "whyIsThisMessageEncrypted": "Nima uchun bu xabarni oʻqib boʻlmaydi?",
     "noKeyForThisMessage": "Bu xabar siz ushbu qurilmada hisobingizga kirishdan oldin yuborilgan boʻlsa sodir boʻlishi mumkin.\n\nShuningdek, joʻnatuvchi qurilmangizni bloklagan yoki internet ulanishida biron bir muammo yuzaga kelgan boʻlishi mumkin.\n\nXabarni boshqa sessiyada oʻqiy olasizmi? Keyin xabarni undan uzatishingiz mumkin! Sozlamalar > Qurilmalar boʻlimiga oʻting va qurilmalaringiz bir-birini tasdiqlaganligiga ishonch hosil qiling. Keyingi safar xonani ochganingizda va ikkala sessiya ham oldinda boʻlganda, kalitlar avtomatik ravishda uzatiladi.\n\nTizimdan chiqishda yoki qurilmalarni almashtirishda kalitlarni yoʻqotishni xohlamaysizmi? Sozlamalarda suhbatning zaxira nusxasini yoqganingizga ishonch hosil qiling.",
     "newGroup": "Yangi guruh",
@@ -2434,13 +2415,9 @@
     },
     "newSpaceDescription": "Maydonlar sizga suhbatlaringizni birlashtirish va shaxsiy yoki ommaviy hamjamiyatlarni yaratish imkonini beradi.",
     "openChat": "Suhbatni ochish",
-<<<<<<< HEAD
     "@openChat": {},
     "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut boʻyicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, Uchar ni ishga tushirish mumkin emas.",
     "@indexedDbErrorLong": {},
-=======
-    "indexedDbErrorLong": "Xabarlarni saqlash, afsuski, sukut bo'yicha maxfiy rejimda yoqilmagan.\nIltimos, tashrif buyuring\n- about:config\n- dom.indexedDB.privateBrowsing.enabled ga true berilgan\nAks holda, FluffyChat ni ishga tushirish mumkin emas.",
->>>>>>> main
     "youJoinedTheChat": "Siz suhbatga qoʻshildingiz",
     "encryptThisChat": "Bu suhbatni shifrlash",
     "disableEncryptionWarning": "Xavfsizlik nuqtai nazaridan, agar u ilgari yoqilgan boʻlsa, suhbatda shifrlashni oʻchirib qoʻyolmaysiz.",
@@ -2496,7 +2473,6 @@
     "changeTheDescriptionOfTheGroup": "Suhbat tavsifini oʻzgartirish",
     "chatPermissionsDescription": "Ushbu suhbatda muayyan harakatlar uchun qaysi quvvat darajasi zarurligini aniqlang. 0, 50 va 100 quvvat darajalari odatda foydalanuvchilar, moderatorlar va administratorlarni ifodalaydi, ammo har qanday gradatsiya mumkin.",
     "noticeChatBackupDeviceVerification": "Eslatma: Barcha qurilmalaringizni suhbat zaxira nusxasiga ulaganingizda, ular avtomatik ravishda tasdiqlanadi.",
-<<<<<<< HEAD
     "@noticeChatBackupDeviceVerification": {},
     "welcomeText": "Hey Hey 👋 Bu Uchar. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmogʻi!",
     "@welcomeText": {},
@@ -2504,11 +2480,6 @@
     "@unableToJoinChat": {},
     "appIntroduction": "Uchar sizga turli messenjerlar orqali doʻstlaringiz bilan suhbatlashish imkonini beradi. Batafsil maʼlumotni https://matrix.org saytida oling yoki shunchaki *Davom etish* tugmasini bosing.",
     "@appIntroduction": {},
-=======
-    "welcomeText": "Hey Hey 👋 Bu FluffyChat. Siz https://matrix.org bilan mos keladigan istalgan uy serveriga kirishingiz mumkin. Va keyin istalgan kishi bilan suhbatlashishingiz mumkin. Bu ulkan markazlashtirilmagan xabar almashish tarmog'i!",
-    "unableToJoinChat": "Chatga qoʻshilib boʻlmadi. Ehtimol, boshqa tomon suhbatni allaqachon yopib qoʻygan.",
-    "appIntroduction": "FluffyChat sizga turli messenjerlar orqali doʻstlaringiz bilan suhbatlashish imkonini beradi. Batafsil maʼlumotni https://matrix.org saytidan oling yoki shunchaki *Davom etish* tugmasini bosing.",
->>>>>>> main
     "newChatRequest": "📩 Yangi suhbat uchun soʻrov",
     "shareKeysWithDescription": "Shifrlangan suhbatlarda xabarlaringizni oʻqishlari uchun qaysi qurilmalarga ishonish kerak?",
     "enterNewChat": "Yangi suhbatga kirish",
@@ -2552,14 +2523,11 @@
     "pinMessage": "Xonaga mahkamlash",
     "confirmEventUnpin": "Tadbirni butunlay olib tashlashga ishonchingiz komilmi?",
     "placeCall": "Qoʻngʻiroq qilish",
-<<<<<<< HEAD
     "@placeCall": {},
     "noCallPermission": "Sizda qoʻngʻiroq qilish yoki qoʻshilish huquqi yoʻq. Administratordan huquq soʻrang.",
     "@noCallPermission": {},
     "grantCallPermission": "Qoʻngʻiroq huquqi berish",
     "@grantCallPermission": {},
-=======
->>>>>>> main
     "voiceCall": "Ovozli qoʻngʻiroq",
     "unsupportedAndroidVersion": "Qoʻllab-quvvatlanmaydigan Android versiyasi",
     "unsupportedAndroidVersionLong": "Bu funksiya Androidning yangi versiyasini talab qiladi. Iltimos, yangilanishlar yoki Lineage OS qoʻllab-quvvatlashini tekshiring.",
