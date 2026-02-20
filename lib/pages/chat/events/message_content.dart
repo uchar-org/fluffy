@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/pages/chat/events/message_status.dart';
+import 'package:fluffychat/utils/html_cleaner.dart';
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -38,6 +39,7 @@ class MessageContent extends StatelessWidget {
   final Timeline timeline;
   final bool selected;
   final MessageStatus? messageStatus;
+  final bool isReplied;
 
   const MessageContent(
     this.event, {
@@ -50,6 +52,7 @@ class MessageContent extends StatelessWidget {
     required this.innerBorderRadius,
     required this.selected,
     required this.messageStatus,
+    required this.isReplied,
   });
 
   void _verifyOrRequestKey(BuildContext context) async {
@@ -101,7 +104,7 @@ class MessageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Logs().i("message content: ${event.toJson()}");
+    // Logs().i("message content: ${event.toJson()}");
 
     final fontSize = AppConfig.messageFontSize * AppSettings.fontSizeFactor.value;
     final buttonTextColor = textColor;
@@ -152,6 +155,7 @@ class MessageContent extends StatelessWidget {
                   timeline: timeline,
                   textColor: textColor,
                   messageStatus: messageStatus,
+                  selected: selected,
                 );
               },
             );
@@ -228,13 +232,15 @@ class MessageContent extends StatelessWidget {
               html = '* $html';
             }
 
+            final messageTime = event.originServerTs;
+            final formattedTime =
+                "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
+
             final bigEmotes = event.onlyEmotes && event.numberEmotes > 0 && event.numberEmotes <= 3;
+
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Wrap(
-                alignment: WrapAlignment.end,
-                crossAxisAlignment: WrapCrossAlignment.end,
-                // mainAxisSize: MainAxisSize.min,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Stack(
                 children: [
                   HtmlMessage(
                     html: html,
@@ -254,30 +260,27 @@ class MessageContent extends StatelessWidget {
                       timeline,
                       EventCheckboxRoomExtension.relationshipType,
                     ),
+                    trailingWidget: SizedBox(
+                      width: isReplied
+                          ? double.infinity
+                          : messageStatus == null
+                          ? 46
+                          : 60,
+                      height: 14,
+                    ),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6, left: 8),
-                    child: Transform.translate(
-                      offset: Offset(0, 2),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Builder(
-                            builder: (context) {
-                              final messageTime = event.originServerTs;
-                              final formattedTime =
-                                  "${messageTime.hour.toString().padLeft(2, '0')}:${messageTime.minute.toString().padLeft(2, '0')}";
-                              return Text(formattedTime, style: TextStyle(color: textColor, fontSize: 12));
-                            },
-                          ),
-
-                          const SizedBox(width: 3),
-
-                          MessageStatusWidget(status: messageStatus, iconColor: textColor),
-                        ],
-                      ),
+                  // Time - always in the lower right corner
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(formattedTime, style: TextStyle(color: textColor, fontSize: 12)),
+                        if (messageStatus != null) const SizedBox(width: 3),
+                        if (messageStatus != null) MessageStatusWidget(status: messageStatus, iconColor: textColor),
+                      ],
                     ),
                   ),
                 ],
@@ -396,11 +399,4 @@ class _ButtonContent extends StatelessWidget {
       ),
     );
   }
-}
-
-String stripMxReply(String html) {
-  final endTag = '</mx-reply>';
-  final index = html.indexOf(endTag);
-  if (index == -1) return html;
-  return html.substring(index + endTag.length).trim();
 }

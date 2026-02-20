@@ -143,7 +143,7 @@ class Message extends StatelessWidget {
       bottomRight: ownMessage && previousEventSameSender ? hardCorner : roundedCorner,
     );
 
-    final innerRoundedCorner =  Radius.circular(AppConfig.innerWidgetRadius);
+    final innerRoundedCorner = Radius.circular(AppConfig.innerWidgetRadius);
 
     final innerWidgetRadius = BorderRadius.only(
       topLeft: !ownMessage && nextEventSameSender ? hardCorner : innerRoundedCorner,
@@ -180,10 +180,7 @@ class Message extends StatelessWidget {
       );
     }
 
-    final hasReactions = event.hasAggregatedEvents(
-      timeline,
-      RelationshipTypes.reaction,
-    );
+    final hasReactions = event.hasAggregatedEvents(timeline, RelationshipTypes.reaction);
 
     final threadChildren = event.aggregatedEvents(timeline, RelationshipTypes.thread);
 
@@ -234,7 +231,7 @@ class Message extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
               StatefulBuilder(
                 builder: (context, setState) {
                   if (animateIn && resetAnimateIn != null) {
@@ -322,7 +319,7 @@ class Message extends StatelessWidget {
                                         );
                                       },
                                     ),
-                                  
+
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: .start,
@@ -364,7 +361,7 @@ class Message extends StatelessWidget {
                                                     },
                                                   ),
                                           ),
-                                        
+
                                         Container(
                                           alignment: alignment,
                                           padding: const EdgeInsets.only(left: 8),
@@ -446,7 +443,7 @@ class Message extends StatelessWidget {
                                                               );
                                                             },
                                                           ),
-                                                          
+
                                                         Builder(
                                                           builder: (context) {
                                                             MessageStatus? myMessageStatus;
@@ -511,6 +508,9 @@ class Message extends StatelessWidget {
                                                               timeline: timeline,
                                                               selected: selected,
                                                               messageStatus: myMessageStatus,
+                                                              isReplied:
+                                                                  event.inReplyToEventId(includingFallback: false) !=
+                                                                  null,
                                                             );
                                                           },
                                                         ),
@@ -668,7 +668,7 @@ class Message extends StatelessWidget {
                   );
                 },
               ),
-              
+
               // reacted reactions
               AnimatedSize(
                 duration: FluffyThemes.animationDuration,
@@ -714,7 +714,7 @@ class Message extends StatelessWidget {
                           ),
                         ),
                 ),
-                
+
               if (displayReadMarker)
                 Row(
                   children: [
