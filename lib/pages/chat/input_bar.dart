@@ -14,7 +14,7 @@ import '../../widgets/avatar.dart';
 import '../../widgets/matrix.dart';
 import 'command_hints.dart';
 
-class InputBar extends StatelessWidget {
+class InputBar extends StatefulWidget {
   final Room room;
   final int? minLines;
   final int? maxLines;
@@ -48,9 +48,18 @@ class InputBar extends StatelessWidget {
     super.key,
   });
 
+  @override
+  State<InputBar> createState() => _InputBarState();
+}
+
+class _InputBarState extends State<InputBar> {
+  // Multi-select uchun tanlangan userlar
+  final Set<String> _selectedMxids = {};
+  // Qaysi suggestion multi-select modeda (@ yoki user search)
+
   List<Map<String, String?>> getSuggestions(TextEditingValue text) {
     if (text.selection.baseOffset != text.selection.extentOffset || text.selection.baseOffset < 0) {
-      return []; // no entries if there is selected text
+      return [];
     }
     final searchText = text.text.substring(0, text.selection.baseOffset);
     final ret = <Map<String, String?>>[];
@@ -59,14 +68,14 @@ class InputBar extends StatelessWidget {
     final commandMatch = RegExp(r'^/(\w*)$').firstMatch(searchText);
     if (commandMatch != null) {
       final commandSearch = commandMatch[1]!.toLowerCase();
-      for (final command in room.client.commands.keys) {
+      for (final command in widget.room.client.commands.keys) {
         if (command.contains(commandSearch)) {
           ret.add({'type': 'command', 'name': command});
         }
-
         if (ret.length > maxResults) return ret;
       }
     }
+
     final emojiMatch = RegExp(
       r'(?:\s|^):(?:([\p{L}\p{N}_-]+)~)?([\p{L}\p{N}_-]+)$',
       unicode: true,
@@ -74,7 +83,7 @@ class InputBar extends StatelessWidget {
     if (emojiMatch != null) {
       final packSearch = emojiMatch[1];
       final emoteSearch = emojiMatch[2]!.toLowerCase();
-      final emotePacks = room.getImagePacks(ImagePackUsage.emoticon);
+      final emotePacks = widget.room.getImagePacks(ImagePackUsage.emoticon);
       if (packSearch == null || packSearch.isEmpty) {
         for (final pack in emotePacks.entries) {
           for (final emote in pack.value.images.entries) {
@@ -88,105 +97,65 @@ class InputBar extends StatelessWidget {
                 'mxc': emote.value.url.toString(),
               });
             }
-            if (ret.length > maxResults) {
-              break;
-            }
+            if (ret.length > maxResults) break;
           }
-          if (ret.length > maxResults) {
-            break;
-          }
-        }
-      } else if (emotePacks[packSearch] != null) {
-        for (final emote in emotePacks[packSearch]!.images.entries) {
-          if (emote.key.toLowerCase().contains(emoteSearch)) {
-            ret.add({
-              'type': 'emote',
-              'name': emote.key,
-              'pack': packSearch,
-              'pack_avatar_url': emotePacks[packSearch]!.pack.avatarUrl?.toString(),
-              'pack_display_name': emotePacks[packSearch]!.pack.displayName ?? packSearch,
-              'mxc': emote.value.url.toString(),
-            });
-          }
-          if (ret.length > maxResults) {
-            break;
-          }
+          if (ret.length > maxResults) break;
         }
       }
 
-      // aside of emote packs, also propose normal (tm) unicode emojis
-      final matchingUnicodeEmojis = suggestionEmojis
+      final matchingUnicodeEmojis = widget.suggestionEmojis
           .where((emoji) => emoji.name.toLowerCase().contains(emoteSearch))
           .toList();
-
-      // sort by the index of the search term in the name in order to have
-      // best matches first
-      // (thanks for the hint by github.com/nextcloud/circles devs)
       matchingUnicodeEmojis.sort((a, b) {
         final indexA = a.name.indexOf(emoteSearch);
         final indexB = b.name.indexOf(emoteSearch);
         if (indexA == -1 || indexB == -1) {
           if (indexA == indexB) return 0;
-          if (indexA == -1) {
-            return 1;
-          } else {
-            return 0;
-          }
+          return indexA == -1 ? 1 : 0;
         }
         return indexA.compareTo(indexB);
       });
       for (final emoji in matchingUnicodeEmojis) {
         ret.add({'type': 'emoji', 'emoji': emoji.emoji, 'label': emoji.name, 'current_word': ':$emoteSearch'});
-        if (ret.length > maxResults) {
-          break;
-        }
+        if (ret.length > maxResults) break;
       }
     }
-    final userMatch = RegExp(r'(?:\s|^)@([-\w]+)$').firstMatch(searchText);
-    Logs().i("member search for mentioning");
 
+    final userMatch = RegExp(r'(?:\s|^)@([-\w]*)$').firstMatch(searchText);
     if (userMatch != null) {
       final userSearch = userMatch[1]!.toLowerCase();
-      for (final user in room.getParticipants()) {
-        if ((user.displayName != null &&
+
+      for (final user in widget.room.getParticipants()) {
+        // Agar search bo'sh bo'lsa (faqat @ kiritilgan) - barchani ko'rsat
+        // Agar search bo'lsa - filter qil
+        final matchesSearch =
+            userSearch.isEmpty ||
+            (user.displayName != null &&
                 (user.displayName!.toLowerCase().contains(userSearch) ||
                     slugify(user.displayName!.toLowerCase()).contains(userSearch))) ||
-            user.id.split(':')[0].toLowerCase().contains(userSearch)) {
+            user.id.split(':')[0].toLowerCase().contains(userSearch);
+
+        if (matchesSearch) {
           ret.add({
             'type': 'user',
             'mxid': user.id,
             'mention': user.mention,
             'displayname': user.displayName,
             'avatar_url': user.avatarUrl?.toString(),
+            // Multi-select uchun tanlangan holat
+            'selected': _selectedMxids.contains(user.id) ? 'true' : 'false',
           });
         }
-        if (ret.length > maxResults) {
-          break;
-        }
+        if (ret.length > maxResults) break;
       }
-    } else if (searchText.trim().startsWith('@') && searchText.trim().length == 1) {
-      for (final user in room.getParticipants()) {
-        ret.add({
-          'type': 'user',
-          'mxid': user.id,
-          'mention': user.mention,
-          'displayname': user.displayName,
-          'avatar_url': user.avatarUrl?.toString(),
-        });
-
-        if (ret.length > maxResults) {
-          break;
-        }
-      }
+    } else {
     }
 
     final roomMatch = RegExp(r'(?:\s|^)#([-\w]+)$').firstMatch(searchText);
     if (roomMatch != null) {
       final roomSearch = roomMatch[1]!.toLowerCase();
-      for (final r in room.client.rooms) {
-        if (r.getState(EventTypes.RoomTombstone) != null) {
-          continue; // we don't care about tombstoned rooms
-        }
+      for (final r in widget.room.client.rooms) {
+        if (r.getState(EventTypes.RoomTombstone) != null) continue;
         final state = r.getState(EventTypes.RoomCanonicalAlias);
         if ((state != null &&
                 ((state.content['alias'] is String &&
@@ -203,11 +172,10 @@ class InputBar extends StatelessWidget {
             'avatar_url': r.avatar?.toString(),
           });
         }
-        if (ret.length > maxResults) {
-          break;
-        }
+        if (ret.length > maxResults) break;
       }
     }
+
     return ret;
   }
 
@@ -220,12 +188,13 @@ class InputBar extends StatelessWidget {
   ) {
     final theme = Theme.of(context);
     const size = 30.0;
+
     if (suggestion['type'] == 'command') {
       final command = suggestion['name']!;
       final hint = commandHint(L10n.of(context), command);
       return Tooltip(
         message: hint,
-        waitDuration: const Duration(days: 1), // don't show on hover
+        waitDuration: const Duration(days: 1),
         child: ListTile(
           onTap: () => onSelected(suggestion),
           title: Text(commandExample(command), style: const TextStyle(fontFamily: 'RobotoMono')),
@@ -233,11 +202,12 @@ class InputBar extends StatelessWidget {
         ),
       );
     }
+
     if (suggestion['type'] == 'emoji') {
       final label = suggestion['label']!;
       return Tooltip(
         message: label,
-        waitDuration: const Duration(days: 1), // don't show on hover
+        waitDuration: const Duration(days: 1),
         child: ListTile(
           onTap: () => onSelected(suggestion),
           leading: SizedBox.square(
@@ -248,11 +218,11 @@ class InputBar extends StatelessWidget {
         ),
       );
     }
+
     if (suggestion['type'] == 'emote') {
       return ListTile(
         onTap: () => onSelected(suggestion),
         leading: MxcImage(
-          // ensure proper ordering ...
           key: ValueKey(suggestion['name']),
           uri: suggestion['mxc'] is String ? Uri.parse(suggestion['mxc'] ?? '') : null,
           width: size,
@@ -260,7 +230,7 @@ class InputBar extends StatelessWidget {
           isThumbnail: false,
         ),
         title: Row(
-          crossAxisAlignment: .center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(suggestion['name']!),
             Expanded(
@@ -283,7 +253,31 @@ class InputBar extends StatelessWidget {
         ),
       );
     }
-    if (suggestion['type'] == 'user' || suggestion['type'] == 'room') {
+
+    if (suggestion['type'] == 'user') {
+      final mxid = suggestion['mxid']!;
+      final url = Uri.parse(suggestion['avatar_url'] ?? '');
+
+      return StatefulBuilder(
+        builder: (context, setTileState) {
+          return ListTile(
+            onTap: () {
+              onSelected(suggestion);
+            },
+            leading: Avatar(
+              mxContent: url,
+              name: suggestion.tryGet<String>('displayname') ?? suggestion.tryGet<String>('mxid'),
+              size: size,
+              client: client,
+            ),
+            title: Text(suggestion['displayname'] ?? suggestion['mxid']!),
+            subtitle: Text(mxid, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodySmall),
+          );
+        },
+      );
+    }
+
+    if (suggestion['type'] == 'room') {
       final url = Uri.parse(suggestion['avatar_url'] ?? '');
       return ListTile(
         onTap: () => onSelected(suggestion),
@@ -296,55 +290,78 @@ class InputBar extends StatelessWidget {
         title: Text(suggestion['displayname'] ?? suggestion['mxid']!),
       );
     }
+
     return const SizedBox.shrink();
   }
 
   String insertSuggestion(Map<String, String?> suggestion) {
-    final replaceText = controller!.text.substring(0, controller!.selection.baseOffset);
+    final controller = widget.controller!;
+    final replaceText = controller.text.substring(0, controller.selection.baseOffset);
     var startText = '';
-    final afterText = replaceText == controller!.text
+    final afterText = replaceText == controller.text
         ? ''
-        : controller!.text.substring(controller!.selection.baseOffset + 1);
-    var insertText = '';
+        : controller.text.substring(controller.selection.baseOffset + 1);
+
     if (suggestion['type'] == 'command') {
-      insertText = '${suggestion['name']!} ';
+      final insertText = '${suggestion['name']!} ';
       startText = replaceText.replaceAllMapped(RegExp(r'^(/\w*)$'), (Match m) => '/$insertText');
     }
+
     if (suggestion['type'] == 'emoji') {
-      insertText = '${suggestion['emoji']!} ';
+      final insertText = '${suggestion['emoji']!} ';
       startText = replaceText.replaceAllMapped(suggestion['current_word']!, (Match m) => insertText);
     }
+
     if (suggestion['type'] == 'emote') {
       var isUnique = true;
       final insertEmote = suggestion['name'];
       final insertPack = suggestion['pack'];
-      final emotePacks = room.getImagePacks(ImagePackUsage.emoticon);
+      final emotePacks = widget.room.getImagePacks(ImagePackUsage.emoticon);
       for (final pack in emotePacks.entries) {
-        if (pack.key == insertPack) {
-          continue;
-        }
+        if (pack.key == insertPack) continue;
         for (final emote in pack.value.images.entries) {
           if (emote.key == insertEmote) {
             isUnique = false;
             break;
           }
         }
-        if (!isUnique) {
-          break;
-        }
+        if (!isUnique) break;
       }
-      insertText = ':${isUnique ? '' : '${insertPack!}~'}$insertEmote: ';
+      final insertText = ':${isUnique ? '' : '${insertPack!}~'}$insertEmote: ';
       startText = replaceText.replaceAllMapped(
         RegExp(r'(\s|^)(:(?:[-\w]+~)?[-\w]+)$'),
         (Match m) => '${m[1]}$insertText',
       );
     }
+
     if (suggestion['type'] == 'user') {
-      insertText = '${suggestion['mention']!} ';
-      startText = replaceText.replaceAllMapped(RegExp(r'(\s|^)(@[-\w]+)$'), (Match m) => '${m[1]}$insertText');
+      // Multi-select: agar bir nechta tanlangan bo'lsa, barchani qo'shamiz
+      if (_selectedMxids.isNotEmpty) {
+        // Barcha tanlangan userlarni mention sifatida qo'shamiz
+        final mentions = _selectedMxids
+            .map((mxid) {
+              final user = widget.room.getParticipants().firstWhere(
+                (u) => u.id == mxid,
+                orElse: () => throw Exception(),
+              );
+              return user.mention;
+            })
+            .join(' ');
+
+        // @ pattern ni topib o'rniga qo'yamiz
+        startText = replaceText.replaceAllMapped(RegExp(r'(\s|^)(@[-\w]*)$'), (Match m) => '${m[1]}$mentions ');
+
+        // Selection ni tozalaymiz
+        _selectedMxids.clear();
+      } else {
+        // Oddiy single select
+        final insertText = '${suggestion['mention']!} ';
+        startText = replaceText.replaceAllMapped(RegExp(r'(\s|^)(@[-\w]*)$'), (Match m) => '${m[1]}$insertText');
+      }
     }
+
     if (suggestion['type'] == 'room') {
-      insertText = '${suggestion['mxid']!} ';
+      final insertText = '${suggestion['mxid']!} ';
       startText = replaceText.replaceAllMapped(RegExp(r'(\s|^)(#[-\w]+)$'), (Match m) => '${m[1]}$insertText');
     }
 
@@ -355,51 +372,41 @@ class InputBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Autocomplete<Map<String, String?>>(
-      focusNode: focusNode,
-      textEditingController: controller,
+      focusNode: widget.focusNode,
+      textEditingController: widget.controller,
       optionsBuilder: getSuggestions,
       fieldViewBuilder: (context, controller, focusNode, _) => TextField(
         controller: controller,
         focusNode: focusNode,
-        readOnly: readOnly,
+        readOnly: widget.readOnly,
         contextMenuBuilder: (c, e) => markdownContextBuilder(c, e, controller),
         contentInsertionConfiguration: ContentInsertionConfiguration(
           onContentInserted: (KeyboardInsertedContent content) {
             final data = content.data;
             if (data == null) return;
-
             final file = MatrixFile(mimeType: content.mimeType, bytes: data, name: content.uri.split('/').last);
-            room.sendFileEvent(file, shrinkImageMaxDimension: 1600);
+            widget.room.sendFileEvent(file, shrinkImageMaxDimension: 1600);
           },
         ),
-        minLines: minLines,
-        maxLines: maxLines,
-        keyboardType: keyboardType!,
-        textInputAction: textInputAction,
-        autofocus: autofocus!,
+        minLines: widget.minLines,
+        maxLines: widget.maxLines,
+        keyboardType: widget.keyboardType!,
+        textInputAction: widget.textInputAction,
+        autofocus: widget.autofocus!,
         inputFormatters: [LengthLimitingTextInputFormatter((maxPDUSize / 3).floor())],
-        onSubmitted: (text) {
-          // fix for library for now
-          // it sets the types for the callback incorrectly
-          onSubmitted!(text);
-        },
+        onSubmitted: (text) => widget.onSubmitted!(text),
         maxLength: AppSettings.textMessageMaxLength.value,
-        decoration: decoration,
-        onChanged: (text) {
-          // fix for the library for now
-          // it sets the types for the callback incorrectly
-          onChanged!(text);
-        },
+        decoration: widget.decoration,
+        onChanged: (text) => widget.onChanged!(text),
         textCapitalization: TextCapitalization.sentences,
       ),
       optionsViewBuilder: (c, onSelected, s) {
         final suggestions = s.toList();
-        final maxWidth = MediaQuery.of(context).size.width > 300 ? 300 : MediaQuery.of(context).size.width * .7;
-
+        final maxWidth = MediaQuery.of(context).size.width > 300 ? 300.0 : MediaQuery.of(context).size.width * .7;
         return ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height * .3,
-            maxWidth: maxWidth.toDouble(),
+            maxWidth: maxWidth,
             minWidth: 300,
           ),
           child: Material(
@@ -407,10 +414,13 @@ class InputBar extends StatelessWidget {
             shadowColor: theme.appBarTheme.shadowColor,
             borderRadius: BorderRadius.circular(AppConfig.borderRadius),
             clipBehavior: Clip.hardEdge,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: suggestions.length,
-              itemBuilder: (context, i) => buildSuggestion(c, suggestions[i], onSelected, Matrix.of(context).client, maxWidth.toDouble()),
+            child: Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: suggestions.length,
+                itemBuilder: (context, i) =>
+                    buildSuggestion(c, suggestions[i], onSelected, Matrix.of(context).client, maxWidth),
+              ),
             ),
           ),
         );
