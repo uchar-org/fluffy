@@ -256,7 +256,10 @@ class _InputBarState extends State<InputBar> {
 
     if (suggestion['type'] == 'user') {
       final mxid = suggestion['mxid']!;
-      final url = Uri.parse(suggestion['avatar_url'] ?? '');
+      final avatarUrl = suggestion['avatar_url'];
+      final url = avatarUrl != null && avatarUrl.isNotEmpty
+          ? Uri.tryParse(avatarUrl)
+          : null;
 
       return StatefulBuilder(
         builder: (context, setTileState) {
@@ -340,10 +343,10 @@ class _InputBarState extends State<InputBar> {
         // Barcha tanlangan userlarni mention sifatida qo'shamiz
         final mentions = _selectedMxids
             .map((mxid) {
-              final user = widget.room.getParticipants().firstWhere(
-                (u) => u.id == mxid,
-                orElse: () => throw Exception(),
-              );
+              final participants = widget.room.getParticipants();
+              final user = participants.where((u) => u.id == mxid).firstOrNull;
+
+              if (user == null) return '';
               return user.mention;
             })
             .join(' ');
@@ -414,13 +417,11 @@ class _InputBarState extends State<InputBar> {
             shadowColor: theme.appBarTheme.shadowColor,
             borderRadius: BorderRadius.circular(AppConfig.borderRadius),
             clipBehavior: Clip.hardEdge,
-            child: Flexible(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: suggestions.length,
-                itemBuilder: (context, i) =>
-                    buildSuggestion(c, suggestions[i], onSelected, Matrix.of(context).client, maxWidth),
-              ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: suggestions.length,
+              itemBuilder: (context, i) =>
+                  buildSuggestion(c, suggestions[i], onSelected, Matrix.of(context).client, maxWidth),
             ),
           ),
         );
