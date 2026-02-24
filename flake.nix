@@ -1,52 +1,41 @@
 {
-  description = "fluffychat nix";
+  description = "A beginning of an awesome project bootstrapped with github:bleur-org/templates";
 
-  # Flake inputs
-  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1"; # 0 Stable Nixpkgs (use 0.1 for unstable)
-  inputs.android-nixpkgs = {
-    url = "github:tadfisher/android-nixpkgs";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
+  inputs = {
+    # Stable for keeping thins clean
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+
+    # Fresh and new for testing
+    nixpkgs.url = "github:xinux-org/upstream";
+
+    # The flake-parts library
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  # Flake outputs
-  outputs = inputs: let
-    linuxSystems = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
+  outputs = {
+    self,
+    flake-parts,
+    ...
+  } @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem = {pkgs, ...}: {
+        # Nix script formatter
+        formatter = pkgs.alejandra;
 
-    darwinSystems = [
-      "x86_64-darwin"
-      "aarch64-darwin"
-    ];
+        # Development environment
+        devShells.default = import ./nix/shell.nix self {inherit pkgs;};
 
-    supportedSystems = linuxSystems ++ darwinSystems;
-
-    eachSystems = systems: f:
-      inputs.nixpkgs.lib.genAttrs systems (
-        system:
-          f {
-            inherit system;
-            attrs = import ./nix/attrs.nix {inherit system inputs;};
-          }
-      );
-
-    package = args: target: import ./nix/package.nix args.attrs target;
-  in {
-    packages = eachSystems supportedSystems (args: {
-      linux = package args "linux";
-      web = package args "web";
+        # Output package
+        packages = {
+          default = pkgs.callPackage ./nix { };
+          web = pkgs.callPackage ./nix {targetFlutterPlatform = "web"; };
+        };
+      };
     });
-    devShells =
-      eachSystems linuxSystems (args: {
-        default = import ./nix/shell_linux.nix args.attrs;
-      })
-      // (
-        eachSystems darwinSystems (args: {
-          default = import ./nix/shell_darwin.nix args.attrs;
-        })
-      );
-  };
 }
