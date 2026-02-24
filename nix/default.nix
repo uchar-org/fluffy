@@ -34,7 +34,7 @@ flutter338.buildFlutterApplication (
     pname = "uchar-${targetFlutterPlatform}";
     version = "2.4.1";
 
-    src = lib.cleanSource ./.;
+    src = lib.cleanSource ./..;
 
     inherit pubspecLock;
 

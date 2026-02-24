@@ -6,7 +6,7 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     # Fresh and new for testing
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:xinux-org/upstream";
 
     # The flake-parts library
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -29,7 +29,7 @@
         formatter = pkgs.alejandra;
 
         # Development environment
-        devShells.default = import ./shell.nix self {inherit pkgs;};
+        devShells.default = import ./nix/shell.nix self {inherit pkgs;};
 
         # Output package
         packages = {

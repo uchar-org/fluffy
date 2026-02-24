@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  uchar-web,
+  fluffychat-web,
   symlinkJoin,
   buildPackages,
   rustc,
@@ -16,10 +16,11 @@
   writableTmpDirAsHomeHook,
   runCommand,
   removeReferencesTo,
+  olm
 }:
 
 let
-  pubSources = uchar-web.pubspecLock.dependencySources;
+  pubSources = fluffychat-web.pubspecLock.dependencySources;
   pubCache = runCommand "uchar-pub-cache" { } ''
     mkdir -p $out/hosted/pub.dev
     pushd $out/hosted/pub.dev
@@ -60,9 +61,9 @@ stdenv.mkDerivation {
   '';
 
   # Remove dev_dependencies to avoid downloading them
-  postPatch = ''
-    sed -i '/^dev_dependencies:/,/^$/d' dart/pubspec.yaml
-  '';
+  # postPatch = ''
+  #   sed -i '/^dev_dependencies:/,/^$/d' dart/pubspec.yaml
+  # '';
 
   cargoRoot = "rust";
 
@@ -126,5 +127,5 @@ stdenv.mkDerivation {
     RUSTC_BOOTSTRAP = 1; # `-Z build-std=std,panic_abort` requires nightly toolchain
   };
 
-  inherit (uchar) meta;
+  inherit (fluffychat-web) meta;
 }
