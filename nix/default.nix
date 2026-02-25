@@ -16,6 +16,7 @@
   vodozemac-wasm ? callPackage ./vodozemac-wasm.nix { flutter = flutter338; },
 
   targetFlutterPlatform ? "linux",
+  olm,
 }:
 
 let

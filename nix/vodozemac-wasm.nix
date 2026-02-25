@@ -16,7 +16,6 @@
   writableTmpDirAsHomeHook,
   runCommand,
   removeReferencesTo,
-  olm
 }:
 
 let
