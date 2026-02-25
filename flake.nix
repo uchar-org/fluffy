@@ -36,52 +36,52 @@
         formatter = pkgs.alejandra;
 
         # Development environment
-        # devShells.default =
-        #   import ./nix/shell.nix self { inherit pkgs inputs; };
+        devShells.default =
+          import ./nix/shell.nix self { inherit pkgs inputs; };
 
-        devShells.default = let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
+        # devShells.default = let
+        #   pkgs = import inputs.nixpkgs {
+        #     inherit system;
 
-            config = {
-              android_sdk.accept_license = true;
-              allowUnfree = true;
-            };
-          };
-          buildToolsVersion = "35.0.0";
-          androidComposition = pkgs.androidenv.composeAndroidPackages {
-            buildToolsVersions = [ buildToolsVersion "28.0.3" ];
-            platformVersions = [ "34" "28" "36" ];
-            abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
-            includeNDK = true;
-            ndkVersions = [ "28.2.13676358" ];
-            cmakeVersions = [ "3.22.1" ];
-            includeSources = false;
-            includeSystemImages = false;
-            includeEmulator = false;
-            useGoogleAPIs = false;
-            useGoogleTVAddOns = false;
-          };
+        #     config = {
+        #       android_sdk.accept_license = true;
+        #       allowUnfree = true;
+        #     };
+        #   };
+        #   buildToolsVersion = "35.0.0";
+        #   androidComposition = pkgs.androidenv.composeAndroidPackages {
+        #     buildToolsVersions = [ buildToolsVersion "28.0.3" ];
+        #     platformVersions = [ "34" "28" "36" ];
+        #     abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+        #     includeNDK = true;
+        #     ndkVersions = [ "28.2.13676358" ];
+        #     cmakeVersions = [ "3.22.1" ];
+        #     includeSources = false;
+        #     includeSystemImages = false;
+        #     includeEmulator = false;
+        #     useGoogleAPIs = false;
+        #     useGoogleTVAddOns = false;
+        #   };
 
-          androidSdk = androidComposition.androidsdk;
+        #   androidSdk = androidComposition.androidsdk;
 
-        in with pkgs;
-        mkShell rec {
-          ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
-          JAVA_HOME = pkgs.jdk17;
-          ANDROID_AVD_HOME = (toString ./.) + "/.android/avd";
+        # in with pkgs;
+        # mkShell rec {
+        #   ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+        #   JAVA_HOME = pkgs.jdk17;
+        #   ANDROID_AVD_HOME = (toString ./.) + "/.android/avd";
 
-          buildInputs = [
-            flutter
-            androidSdk # The customized SDK that we've made above
-            jdk17
-          ];
-        };
+        #   buildInputs = [
+        #     flutter
+        #     androidSdk # The customized SDK that we've made above
+        #     jdk17
+        #   ];
+        # };
 
         # Output package
         packages = {
           default = pkgs.callPackage ./nix { };
-          web = pkgs.callPackage ./nix { targetFlutterPlatform = "web"; };
+          web = pkgs.callPackage ./nix { inherit inputs; targetFlutterPlatform = "web"; };
         };
       };
     });
