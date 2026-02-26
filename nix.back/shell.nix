@@ -75,12 +75,14 @@ let
 in pkgs.mkShell {
   packages = [
     pkgs.rustup
+    pkgs.webkitgtk_4_1
+    pkgs.olm
     formatter
     pinnedFlutter
     androidCustomPackage
     pinnedJDK
 
-    # (pkgs.callPackage ./shell_vodozemac.nix {})
+    (pkgs.callPackage ./shell_vodozemac.nix {})
 
     (pkgs.writeScriptBin "android-emulator" ''
       ${androidEmulator}/bin/run-test-emulator
@@ -102,7 +104,7 @@ in pkgs.mkShell {
   };
 
   shellHook = ''
-    # init-vodozemac
+    init-vodozemac
 
     echo "---------------------------------------------------------------------------------------------------"
     echo "in order to run android emulator, execute 'android-emulator' and 'android-emulator-no-gpu' commands"

@@ -16,11 +16,12 @@
   writableTmpDirAsHomeHook,
   runCommand,
   removeReferencesTo,
+  olm
 }:
 
 let
   pubSources = fluffychat-web.pubspecLock.dependencySources;
-  pubCache = runCommand "fluffychat-pub-cache" { } ''
+  pubCache = runCommand "uchar-pub-cache" { } ''
     mkdir -p $out/hosted/pub.dev
     pushd $out/hosted/pub.dev
       ${lib.concatMapAttrsStringSep "; " (
@@ -44,7 +45,6 @@ let
   rustcWithLibSrc = buildPackages.rustc.override { inherit sysroot; };
 in
 
-# https://github.com/krille-chan/fluffychat/blob/main/scripts/prepare-web.sh
 stdenv.mkDerivation {
   pname = "vodozemac-wasm";
   inherit (pubSources.vodozemac) version;
@@ -61,9 +61,9 @@ stdenv.mkDerivation {
   '';
 
   # Remove dev_dependencies to avoid downloading them
-  postPatch = ''
-    sed -i '/^dev_dependencies:/,/^$/d' dart/pubspec.yaml
-  '';
+  # postPatch = ''
+  #   sed -i '/^dev_dependencies:/,/^$/d' dart/pubspec.yaml
+  # '';
 
   cargoRoot = "rust";
 
@@ -90,6 +90,7 @@ stdenv.mkDerivation {
     binaryen
     writableTmpDirAsHomeHook
     removeReferencesTo
+    olm
   ];
 
   buildPhase = ''
