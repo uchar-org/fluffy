@@ -88,8 +88,10 @@ dependencies:
   wakelock_plus: ^1.3.3
   fcm_shared_isolate: ^0.2.0
   flutter_inappwebview: ^6.1.5
+  olm: ^3.1.0
 
 dev_dependencies:
+
   flutter_lints: ^6.0.0
   flutter_native_splash: ^2.4.7
   flutter_test:
@@ -122,4 +124,4 @@ flutter:
 # 1. Don't do it if you can avoid it or fix it upstream in a manageable time
 # 2. Always link an (upstream?) issue
 # 3. Explain how and when this can be removed (overrides must be temporarily)
-dependency_overrides:
+# dependency_overrides:
