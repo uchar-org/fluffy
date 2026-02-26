@@ -81,16 +81,19 @@ in flutter338.buildFlutterApplication {
   pubspecLock = lib.importJSON ./pubspec.lock.json;
 
   buildPhase = ''
-    runHook preBuild
+    # runHook preBuild
     flutter build web
-    runHook postBuild
+    # runHook postBuild
   '';
 
   installPhase = ''
-    runHook preInstall
-    mkdir -p $out/bin
-    cp uchar-web $out/bin
-    runHook postInstall
+    # runHook preInstall
+    mkdir -p $out/build
+    cp build/web $out/build -r
+
+    mkdir $debug
+    mkdir $pubcache
+    # runHook postInstall
   '';
 
   meta = {
