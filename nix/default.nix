@@ -79,16 +79,7 @@ in stdenv.mkDerivation {
   ];
 
   buildPhase = ''
-    runHook preBuild
     flutter build web
-    runHook postBuild
-  '';
-
-  installPhase = ''
-    runHook preInstall
-    mkdir -p $out/bin
-    cp uchar-web $out/bin
-    runHook postInstall
   '';
 
   meta = {
