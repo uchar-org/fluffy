@@ -1,115 +1,146 @@
-{ pkgs, stdenv, flutter338, lib, inputs, targetFlutterPlatform ? "web", ... }:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  fetchzip,
+  imagemagick,
+  libgbm,
+  libdrm,
+  flutter338,
+  pulseaudio,
+  webkitgtk_4_1,
+  copyDesktopItems,
+  makeDesktopItem,
+
+  callPackage,
+  vodozemac-wasm ? callPackage ./vodozemac-wasm.nix { flutter = flutter338; },
+
+  targetFlutterPlatform ? "linux",
+}:
 
 let
-  # Hostplatform system
-
-  system = pkgs.hostPlatform.system;
-  formatter = pkgs.alejandra;
-
-  androidEmulator = pkgs.androidenv.emulateApp {
-    name = "emulator";
-    platformVersion = "36";
-    abiVersion = "x86_64";
-    systemImageType = "google_apis_playstore";
-    configOptions = {
-      "hw.gpu.enabled" = "yes";
-      "hw.gpu.mode" = "swiftshader_indirect";
-      "hw.keyboard" = "yes";
-      "hw.kainKeys" = "yes";
-    };
-  };
-  androidEmulatorNoGPU = pkgs.androidenv.emulateApp {
-    name = "emulator";
-    platformVersion = "36";
-    abiVersion = "x86_64";
-    systemImageType = "google_apis_playstore";
-    configOptions = {
-      "hw.gpu.enabled" = "yes";
-      "hw.keyboard" = "yes";
-      "hw.kainKeys" = "yes";
-    };
-  };
-
-  pinnedFlutter = pkgs.flutter338;
-  pinnedJDK = pkgs.jdk17_headless;
-  androidCustomPackage = inputs.android-nixpkgs.sdk.${system} (
-    # show all potential values with
-    # nix flake show github:tadfisher/android-nixpkgs
-    sdkPkgs:
-    with sdkPkgs; [
-      cmdline-tools-latest
-      cmake-3-22-1
-      build-tools-35-0-0
-      ndk-27-0-12077973
-      ndk-28-2-13676358
-      platform-tools
-      emulator
-      platforms-android-31
-      platforms-android-33
-      platforms-android-34
-      platforms-android-35
-      platforms-android-36
-      system-images-android-36-google-apis-playstore-x86-64
-    ]);
-
-  # Production package
-  # base = flake.packages.${system}.default;
-
-in flutter338.buildFlutterApplication {
-  pname = "uchar-${targetFlutterPlatform}";
-  version = "2.4.1";
-
-  src = lib.cleanSource ./..;
-
-  nativeBuildInputs = [
-    pkgs.rustup
-    formatter
-    pinnedFlutter
-    androidCustomPackage
-    pinnedJDK
-
-    # (pkgs.callPackage ./shell_vodozemac.nix {})
-
-    (pkgs.writeScriptBin "android-emulator" ''
-      ${androidEmulator}/bin/run-test-emulator
-    '')
-    (pkgs.writeScriptBin "android-emulator-no-gpu" ''
-      ${androidEmulatorNoGPU}/bin/run-test-emulator
-    '')
+  libwebrtcRpath = lib.makeLibraryPath [
+    libgbm
+    libdrm
   ];
-
   pubspecLock = lib.importJSON ./pubspec.lock.json;
-
-  buildPhase = ''
-    # runHook preBuild
-    flutter build web
-    # runHook postBuild
-  '';
-
-  installPhase = ''
-    # runHook preInstall
-    mkdir -p $out/build
-    cp build/web $out/build -r
-
-    mkdir $debug
-    mkdir $pubcache
-    # runHook postInstall
-  '';
-
-  meta = {
-    description = "Chat with your friends (matrix client)";
-    homepage = "https://uchar.uz/";
-    license = lib.licenses.agpl3Plus;
-    maintainers = with lib.maintainers; [ mkg20001 tebriel aleksana ];
-    badPlatforms = lib.platforms.darwin;
+  libwebrtc = fetchzip {
+    url = "https://github.com/flutter-webrtc/flutter-webrtc/releases/download/v1.1.0/libwebrtc.zip";
+    sha256 = "sha256-lRfymTSfoNUtR5tSUiAptAvrrTwbB8p+SaYQeOevMzA=";
   };
-  # Necessary Environment Variables
-  # INCLUDE = lib.makeIncludePath programs;
-  # NIX_LDFLAGS = with pkgs; "-L${getLibrary gtk4}";
-  # LD_LIBRARY_PATH = lib.makeLibraryPath programs;
-  # PKG_CONFIG_EXECUTABLE = lib.getExe pkgs.pkg-config;
+in
+flutter338.buildFlutterApplication (
+  rec {
+    pname = "uchar-${targetFlutterPlatform}";
+    version = "2.4.1";
 
-  # Some dev env bootstrap scripts # yellow = 3; blue = 4
-  shellHook = "\n";
-}
+    src = lib.cleanSource ../.;
 
+    inherit pubspecLock;
+
+    gitHashes = {
+      flutter_web_auth_2 = "sha256-3aci73SP8eXg6++IQTQoyS+erUUuSiuXymvR32sxHFw=";
+      flutter_secure_storage_linux = "sha256-cFNHW7dAaX8BV7arwbn68GgkkBeiAgPfhMOAFSJWlyY=";
+    };
+
+    inherit targetFlutterPlatform;
+
+    flutterBuildFlags = [
+      # Required since v2.4.0
+      "--enable-experiment=dot-shorthands"
+    ];
+
+    meta = {
+      description = "Chat with your friends (matrix client)";
+      homepage = "https://fluffychat.im/";
+      license = lib.licenses.agpl3Plus;
+      maintainers = with lib.maintainers; [
+        mkg20001
+        tebriel
+        aleksana
+      ];
+      badPlatforms = lib.platforms.darwin;
+    }
+    // lib.optionalAttrs (targetFlutterPlatform == "linux") {
+      mainProgram = "uchar";
+    };
+  }
+  // lib.optionalAttrs (targetFlutterPlatform == "linux") {
+    nativeBuildInputs = [
+      imagemagick
+      copyDesktopItems
+      webkitgtk_4_1
+    ];
+
+    runtimeDependencies = [ pulseaudio ];
+
+    env.NIX_LDFLAGS = "-rpath-link ${libwebrtcRpath}";
+
+    desktopItems = [
+      (makeDesktopItem {
+        name = "Uchar";
+        exec = "Uchar";
+        icon = "Uchar";
+        desktopName = "Uchar";
+        genericName = "Chat with your friends (matrix client)";
+        categories = [
+          "Chat"
+          "Network"
+          "InstantMessaging"
+        ];
+      })
+    ];
+
+    customSourceBuilders = {
+      flutter_webrtc =
+        { version, src, ... }:
+        stdenv.mkDerivation {
+          pname = "flutter_webrtc";
+          inherit version src;
+          inherit (src) passthru;
+
+          postPatch = ''
+            substituteInPlace third_party/CMakeLists.txt \
+              --replace-fail "\''${CMAKE_CURRENT_LIST_DIR}/downloads/libwebrtc.zip" ${libwebrtc}
+              ln -s ${libwebrtc} third_party/libwebrtc
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir $out
+            cp -r ./* $out/
+
+            runHook postInstall
+          '';
+        };
+    };
+
+    # Temporary fix for json deprecation error
+    # https://github.com/juliansteenbakker/flutter_secure_storage/issues/965
+    postPatch = ''
+      substituteInPlace linux/CMakeLists.txt \
+        --replace-fail \
+        "PRIVATE -Wall -Werror" \
+        "PRIVATE -Wall -Werror -Wno-deprecated"
+    '';
+
+    postInstall = ''
+      FAV=$out/app/fluffychat-linux/data/flutter_assets/assets/favicon.png
+      ICO=$out/share/icons
+
+      for size in 24 32 42 64 128 256 512; do
+        D=$ICO/hicolor/''${size}x''${size}/apps
+        mkdir -p $D
+        magick $FAV -resize ''${size}x''${size} $D/fluffychat.png
+      done
+
+      patchelf --add-rpath ${libwebrtcRpath} $out/app/fluffychat-linux/lib/libwebrtc.so
+    '';
+  }
+  // lib.optionalAttrs (targetFlutterPlatform == "web") {
+    preBuild = ''
+      cp -r ${vodozemac-wasm}/* ./assets/vodozemac/
+    '';
+  }
+)
