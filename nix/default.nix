@@ -1,4 +1,4 @@
-{ pkgs, stdenv, lib, inputs, targetFlutterPlatform ? "web", ... }:
+{ pkgs, stdenv, flutter338, lib, inputs, targetFlutterPlatform ? "web", ... }:
 
 let
   # Hostplatform system
@@ -55,7 +55,7 @@ let
   # Production package
   # base = flake.packages.${system}.default;
 
-in stdenv.mkDerivation {
+in flutter338.buildFlutterApplication {
   pname = "uchar-${targetFlutterPlatform}";
   version = "2.4.1";
 
@@ -78,8 +78,19 @@ in stdenv.mkDerivation {
     '')
   ];
 
+  pubspecLock = lib.importJSON ./pubspec.lock.json;
+
   buildPhase = ''
+    runHook preBuild
     flutter build web
+    runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+    mkdir -p $out/bin
+    cp uchar-web $out/bin
+    runHook postInstall
   '';
 
   meta = {
