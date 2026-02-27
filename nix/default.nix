@@ -14,7 +14,7 @@ let
 
   };
 in flutter338.buildFlutterApplication (rec {
-  pname = "fluffychat-${targetFlutterPlatform}";
+  pname = "uchar-${targetFlutterPlatform}";
   version = "2.4.1";
 
   src = ../.;
@@ -36,12 +36,12 @@ in flutter338.buildFlutterApplication (rec {
 
   meta = {
     description = "Chat with your friends (matrix client)";
-    homepage = "https://fluffychat.im/";
+    homepage = "https://uchar.im/";
     license = lib.licenses.agpl3Plus;
     maintainers = with lib.maintainers; [ mkg20001 tebriel aleksana ];
     badPlatforms = lib.platforms.darwin;
   } // lib.optionalAttrs (targetFlutterPlatform == "linux") {
-    mainProgram = "fluffychat";
+    mainProgram = "uchar";
   };
 } // lib.optionalAttrs (targetFlutterPlatform == "linux") {
   nativeBuildInputs = [ imagemagick copyDesktopItems webkitgtk_4_1 ];
@@ -52,10 +52,10 @@ in flutter338.buildFlutterApplication (rec {
 
   desktopItems = [
     (makeDesktopItem {
-      name = "Fluffychat";
-      exec = "fluffychat";
-      icon = "fluffychat";
-      desktopName = "Fluffychat";
+      name = "uchar";
+      exec = "uchar";
+      icon = "uchar";
+      desktopName = "uchar";
       genericName = "Chat with your friends (matrix client)";
       categories = [ "Chat" "Network" "InstantMessaging" ];
     })
@@ -95,16 +95,16 @@ in flutter338.buildFlutterApplication (rec {
   '';
 
   postInstall = ''
-    FAV=$out/app/fluffychat-linux/data/flutter_assets/assets/favicon.png
+    FAV=$out/app/uchar-linux/data/flutter_assets/assets/favicon.png
     ICO=$out/share/icons
 
     for size in 24 32 42 64 128 256 512; do
       D=$ICO/hicolor/''${size}x''${size}/apps
       mkdir -p $D
-      magick $FAV -resize ''${size}x''${size} $D/fluffychat.png
+      magick $FAV -resize ''${size}x''${size} $D/uchar.png
     done
 
-    patchelf --add-rpath ${libwebrtcRpath} $out/app/fluffychat-linux/lib/libwebrtc.so
+    patchelf --add-rpath ${libwebrtcRpath} $out/app/uchar-linux/lib/libwebrtc.so
   '';
 } // lib.optionalAttrs (targetFlutterPlatform == "web") {
   preBuild = ''
