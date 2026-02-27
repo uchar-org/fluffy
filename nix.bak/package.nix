@@ -25,8 +25,8 @@ let
   ];
   pubspecLock = lib.importJSON ./pubspec.lock.json;
   libwebrtc = fetchzip {
-    url = "https://github.com/flutter-webrtc/flutter-webrtc/releases/download/v1.1.0/libwebrtc.zip";
-    sha256 = "sha256-lRfymTSfoNUtR5tSUiAptAvrrTwbB8p+SaYQeOevMzA=";
+    url = "https://github.com/flutter-webrtc/flutter-webrtc/releases/download/v1.3.0/libwebrtc.zip";
+    sha256 = "ea4de360aac95188b8fb1bb7dcbab86904f5d009446506647f599deb488da137";
   };
 in
 flutter338.buildFlutterApplication (
