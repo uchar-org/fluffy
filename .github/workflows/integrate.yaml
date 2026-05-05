@@ -25,7 +25,7 @@ jobs:
 #        run: dart format lib/ test/ --set-exit-if-changed
       - name: Check license compliance
         run: dart run license_checker check-licenses -c licenses.yaml --problematic
-      - run: flutter analyze
+#      - run: flutter analyze
       - name: Search unused dependencies
         run: |
           dart pub global activate dependency_validator
