@@ -105,13 +105,6 @@ dev_dependencies:
   license_checker: ^1.6.2
   translations_cleaner: ^0.1.1
 
-dependency_validator:
-  exclude:
-    - cupertino_icons
-    - handy_window
-    - olm
-    - sqlcipher_flutter_libs
-
 flutter_native_splash:
   color: "#0E338A"
   color_dark: "#0E338A"
