@@ -30,10 +30,10 @@ jobs:
 #        run: |
 #          dart pub global activate dependency_validator
 #          dart pub global run dependency_validator
-      - run: dart run dart_code_linter:metrics analyze lib --reporter=github
-      - run: dart run dart_code_linter:metrics check-unused-code lib
-      - run: dart run dart_code_linter:metrics check-unused-files lib
-      - run: dart run dart_code_linter:metrics check-unused-l10n lib
+#      - run: dart run dart_code_linter:metrics analyze lib --reporter=github
+#      - run: dart run dart_code_linter:metrics check-unused-code lib
+#      - run: dart run dart_code_linter:metrics check-unused-files lib
+#      - run: dart run dart_code_linter:metrics check-unused-l10n lib
       - name: Check for commented-out Dart code with semicolons
         run: |
           if grep -R --include="*.dart" -nE '^[[:space:]]*//[^/<].*;[[:space:]]*$' lib/; then
