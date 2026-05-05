@@ -54,6 +54,7 @@ class MessageReactions extends StatelessWidget {
             reactionKey: r.key,
             count: r.count,
             reacted: r.reacted,
+            reactors: r.reactors,
             onTap: () {
               if (r.reacted) {
                 final evt = allReactionEvents.firstWhereOrNull(
@@ -97,6 +98,7 @@ class _Reaction extends StatelessWidget {
   final bool? reacted;
   final void Function()? onTap;
   final void Function()? onLongPress;
+  final List<User>? reactors;
 
   const _Reaction({
     required this.reactionKey,
@@ -104,6 +106,7 @@ class _Reaction extends StatelessWidget {
     required this.reacted,
     required this.onTap,
     required this.onLongPress,
+    this.reactors,
   });
 
   @override
@@ -148,6 +151,23 @@ class _Reaction extends StatelessWidget {
         ),
       );
     }
+    final reactor = count == 1 ? reactors?.firstOrNull : null;
+    if (reactor != null) {
+      content = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          content,
+          const SizedBox(width: 4),
+          Avatar(
+            mxContent: reactor.avatarUrl,
+            name: reactor.displayName ?? reactor.stateKey,
+            client: Matrix.of(context).client,
+            size: 16,
+          ),
+        ],
+      );
+    }
+
     return InkWell(
       onTap: () => onTap != null ? onTap!() : null,
       onLongPress: () => onLongPress != null ? onLongPress!() : null,

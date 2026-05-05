@@ -316,7 +316,19 @@ class MessageContextMenu extends StatelessWidget {
             });
             return entries;
           }()
-        : <_SeenEntry>[];
+        : () {
+            final entries = <_SeenEntry>[];
+            for (final userEntry in reactionsByUser.entries) {
+              final user = event.room.unsafeGetUserFromMemoryOrFallback(userEntry.key);
+              for (final r in userEntry.value) {
+                entries.add(_SeenEntry(
+                  receipt: Receipt(user, r.time ?? DateTime.now()),
+                  reaction: r,
+                ));
+              }
+            }
+            return entries;
+          }();
 
     late OverlayEntry overlayEntry;
     final menuKey = GlobalKey<_ContextMenuOverlayState>();
