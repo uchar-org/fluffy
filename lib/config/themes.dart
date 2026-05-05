@@ -117,13 +117,23 @@ abstract class FluffyThemes {
         color: colorScheme.primary,
         refreshBackgroundColor: colorScheme.primaryContainer,
       ),
-      snackBarTheme: isColumnMode
-          ? const SnackBarThemeData(
-              showCloseIcon: true,
-              behavior: SnackBarBehavior.floating,
-              width: FluffyThemes.columnWidth * 1.5,
-            )
-          : const SnackBarThemeData(behavior: SnackBarBehavior.floating),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        showCloseIcon: true,
+        closeIconColor: colorScheme.onSurfaceVariant,
+        backgroundColor: colorScheme.surfaceContainerHigh,
+        contentTextStyle: TextStyle(
+          color: colorScheme.onSurface,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 4,
+        width: isColumnMode ? FluffyThemes.columnWidth * 1.5 : null,
+        insetPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.secondaryContainer,

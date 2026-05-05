@@ -33,6 +33,7 @@ import '../../../utils/account_bundles.dart';
 import '../../config/setting_keys.dart';
 import '../../utils/url_launcher.dart';
 import '../../widgets/matrix.dart';
+import '../../widgets/uchar_snack_bar.dart';
 
 enum PopupMenuAction {
   settings,
@@ -956,27 +957,17 @@ class ChatListController extends State<ChatList>
           (device) => !device.verified && !device.blocked,
         ) ??
         false) {
+      final messenger = ScaffoldMessenger.of(context);
       late final ScaffoldFeatureController controller;
-      final theme = Theme.of(context);
-      controller = ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 15),
-          showCloseIcon: true,
-          backgroundColor: theme.colorScheme.errorContainer,
-          closeIconColor: theme.colorScheme.onErrorContainer,
-          content: Text(
-            L10n.of(context).oneOfYourDevicesIsNotVerified,
-            style: TextStyle(color: theme.colorScheme.onErrorContainer),
-          ),
-          action: SnackBarAction(
-            onPressed: () {
-              controller.close();
-              router.go('/rooms/settings/devices');
-            },
-            textColor: theme.colorScheme.onErrorContainer,
-            label: L10n.of(context).settings,
-          ),
-        ),
+      controller = messenger.showUcharSnackBar(
+        message: L10n.of(context).oneOfYourDevicesIsNotVerified,
+        type: UcharNotificationType.error,
+        actionLabel: L10n.of(context).settings,
+        onAction: () {
+          controller.close();
+          router.go('/rooms/settings/devices');
+        },
+        duration: const Duration(seconds: 15),
       );
     }
   }
