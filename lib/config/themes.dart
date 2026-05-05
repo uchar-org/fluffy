@@ -121,7 +121,7 @@ abstract class FluffyThemes {
         behavior: SnackBarBehavior.floating,
         showCloseIcon: true,
         closeIconColor: colorScheme.onSurfaceVariant,
-        backgroundColor: colorScheme.surfaceContainerHigh,
+        backgroundColor: colorScheme.surfaceContainerLowest,
         contentTextStyle: TextStyle(
           color: colorScheme.onSurface,
           fontSize: 14,
@@ -129,8 +129,12 @@ abstract class FluffyThemes {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: colorScheme.outlineVariant.withAlpha(40),
+            width: 1,
+          ),
         ),
-        elevation: 4,
+        elevation: 2,
         width: isColumnMode ? FluffyThemes.columnWidth * 1.5 : null,
         insetPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       ),
