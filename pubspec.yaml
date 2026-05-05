@@ -84,8 +84,11 @@ dependencies:
   wakelock_plus: ^1.5.2
   webrtc_interface: ^1.5.1
   fcm_shared_isolate: ^0.2.0
+  firebase_core: ^2.32.0
   flutter_inappwebview: ^6.1.5
+  linkify: ^5.0.0
   olm: ^3.1.0
+  uuid: ^4.5.2
   pasteboard: ^0.5.0
 
   #root
