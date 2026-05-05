@@ -379,7 +379,20 @@ class _MessageContextMenuState extends State<MessageContextMenu>
             });
             return entries;
           }()
-        : <_SeenEntry>[];
+        : () {
+            final entries = <_SeenEntry>[];
+            for (final userId in reactionsByUser.keys) {
+              final user = widget.event.room
+                  .unsafeGetUserFromMemoryOrFallback(userId);
+              for (final r in reactionsByUser[userId]!) {
+                entries.add(_SeenEntry(
+                  receipt: Receipt(user, r.time ?? DateTime.now()),
+                  reaction: r,
+                ));
+              }
+            }
+            return entries;
+          }();
 
     late OverlayEntry overlayEntry;
     final menuKey = GlobalKey<_ContextMenuOverlayState>();
