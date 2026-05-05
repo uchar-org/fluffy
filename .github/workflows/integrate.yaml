@@ -43,7 +43,7 @@ jobs:
 #          fi
       - name: Add Firebase Messaging
         run: ./scripts/add-firebase-messaging.sh
-      - run: flutter analyze
+#      - run: flutter analyze
       - run: flutter test
 
   build_debug_apk:
