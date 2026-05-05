@@ -41,8 +41,6 @@ jobs:
 #            echo "❌ Found commented-out Dart code ending with semicolon."
 #            exit 1
 #          fi
-      - name: Add Firebase Messaging
-        run: ./scripts/add-firebase-messaging.sh
 #      - run: flutter analyze
       - run: flutter test
 
