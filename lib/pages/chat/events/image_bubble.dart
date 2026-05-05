@@ -4,6 +4,7 @@ import 'package:fluffychat/pages/chat/events/html_message.dart';
 import 'package:fluffychat/pages/chat/events/message.dart';
 import 'package:fluffychat/pages/chat/events/message_status.dart';
 import 'package:fluffychat/pages/image_viewer/image_viewer.dart';
+import 'package:fluffychat/utils/date_time_extension.dart';
 import 'package:fluffychat/utils/event_checkbox_extension.dart';
 import 'package:fluffychat/utils/file_description.dart';
 import 'package:fluffychat/utils/html_cleaner.dart';
@@ -129,7 +130,10 @@ class ImageBubble extends StatelessWidget {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(formattedTime, style: TextStyle(color: Colors.white, fontSize: 10)),
+                                      Tooltip(
+                        message: messageTime.fullLocalizedDateTime,
+                        child: Text(formattedTime, style: TextStyle(color: Colors.white, fontSize: 10)),
+                      ),
 
                                       if (messageStatus != null) SizedBox(width: 6),
 

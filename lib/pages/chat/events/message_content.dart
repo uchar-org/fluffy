@@ -367,7 +367,10 @@ class MessageContent extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                         ],
-                        Text(formattedTime, style: TextStyle(color: textColor, fontSize: 12)),
+                        Tooltip(
+                          message: messageTime.fullLocalizedDateTime,
+                          child: Text(formattedTime, style: TextStyle(color: textColor, fontSize: 12)),
+                        ),
                         if (messageStatus != null) const SizedBox(width: 3),
                         if (messageStatus != null) MessageStatusWidget(status: messageStatus, iconColor: textColor),
                       ],

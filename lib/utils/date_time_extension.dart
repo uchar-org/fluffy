@@ -79,7 +79,10 @@ extension DateTimeExtension on DateTime {
     );
   }
 
-  /// Check if time needs to be in 24h format
+  /// Returns the raw DateTime string as-is for tooltips.
+  String get fullLocalizedDateTime => toString();
+
+/// Check if time needs to be in 24h format
   bool use24HourFormat(BuildContext context) {
     final mediaQuery24h = MediaQuery.alwaysUse24HourFormatOf(context);
 
