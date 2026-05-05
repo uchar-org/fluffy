@@ -11,10 +11,12 @@ import '../../../config/app_config.dart';
 class StateMessage extends StatelessWidget {
   final Event event;
   final void Function()? onExpand;
+  final void Function()? onSenderTap;
   final bool isCollapsed;
   const StateMessage(
     this.event, {
     this.onExpand,
+    this.onSenderTap,
     this.isCollapsed = false,
     super.key,
   });
@@ -37,7 +39,12 @@ class StateMessage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                       AppConfig.borderRadius / 3,
                     ),
-                    child: Padding(
+                    child: InkWell(
+                      onTap: onSenderTap,
+                      borderRadius: BorderRadius.circular(
+                        AppConfig.borderRadius / 3,
+                      ),
+                      child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8.0,
                         vertical: 4.0,
@@ -77,6 +84,7 @@ class StateMessage extends StatelessWidget {
                 ),
               ),
             ),
+          ),
     );
   }
 }
