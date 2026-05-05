@@ -24,6 +24,7 @@ import 'package:flutter/services.dart';
 import 'package:matrix/matrix.dart';
 
 import '../../../config/app_config.dart';
+import '../../../widgets/adaptive_dialogs/user_dialog.dart';
 import 'message_content.dart';
 import 'message_context_menu.dart';
 import 'message_reactions.dart';
@@ -104,12 +105,40 @@ class Message extends StatelessWidget {
       if (event.type.startsWith('m.call.')) {
         return const SizedBox.shrink();
       }
-      return StateMessage(event, onExpand: onExpand, isCollapsed: isCollapsed);
+      return StateMessage(
+        event,
+        onExpand: onExpand,
+        isCollapsed: isCollapsed,
+        onSenderTap: () {
+          final sender = event.senderFromMemoryOrFallback;
+          UserDialog.show(
+            context: context,
+            profile: Profile(
+              userId: sender.id,
+              displayName: sender.displayName,
+              avatarUrl: sender.avatarUrl,
+            ),
+          );
+        },
+      );
     }
 
     if (event.type == EventTypes.Message &&
         event.messageType == EventTypes.KeyVerificationRequest) {
-      return StateMessage(event);
+      return StateMessage(
+        event,
+        onSenderTap: () {
+          final sender = event.senderFromMemoryOrFallback;
+          UserDialog.show(
+            context: context,
+            profile: Profile(
+              userId: sender.id,
+              displayName: sender.displayName,
+              avatarUrl: sender.avatarUrl,
+            ),
+          );
+        },
+      );
     }
 
     final client = Matrix.of(context).client;
@@ -401,29 +430,38 @@ class Message extends StatelessWidget {
                                                 : FutureBuilder<User?>(
                                                     future: event.fetchSenderUser(),
                                                     builder: (context, snapshot) {
-                                                      final displayname =
-                                                          snapshot.data?.calcDisplayname() ??
-                                                          event.senderFromMemoryOrFallback.calcDisplayname();
-                                                      return Text(
-                                                        displayname,
-                                                        style: TextStyle(
-                                                          fontSize: 11,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: (theme.brightness == Brightness.light
-                                                              ? displayname.color
-                                                              : displayname.lightColorText),
-                                                          shadows: !wallpaperMode
-                                                              ? null
-                                                              : [
-                                                                  const Shadow(
-                                                                    offset: Offset(0.0, 0.0),
-                                                                    blurRadius: 3,
-                                                                    color: Colors.black,
-                                                                  ),
-                                                                ],
+                                                      final user = snapshot.data ?? event.senderFromMemoryOrFallback;
+                                                      final displayname = user.calcDisplayname();
+                                                      return GestureDetector(
+                                                        onTap: () => UserDialog.show(
+                                                          context: context,
+                                                          profile: Profile(
+                                                            userId: user.id,
+                                                            displayName: user.displayName,
+                                                            avatarUrl: user.avatarUrl,
+                                                          ),
                                                         ),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
+                                                        child: Text(
+                                                          displayname,
+                                                          style: TextStyle(
+                                                            fontSize: 11,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: (theme.brightness == Brightness.light
+                                                                ? displayname.color
+                                                                : displayname.lightColorText),
+                                                            shadows: !wallpaperMode
+                                                                ? null
+                                                                : [
+                                                                    const Shadow(
+                                                                      offset: Offset(0.0, 0.0),
+                                                                      blurRadius: 3,
+                                                                      color: Colors.black,
+                                                                    ),
+                                                                  ],
+                                                          ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
                                                       );
                                                     },
                                                   ),
