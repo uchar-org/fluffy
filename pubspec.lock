@@ -458,7 +458,7 @@ packages:
     source: hosted
     version: "0.9.3+5"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
       sha256: "26de145bb9688a90962faec6f838247377b0b0d32cc0abecd9a4e43525fc856c"
@@ -1133,7 +1133,7 @@ packages:
     source: hosted
     version: "1.6.2"
   linkify:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: linkify
       sha256: "4139ea77f4651ab9c315b577da2dd108d9aa0bd84b5d03d33323f1970c645832"
@@ -2162,7 +2162,7 @@ packages:
     source: hosted
     version: "3.1.5"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       sha256: a11b666489b1954e01d992f3d601b1804a33937b5a8fe677bd26b8a9f96f96e8

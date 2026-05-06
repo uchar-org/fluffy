@@ -29,82 +29,31 @@ jobs:
         run: ./scripts/prepare-web.sh
       - run: rm ./assets/vodozemac/.gitignore
       - name: Build Release Web
-        run: flutter build web --dart-define=FLUTTER_WEB_CANVASKIT_URL=canvaskit/ --release --source-maps --base-href "/web/"
+        run: flutter build web --dart-define=FLUTTER_WEB_CANVASKIT_URL=canvaskit/ --release --source-maps --base-href "/"
       - name: Create archive
-        run: tar -czf fluffychat-web.tar.gz build/web/
+        run: tar -czf uchar-web.tar.gz build/web/
       - name: Upload Web Build
         uses: actions/upload-artifact@v7
         with:
           name: Web Build
-          path: fluffychat-web.tar.gz
+          path: uchar-web.tar.gz
       - name: Upload to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: fluffychat-web.tar.gz
-          asset_name: fluffychat-web.tar.gz
+          asset_path: uchar-web.tar.gz
+          asset_name: uchar-web.tar.gz
           asset_content_type: application/gzip
-      - name: Clone fluffychat website
-        run: |
-          git clone https://github.com/krille-chan/fluffychat-website.git
-          cat CHANGELOG.md >> fluffychat-website/src/changelog.md
-          cat PRIVACY.md >> fluffychat-website/src/privacy.md
-      - name: Build website
-        working-directory: fluffychat-website
-        run: |
-          npm install tailwindcss @tailwindcss/cli
-          npx tailwindcss -i ./src/styles.css -o ./src/assets/tailwind.css --minify
-          npx @11ty/eleventy
-          mv public ../
-      - name: Copy FluffyChat web into it
-        run: |
-          mkdir public/web
-          mkdir public/nightly
-          cp -r build/web/* public/web/
-          cp -r build/web/* public/nightly/
-          echo "fluffychat.im" >> public/CNAME
       - name: Deploy to GitHub Pages
         if: startsWith(github.ref, 'refs/tags/v')
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./build/web
           publish_branch: gh-pages
-          cname: fluffychat.im
-
-  build_apk:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version-file: .tool_versions.yaml
-          cache: true
-      - name: Add Firebase Messaging
-        run: |
-          echo '${{secrets.GOOGLE_SERVICES_JSON}}' | base64 -d > android/app/google-services.json
-          ./scripts/add-firebase-messaging.sh
-      - uses: ./.github/actions/free_up_space
-      - uses: moonrepo/setup-rust@v1
-      - run: flutter pub get
-      - name: Prepare Android Release Build
-        env:
-          FDROID_KEY: ${{ secrets.FDROID_KEY }}
-          FDROID_KEY_PASS: ${{ secrets.FDROID_KEY_PASS }}
-          PLAYSTORE_DEPLOY_KEY: ${{ secrets.PLAYSTORE_DEPLOY_KEY }}
-        run: ./scripts/prepare-android-release.sh
-      - run: flutter build apk --release --target-platform android-arm,android-arm64
-      - name: Upload to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: build/app/outputs/apk/release/app-release.apk
-          asset_name: fluffychat.apk
-          asset_content_type: application/vnd.android.package-archive
+          cname: chat.uchar.uz
 
   build_linux:
     strategy:
@@ -124,64 +73,16 @@ jobs:
       - run: ./flutter/bin/flutter pub get
       - run: ./flutter/bin/flutter build linux --target-platform linux-${{ matrix.arch }}
       - name: Create archive
-        run: tar -czf fluffychat-linux-${{ matrix.arch }}.tar.gz -C build/linux/${{ matrix.arch }}/release/bundle/ .
+        run: tar -czf uchar-linux-${{ matrix.arch }}.tar.gz -C build/linux/${{ matrix.arch }}/release/bundle/ .
       - name: Upload to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: fluffychat-linux-${{ matrix.arch }}.tar.gz
-          asset_name: fluffychat-linux-${{ matrix.arch }}.tar.gz
+          asset_path: uchar-linux-${{ matrix.arch }}.tar.gz
+          asset_name: uchar-linux-${{ matrix.arch }}.tar.gz
           asset_content_type: application/gzip
-
-  deploy_playstore:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version-file: .tool_versions.yaml
-          cache: true
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-      - uses: ./.github/actions/free_up_space
-      - uses: moonrepo/setup-rust@v1
-      - name: Install Fastlane
-        working-directory: android
-        run: gem install fastlane -NV
-      - name: Add Firebase Messaging
-        run: |
-          echo '${{secrets.GOOGLE_SERVICES_JSON}}' | base64 -d > android/app/google-services.json
-          ./scripts/add-firebase-messaging.sh
-      - run: flutter pub get
-      - name: Prepare Android Release Build
-        env:
-          FDROID_KEY: ${{ secrets.FDROID_KEY }}
-          FDROID_KEY_PASS: ${{ secrets.FDROID_KEY_PASS }}
-          PLAYSTORE_DEPLOY_KEY: ${{ secrets.PLAYSTORE_DEPLOY_KEY }}
-        run: ./scripts/prepare-android-release.sh
-      - name: Build Android Release
-        run: flutter build appbundle --target-platform android-arm,android-arm64
-      - name: Get Tag Name
-        id: tag_name
-        run: echo "::set-output name=tag::$(echo ${GITHUB_REF#refs/tags/})"
-      - name: Deploy Android Release
-        run: |
-          mkdir -p build/android
-          cp build/app/outputs/bundle/release/app-release.aab build/android/
-          cd android
-          bundle install
-          bundle update fastlane
-          bundle exec fastlane deploy_internal_test
-          if [[ $GITHUB_REF_NAME == rc* ]]; then
-              bundle exec fastlane deploy_candidate
-          else
-              bundle exec fastlane deploy_release
-          fi
-          cd ..
 
   deploy_docker:
     runs-on: ubuntu-latest
