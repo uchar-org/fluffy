@@ -42,10 +42,13 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
               client.onSync.value != null &&
               status.status != SyncStatus.error &&
               client.prevBatch != null;
-          return TextField(
+          return SizedBox(
+            height: 40,
+            child: TextField(
             controller: controller.searchController,
             focusNode: controller.searchFocusNode,
             textInputAction: TextInputAction.search,
+            style: const TextStyle(fontSize: 13),
             onChanged: (text) =>
                 controller.onSearchEnter(text, globalSearch: globalSearch),
             decoration: InputDecoration(
@@ -60,6 +63,7 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                   ? L10n.of(context).searchChatsRooms
                   : status.calcLocalizedString(context),
               hintStyle: TextStyle(
+                fontSize: 13,
                 color: status.error != null
                     ? Colors.orange
                     : theme.colorScheme.onPrimaryContainer,
@@ -69,7 +73,7 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                   ? controller.isSearchMode
                         ? IconButton(
                             tooltip: L10n.of(context).cancel,
-                            icon: const Icon(TablerIcons.x),
+                            icon: const Icon(TablerIcons.x, size: 18),
                             onPressed: controller.cancelSearch,
                             color: theme.colorScheme.onPrimaryContainer,
                           )
@@ -77,6 +81,7 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                             onPressed: controller.startSearch,
                             icon: Icon(
                               TablerIcons.search,
+                              size: 18,
                               color: theme.colorScheme.onPrimaryContainer,
                             ),
                           )
@@ -127,6 +132,7 @@ class ChatListHeader extends StatelessWidget implements PreferredSizeWidget {
                           )
                   : SizedBox(width: 0, child: ClientChooserButton(controller)),
             ),
+          ),
           );
         },
       ),

@@ -184,7 +184,7 @@ class ClientChooserButton extends StatelessWidget {
               mxContent: snapshot.data?.avatarUrl,
               name:
                   snapshot.data?.displayName ?? matrix.client.userID?.localpart,
-              size: 32,
+              size: 24,
             ),
           ),
         ),
