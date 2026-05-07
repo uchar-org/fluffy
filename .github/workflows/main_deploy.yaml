@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - uchar/app/latest
   workflow_dispatch:
 
 concurrency:
@@ -14,7 +15,7 @@ jobs:
   deploy_web:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           flutter-version-file: .tool_versions.yaml
