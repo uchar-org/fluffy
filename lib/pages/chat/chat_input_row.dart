@@ -166,7 +166,7 @@ class ChatInputRow extends StatelessWidget {
                   AnimatedContainer(
                     duration: FluffyThemes.animationDuration,
                     curve: FluffyThemes.animationCurve,
-                    width: textMessageOnly ? 0 : 48,
+                    width: textMessageOnly ? 0 : 40,
                     height: height,
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(),
@@ -257,7 +257,7 @@ class ChatInputRow extends StatelessWidget {
                     AnimatedContainer(
                       duration: FluffyThemes.animationDuration,
                       curve: FluffyThemes.animationCurve,
-                      width: textMessageOnly ? 0 : 48,
+                      width: textMessageOnly ? 0 : 40,
                       height: height,
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(),
@@ -301,7 +301,7 @@ class ChatInputRow extends StatelessWidget {
                     ),
                    Container(
                     height: height,
-                    width: 48,
+                    width: 40,
                     alignment: Alignment.center,
                     child: IconButton(
                       tooltip: L10n.of(context).emojis,
