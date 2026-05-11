@@ -43,6 +43,7 @@ import 'package:fluffychat/widgets/adaptive_dialogs/show_text_input_dialog.dart'
 import 'package:fluffychat/widgets/future_loading_dialog.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:fluffychat/widgets/share_scaffold_dialog.dart';
+import 'package:fluffychat/widgets/uchar_snack_bar.dart';
 import '../../utils/account_bundles.dart';
 import '../../utils/localized_exception_extension.dart';
 import '../../utils/element_call/call_service.dart';
@@ -342,17 +343,9 @@ class ChatController extends State<ChatPageWithRoom>
     final shareItems = widget.shareItems;
     if (shareItems == null || shareItems.isEmpty) return;
     if (!room.otherPartyCanReceiveMessages) {
-      final theme = Theme.of(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: theme.colorScheme.errorContainer,
-          closeIconColor: theme.colorScheme.onErrorContainer,
-          content: Text(
-            L10n.of(context).otherPartyNotLoggedIn,
-            style: TextStyle(color: theme.colorScheme.onErrorContainer),
-          ),
-          showCloseIcon: true,
-        ),
+      ScaffoldMessenger.of(context).showUcharSnackBar(
+        message: L10n.of(context).otherPartyNotLoggedIn,
+        type: UcharNotificationType.error,
       );
       return;
     }
@@ -872,8 +865,9 @@ class ChatController extends State<ChatPageWithRoom>
       );
     } catch (e) {
       if (!mounted) return;
-      scaffoldMessenger.showSnackBar(
-        SnackBar(content: Text((e as Object).toLocalizedString(context))),
+      scaffoldMessenger.showUcharSnackBar(
+        message: (e as Object).toLocalizedString(context),
+        type: UcharNotificationType.error,
       );
       return;
     }
@@ -977,8 +971,9 @@ class ChatController extends State<ChatPageWithRoom>
       showEmojiPicker = false;
       selectedEvents.clear();
     });
-    scaffoldMessenger.showSnackBar(
-      SnackBar(content: Text(l10n.contentHasBeenReported)),
+    scaffoldMessenger.showUcharSnackBar(
+      message: l10n.contentHasBeenReported,
+      type: UcharNotificationType.success,
     );
   }
 
@@ -1510,8 +1505,9 @@ class ChatController extends State<ChatPageWithRoom>
     // Check if user has permission to join/start calls
     if (!CallService.canJoinCall(room)) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L10n.of(context).noCallPermission)),
+        ScaffoldMessenger.of(context).showUcharSnackBar(
+          message: L10n.of(context).noCallPermission,
+          type: UcharNotificationType.warning,
         );
       }
       return;
@@ -1523,12 +1519,10 @@ class ChatController extends State<ChatPageWithRoom>
 
     if (!cameraStatus.isGranted || !micStatus.isGranted) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
+        ScaffoldMessenger.of(context).showUcharSnackBar(
+          message:
               'Camera and microphone permissions are required for calls',
-            ),
-          ),
+          type: UcharNotificationType.warning,
         );
       }
       return;

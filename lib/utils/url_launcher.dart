@@ -5,6 +5,7 @@ import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.
 import 'package:fluffychat/widgets/adaptive_dialogs/user_dialog.dart';
 import 'package:fluffychat/widgets/future_loading_dialog.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:fluffychat/widgets/uchar_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:matrix/matrix.dart';
@@ -37,9 +38,9 @@ class UrlLauncher {
     }
     final uri = Uri.tryParse(url!);
     if (uri == null) {
-      // we can't open this thing
-      scaffoldMessenger.showSnackBar(
-        SnackBar(content: Text(l10n.cantOpenUri(url!))),
+      scaffoldMessenger.showUcharSnackBar(
+        message: l10n.cantOpenUri(url!),
+        type: UcharNotificationType.error,
       );
       return;
     }
@@ -92,8 +93,9 @@ class UrlLauncher {
       return;
     }
     if (uri.host.isEmpty) {
-      scaffoldMessenger.showSnackBar(
-        SnackBar(content: Text(l10n.cantOpenUri(url!))),
+      scaffoldMessenger.showUcharSnackBar(
+        message: l10n.cantOpenUri(url!),
+        type: UcharNotificationType.error,
       );
       return;
     }

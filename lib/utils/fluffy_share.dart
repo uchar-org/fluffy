@@ -1,5 +1,6 @@
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/widgets/uchar_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -26,8 +27,9 @@ abstract class FluffyShare {
     }
     await Clipboard.setData(ClipboardData(text: text));
     if (!PlatformInfos.isMobile) {
-      scaffoldMessenger.showSnackBar(
-        SnackBar(showCloseIcon: true, content: Text(l10n.copiedToClipboard)),
+      scaffoldMessenger.showUcharSnackBar(
+        message: l10n.copiedToClipboard,
+        type: UcharNotificationType.success,
       );
     }
     return;
