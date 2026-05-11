@@ -8,7 +8,7 @@ jobs:
   code_tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
       - uses: webiny/action-conventional-commits@v1.3.1
       - run: ./scripts/generate-locale-config.sh
       - run: git diff --exit-code
@@ -48,7 +48,7 @@ jobs:
     needs: [ code_tests ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
           flutter-version-file: .tool_versions.yaml
@@ -72,7 +72,7 @@ jobs:
         arch: [ x64, arm64 ]
     runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest'}}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install git wget curl clang cmake ninja-build pkg-config libgtk-3-dev libblkid-dev liblzma-dev libjsoncpp-dev cmake-data libsecret-1-dev libsecret-1-0 librhash0 libssl-dev libwebkit2gtk-4.1-dev -y
       - run: echo "FLUTTER_VERSION=$(yq '.environment.flutter' < .tool_versions.yaml)" >> $GITHUB_ENV
