@@ -1,11 +1,11 @@
 name: fluffychat
-title: FluffyChat
+title: Uchar
 base: core24
 version: 2.5.1
 license: AGPL-3.0
-summary: The cutest messenger in the Matrix network
+summary: Uchar — secure messenger in the Matrix network
 description: |
-  FluffyChat is an open source, nonprofit and cute matrix messenger app. The app is easy to use but secure and decentralized.
+  Uchar is a secure and decentralized matrix messenger app. The app is easy to use but secure and decentralized.
 
 
   ## Features
@@ -28,18 +28,7 @@ description: |
   - Emoji verification & cross signing
   - And much more...
 
-
-  ## FluffyChat comes with a dream
-
-  Imagine a world where everyone can choose the messenger they like and is still able to chat with all of their friends.
-
-  A world where there are no companies spying on you when you send selfies to friends and lovers.
-
-  And a world where apps are made for fluffyness and not for profit. ♥
-
-  Join the community: https://matrix.to/#/#fluffy-space:matrix.org
-  Website: http://fluffy.chat
-  Microblog: https://mastodon.art/@krille
+  Website: https://uchar.uz
 
 grade: stable
 confinement: strict
