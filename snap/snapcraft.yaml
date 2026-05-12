@@ -1,4 +1,4 @@
-name: fluffychat
+name: uchar
 title: Uchar
 base: core24
 version: 2.5.1
@@ -65,7 +65,7 @@ parts:
       - llvm-18
     override-prime: ''
 
-  fluffychat:
+  uchar:
     after: [flutter-git]
     plugin: nil
     source: .
@@ -93,11 +93,11 @@ slots:
   dbus-svc:
     interface: dbus
     bus: session
-    name: chat.fluffy.fluffychat
+    name: uz.uzinfocom.uchar
 
 apps:
-  fluffychat:
-    command: bin/fluffychat
+  uchar:
+    command: bin/uchar
     extensions: [ gnome ]
     plugs:
       - audio-playback

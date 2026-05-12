@@ -92,9 +92,9 @@ BEGIN
             VALUE "CompanyName", "Uchar" "\0"
             VALUE "FileDescription", "Uchar" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "fluffychat" "\0"
+            VALUE "InternalName", "uchar" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 Uchar. All rights reserved." "\0"
-            VALUE "OriginalFilename", "fluffychat.exe" "\0"
+            VALUE "OriginalFilename", "uchar.exe" "\0"
             VALUE "ProductName", "Uchar" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

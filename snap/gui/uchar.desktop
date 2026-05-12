@@ -2,8 +2,8 @@
 Name=Uchar
 GenericName=Matrix Client
 Comment=Chat with your friends
-Exec=fluffychat
-Icon=${SNAP}/meta/gui/fluffychat.png
+Exec=uchar
+Icon=${SNAP}/meta/gui/uchar.png
 Terminal=false
 Type=Application
 Categories=Network;Chat;InstantMessaging;
