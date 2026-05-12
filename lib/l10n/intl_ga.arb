@@ -39,7 +39,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -299,7 +299,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -1159,7 +1159,7 @@
         "placeholders": {}
     },
     "scanQrCode": "Scan cód QR",
-    "inviteText": "Thug {username} cuireadh duit chuig FluffyChat.\n1. Tabhair cuairt ar fluffychat.im agus a shuiteáil an app\n2. Cláraigh nó sínigh isteach\n3. Oscail an nasc cuirí:\n {link}",
+    "inviteText": "Thug {username} cuireadh duit chuig Uchar.\n1. Tabhair cuairt ar uchar.uz agus a shuiteáil an app\n2. Cláraigh nó sínigh isteach\n3. Oscail an nasc cuirí:\n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1208,7 +1208,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Teachtaireacht nua in FluffyChat",
+    "newMessageInFluffyChat": "💬 Teachtaireacht nua in Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -2250,7 +2250,7 @@
     "oneOfYourDevicesIsNotVerified": "Ní fhíoraítear ceann de do ghléasanna",
     "noticeChatBackupDeviceVerification": "Nóta: Nuair a nascann tú do ghléasanna go léir leis an gcúltaca comhrá, déantar iad a fhíorú go huathoibríoch.",
     "continueText": "Lean ar aghaidh",
-    "welcomeText": "Hey Hey 👋 Is é seo FluffyChat. Is féidir leat síniú isteach in aon fhreastalaí baile, atá comhoiriúnach leis https://matrix.org. Agus ansin comhrá a dhéanamh le duine ar bith. Is líonra teachtaireachtaí díláraithe ollmhór é!",
+    "welcomeText": "Hey Hey 👋 Is é seo Uchar. Is féidir leat síniú isteach in aon fhreastalaí baile, atá comhoiriúnach leis https://matrix.org. Agus ansin comhrá a dhéanamh le duine ar bith. Is líonra teachtaireachtaí díláraithe ollmhór é!",
     "blur": "Doiléirigh:",
     "opacity": "Teimhneacht:",
     "setWallpaper": "Socraigh cúlbhrat",
@@ -2778,9 +2778,9 @@
     "advancedConfigurations": "Cumraíochtaí ardleibhéil",
     "signIn": "Sínigh isteach",
     "createNewAccount": "Cruthaigh cuntas nua",
-    "signUpGreeting": "Tá FluffyChat díláraithe! Roghnaigh freastalaí inar mian leat do chuntas a chruthú agus déanaimis é!",
+    "signUpGreeting": "Tá Uchar díláraithe! Roghnaigh freastalaí inar mian leat do chuntas a chruthú agus déanaimis é!",
     "signInGreeting": "An bhfuil cuntas agat i Matrix cheana féin? Fáilte ar ais! Roghnaigh do fhreastalaí baile agus sínigh isteach.",
-    "appIntro": "Le FluffyChat is féidir leat comhrá a dhéanamh le do chairde. Is teachtaire [maitrís] díláraithe slán é! Foghlaim tuilleadh ar https://matrix.org más maith leat nó cláraigh.",
+    "appIntro": "Le Uchar is féidir leat comhrá a dhéanamh le do chairde. Is teachtaire [maitrís] díláraithe slán é! Foghlaim tuilleadh ar https://matrix.org más maith leat nó cláraigh.",
     "theProcessWasCanceled": "Cuireadh an próiseas ar ceal.",
     "join": "Téigh i",
     "searchOrEnterHomeserverAddress": "Cuardaigh nó cuir isteach seoladh an fhreastalaí baile",
@@ -2799,12 +2799,12 @@
     },
     "createNewChat": "Cruthaigh comhrá nua",
     "reset": "Athshocraigh",
-    "supportFluffyChat": "Tacaigh le FluffyChat",
+    "supportFluffyChat": "Tacaigh le Uchar",
     "support": "Tacaíocht",
-    "fluffyChatSupportBannerMessage": "Tá DO chabhair ag teastáil ó FluffyChat!\n❤️❤️❤️\nBeidh FluffyChat saor in aisce i gcónaí, ach cosnaíonn forbairt agus óstáil airgead fós.\nBraitheann todhchaí an tionscadail ar thacaíocht ó dhaoine cosúil leatsa.",
-    "skipSupportingFluffyChat": "Seachain tacú le FluffyChat",
+    "fluffyChatSupportBannerMessage": "Tá DO chabhair ag teastáil ó Uchar!\n❤️❤️❤️\nBeidh Uchar saor in aisce i gcónaí, ach cosnaíonn forbairt agus óstáil airgead fós.\nBraitheann todhchaí an tionscadail ar thacaíocht ó dhaoine cosúil leatsa.",
+    "skipSupportingFluffyChat": "Seachain tacú le Uchar",
     "iDoNotWantToSupport": "Nílim ag iarraidh tacú leis",
-    "iAlreadySupportFluffyChat": "Tacaím le FluffyChat cheana féin",
+    "iAlreadySupportFluffyChat": "Tacaím le Uchar cheana féin",
     "setLowPriority": "Socraigh tosaíocht íseal",
     "unsetLowPriority": "Díshuiteáil tosaíocht íseal",
     "removeCallFromChat": "Bain glao den chomhrá",

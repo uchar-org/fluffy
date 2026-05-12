@@ -91,7 +91,7 @@ class CallKitService {
     final params = callkit.CallKitParams(
       id: callUuid,
       nameCaller: displayName,
-      appName: 'FluffyChat',
+      appName: 'Uchar',
       avatar: avatarPath,
       handle: room.id,
       type: 1, // Video call
@@ -182,7 +182,7 @@ class CallKitService {
     final params = callkit.CallKitParams(
       id: callUuid,
       nameCaller: displayName,
-      appName: 'FluffyChat',
+      appName: 'Uchar',
       avatar: avatarPath,
       handle: room.id,
       type: 1, // Video call

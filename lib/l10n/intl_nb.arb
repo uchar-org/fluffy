@@ -595,7 +595,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -752,7 +752,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} har invitert deg til FluffyChat. \n1. Installer FluffyChat: https://fluffychat.im \n2. Registrer deg eller logg inn \n3. Åpne invitasjonslenken: \n {link}",
+    "inviteText": "{username} har invitert deg til Uchar. \n1. Installer Uchar: https://uchar.uz \n2. Registrer deg eller logg inn \n3. Åpne invitasjonslenken: \n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -904,7 +904,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "Ny melding i FluffyChat",
+    "newMessageInFluffyChat": "Ny melding i Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1346,7 +1346,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2369,7 +2369,7 @@
     "prepareSendingAttachment": "Forbered sending av vedlegg...",
     "generatingVideoThumbnail": "Genererer videominiatyrbilde ...",
     "compressVideo": "Komprimerer video...",
-    "welcomeText": "Hei, hei! 👋 Dette er FluffyChat. Du kan logge på hvilken som helst hjemmeserver som er kompatibel med https://matrix.org. Og deretter chatte med hvem som helst. Det er et stort desentralisert meldingsnettverk!",
+    "welcomeText": "Hei, hei! 👋 Dette er Uchar. Du kan logge på hvilken som helst hjemmeserver som er kompatibel med https://matrix.org. Og deretter chatte med hvem som helst. Det er et stort desentralisert meldingsnettverk!",
     "notificationRuleIsUserMentionDescription": "Varsler brukeren når de er direkte nevnt i en melding.",
     "notificationRuleContainsDisplayName": "Inneholder visningsnavn",
     "notificationRuleContainsDisplayNameDescription": "Varsler brukeren når en melding inneholder ens visningsnavnet.",
@@ -2779,9 +2779,9 @@
     "addChatOrSubSpace": "Legg til chat eller underområde",
     "signIn": "Logg på",
     "createNewAccount": "Opprett ny konto",
-    "signUpGreeting": "FluffyChat er desentralisert! Velg en server der du vil opprette kontoen din, så kjører vi på!",
+    "signUpGreeting": "Uchar er desentralisert! Velg en server der du vil opprette kontoen din, så kjører vi på!",
     "signInGreeting": "Har du allerede en Matrix-konto? Velkommen tilbake! Velg hjemmeserveren din og logg inn.",
-    "appIntro": "Med FluffyChat kan du chatte med vennene dine. Det er en sikker, desentralisert [matrix]-meldingsapp! Les mer på https://matrix.org hvis du vil, eller bare registrer deg.",
+    "appIntro": "Med Uchar kan du chatte med vennene dine. Det er en sikker, desentralisert [matrix]-meldingsapp! Les mer på https://matrix.org hvis du vil, eller bare registrer deg.",
     "theProcessWasCanceled": "Prosessen ble avbrutt.",
     "join": "Bli med",
     "searchOrEnterHomeserverAddress": "Søk eller angi adresse til hjemmeserver",
@@ -2800,12 +2800,12 @@
     },
     "createNewChat": "Opprett ny chat",
     "reset": "Nullstill",
-    "supportFluffyChat": "Støtt FluffyChat",
+    "supportFluffyChat": "Støtt Uchar",
     "support": "Støtte",
-    "fluffyChatSupportBannerMessage": "FluffyChat trenger DIN hjelp!\n❤️❤️❤️\nFluffyChat vil alltid være gratis, men utvikling og drift koster fortsatt penger. \nProsjektets fremtid avhenger av støtte fra folk som deg.",
-    "skipSupportingFluffyChat": "Hopp over støtte til FluffyChat",
+    "fluffyChatSupportBannerMessage": "Uchar trenger DIN hjelp!\n❤️❤️❤️\nUchar vil alltid være gratis, men utvikling og drift koster fortsatt penger. \nProsjektets fremtid avhenger av støtte fra folk som deg.",
+    "skipSupportingFluffyChat": "Hopp over støtte til Uchar",
     "iDoNotWantToSupport": "Jeg ønsker ikke å støtte",
-    "iAlreadySupportFluffyChat": "Jeg støtter allerede FluffyChat",
+    "iAlreadySupportFluffyChat": "Jeg støtter allerede Uchar",
     "setLowPriority": "Sett lav prioritet",
     "unsetLowPriority": "Fjern lav prioritet",
     "removeCallFromChat": "Fjern anrop fra chat",

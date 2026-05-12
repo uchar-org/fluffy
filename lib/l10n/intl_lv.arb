@@ -148,7 +148,7 @@
             }
         }
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -581,7 +581,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} uzaicināja pievienoties FluffyChat.\n1. Jāapmeklē fluffychat.im un jāuzstāda lietotne \n2. Jāizveido konts vai jāpiesakās \n3. Jāatver uzaicinājuma saite: \n {link}",
+    "inviteText": "{username} uzaicināja pievienoties Uchar.\n1. Jāapmeklē uchar.uz un jāuzstāda lietotne \n2. Jāizveido konts vai jāpiesakās \n3. Jāatver uzaicinājuma saite: \n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -955,7 +955,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Jauna ziņa FluffyChat",
+    "newMessageInFluffyChat": "💬 Jauna ziņa Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1474,7 +1474,7 @@
         "placeholders": {}
     },
     "unverified": "Neapliecināta",
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -2156,7 +2156,7 @@
         "placeholders": {}
     },
     "pinMessage": "Piespraust istabai",
-    "screenSharingDetail": "Tu kopīgo savu ekrānu FluffyChat",
+    "screenSharingDetail": "Tu kopīgo savu ekrānu Uchar",
     "muteChat": "Apklusināt tērzēšanu",
     "@muteChat": {
         "type": "String",
@@ -2478,7 +2478,7 @@
     "oneOfYourDevicesIsNotVerified": "Viena no ierīcēm nav apliecināta",
     "noticeChatBackupDeviceVerification": "Piezīme: kad visas ierīces tiek savienotas ar tērzēšanu rezerves kopiju, tās tiek automātiski apliecinātas.",
     "continueText": "Turpināt",
-    "welcomeText": "Sveicieni! 👋 Šis ir FluffyChat. Tu vari pieteikties jebkurā mājasserverī, kas ir saderīgs ar https://matrix.org. Tad vari tērzēt ar ikvienu. Tas ir milzīgs decentralizētās saziņas tīkls.",
+    "welcomeText": "Sveicieni! 👋 Šis ir Uchar. Tu vari pieteikties jebkurā mājasserverī, kas ir saderīgs ar https://matrix.org. Tad vari tērzēt ar ikvienu. Tas ir milzīgs decentralizētās saziņas tīkls.",
     "blur": "Aizmiglojums:",
     "setWallpaper": "Iestatīt ekrāntapeti",
     "opacity": "Necaurredzamība:",
@@ -2756,7 +2756,7 @@
     "theProcessWasCanceled": "Darbība tika atcelta.",
     "signIn": "Pieteikties",
     "createNewAccount": "Izveidot jaunu kontu",
-    "signUpGreeting": "FluffyChat ir decentralizēta. Jāatlasa serveris, kurā ir vēlēšanās izveidot savu kontu, un aiziet!",
+    "signUpGreeting": "Uchar ir decentralizēta. Jāatlasa serveris, kurā ir vēlēšanās izveidot savu kontu, un aiziet!",
     "signInGreeting": "Jau ir Matrix konts? Laipni lūdzam atpakaļ! Jāatlasa savs mājasserveris un jāpiesakās.",
-    "appIntro": "Ar FluffyChat vari tērzēt ar saviem draugiem. Tā ir droša un decentralizēta [matrix] ziņapmaiņas lietotne. Vairāk var uzzināt https://matrix.org, ja ir vēlēšanās, vai vienkārši jāpiesakās."
+    "appIntro": "Ar Uchar vari tērzēt ar saviem draugiem. Tā ir droša un decentralizēta [matrix] ziņapmaiņas lietotne. Vairāk var uzzināt https://matrix.org, ja ir vēlēšanās, vai vienkārši jāpiesakās."
 }

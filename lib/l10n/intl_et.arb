@@ -751,7 +751,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -908,7 +908,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} kutsus sind kasutama Matrix'i-põhist suhtlusrakendust FluffyChat. \n1. Ava fluffychat.im ja paigalda FluffyChat'i rakendus \n2. Liitu kasutajaks või logi sisse olemasoleva Matrix'i kasutajakontoga\n3. Ava kutse link: \n {link}",
+    "inviteText": "{username} kutsus sind kasutama Matrix'i-põhist suhtlusrakendust Uchar. \n1. Ava uchar.uz ja paigalda Uchar'i rakendus \n2. Liitu kasutajaks või logi sisse olemasoleva Matrix'i kasutajakontoga\n3. Ava kutse link: \n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1070,7 +1070,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Uus sõnum FluffyChat'i vahendusel",
+    "newMessageInFluffyChat": "💬 Uus sõnum Uchar'i vahendusel",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1105,7 +1105,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "noGoogleServicesWarning": "Tundub, et sinu nutiseadmes pole Firebase Cloud Messaging teenuseid. Sinu privaatsuse mõttes on see kindlasti hea otsus! Kui sa soovid FluffyChatis näha tõuketeavitusi, siis soovitame, et selle jaoks kasutad ntfy liidestust. Kasutades ntfyd või mõnda muud Unified Push standardil põhinevat liidestust saad tõuketeavitusi turvalisel moel. Ntfy rakendus on saadaval nii PlayStore kui F-Droidi rakendusepoodides.",
+    "noGoogleServicesWarning": "Tundub, et sinu nutiseadmes pole Firebase Cloud Messaging teenuseid. Sinu privaatsuse mõttes on see kindlasti hea otsus! Kui sa soovid Ucharis näha tõuketeavitusi, siis soovitame, et selle jaoks kasutad ntfy liidestust. Kasutades ntfyd või mõnda muud Unified Push standardil põhinevat liidestust saad tõuketeavitusi turvalisel moel. Ntfy rakendus on saadaval nii PlayStore kui F-Droidi rakendusepoodides.",
     "@noGoogleServicesWarning": {
         "type": "String",
         "placeholders": {}
@@ -1628,7 +1628,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2495,7 +2495,7 @@
     "oneOfYourDevicesIsNotVerified": "Üks sinu seadmetest pole verifitseeritud",
     "noticeChatBackupDeviceVerification": "Märkus: kui liidad kõik oma seadmed vestluste varundamisega, siis on nad sellega ka automaatselt verifitseeritud.",
     "continueText": "Jätka",
-    "welcomeText": "Tere, tere 👋 See on FluffyChat. Sa võid sisse logida igasse koduserverisse, mis ühildub https://matrix.org serveriga. Ja seejärel saad suhelda kõigiga. Tegemist on ikka väga suure detsentraliseeritud sõnumivõrguga!",
+    "welcomeText": "Tere, tere 👋 See on Uchar. Sa võid sisse logida igasse koduserverisse, mis ühildub https://matrix.org serveriga. Ja seejärel saad suhelda kõigiga. Tegemist on ikka väga suure detsentraliseeritud sõnumivõrguga!",
     "setWallpaper": "Määra taustapildiks",
     "manageAccount": "Halda kasutajakontot",
     "blur": "Hägusus:",
@@ -2772,9 +2772,9 @@
     "advancedConfigurations": "Täiendavad seadistused",
     "signIn": "Logi sisse",
     "createNewAccount": "Loo uus kasutajakonto",
-    "signUpGreeting": "FluffyChat kasutab hajutatud võrku! Vali server, kuhu tahad oma kasutajakonto lisada ning alustame!",
+    "signUpGreeting": "Uchar kasutab hajutatud võrku! Vali server, kuhu tahad oma kasutajakonto lisada ning alustame!",
     "signInGreeting": "Sul juba on Matrixi kasutajakonto olemas? Tere tulemast tagasi! Vali oma koduserver ja logi sisse.",
-    "appIntro": "FluffyChati abil saad suhelda oma sõpradega. See on turvaline ja hajutatud sõnumiklient [matrix]-i võrgus! Lisateavet leiad https://matrix.org saidist või lihtsalt liitu.",
+    "appIntro": "Uchari abil saad suhelda oma sõpradega. See on turvaline ja hajutatud sõnumiklient [matrix]-i võrgus! Lisateavet leiad https://matrix.org saidist või lihtsalt liitu.",
     "theProcessWasCanceled": "Protsess on katkestatud.",
     "join": "Liitu",
     "searchOrEnterHomeserverAddress": "Otsi koduserveri aadressi või sisesta see",
@@ -2793,11 +2793,11 @@
     },
     "createNewChat": "Loo uus vestlus",
     "reset": "Lähtesta",
-    "supportFluffyChat": "Toeta FluffyChati",
+    "supportFluffyChat": "Toeta Uchari",
     "support": "Toeta meid",
-    "iAlreadySupportFluffyChat": "Ma juba toetan FluffyChati arendust",
-    "fluffyChatSupportBannerMessage": "FluffyChat vajab SINU abi!\n❤️❤️❤️\nFluffyChat jääb alati vabaks ja vabalt saadavaks, aga arendus ja serveriteenused vajavad ikkagi rahastamist.\nMeie projekti tulevik sõltub sinust ja teistest kasutajatest, nagu sina.",
-    "skipSupportingFluffyChat": "Jäta FluffyChati toetamine vahele",
+    "iAlreadySupportFluffyChat": "Ma juba toetan Uchari arendust",
+    "fluffyChatSupportBannerMessage": "Uchar vajab SINU abi!\n❤️❤️❤️\nUchar jääb alati vabaks ja vabalt saadavaks, aga arendus ja serveriteenused vajavad ikkagi rahastamist.\nMeie projekti tulevik sõltub sinust ja teistest kasutajatest, nagu sina.",
+    "skipSupportingFluffyChat": "Jäta Uchari toetamine vahele",
     "iDoNotWantToSupport": "Ma ei soovi toetada",
     "setLowPriority": "Märgi vähetähtsaks",
     "unsetLowPriority": "Eemalda märkimine vähetähtsaks",

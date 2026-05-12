@@ -750,7 +750,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -907,7 +907,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} hat Dich zu FluffyChat eingeladen. \n1. Gehe auf fluffychat.im und installiere die App \n2. Melde Dich in der App an \n3. Öffne den Einladungslink: \n {link}",
+    "inviteText": "{username} hat Dich zu Uchar eingeladen. \n1. Gehe auf uchar.uz und installiere die App \n2. Melde Dich in der App an \n3. Öffne den Einladungslink: \n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1069,7 +1069,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Neue Nachricht in FluffyChat",
+    "newMessageInFluffyChat": "💬 Neue Nachricht in Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1615,7 +1615,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2504,7 +2504,7 @@
     "noticeChatBackupDeviceVerification": "Hinweis: Wenn du alle deine Geräte mit dem Chat-Backup verbindest, sind sie automatisch verifiziert.",
     "setWallpaper": "Hintergrund ändern",
     "opacity": "Deckkraft:",
-    "welcomeText": "Hey Hey 👋 Das ist FluffyChat. Du kannst sich bei jedem Homeserver anmelden, der mit https://matrix.org kompatibel ist. Und dann mit jedem chatten. Das hier ist ein riesiges dezentrales Nachrichtennetzwerk!",
+    "welcomeText": "Hey Hey 👋 Das ist Uchar. Du kannst sich bei jedem Homeserver anmelden, der mit https://matrix.org kompatibel ist. Und dann mit jedem chatten. Das hier ist ein riesiges dezentrales Nachrichtennetzwerk!",
     "blur": "Verwischen:",
     "manageAccount": "Konto verwalten",
     "continueText": "Fortfahren",
@@ -2778,9 +2778,9 @@
     "advancedConfigurations": "Erweiterte Konfigurationen",
     "signIn": "Anmelden",
     "createNewAccount": "Neues Konto erstellen",
-    "signUpGreeting": "FluffyChat ist dezentral! Wähle einen Server, auf dem du dein Konto erstellen möchtest, und los geht's!",
+    "signUpGreeting": "Uchar ist dezentral! Wähle einen Server, auf dem du dein Konto erstellen möchtest, und los geht's!",
     "signInGreeting": "Du hast bereits ein Konto bei Matrix? Willkommen zurück! Wähle deinen Homeserver aus und melde dich an.",
-    "appIntro": "Mit FluffyChat kannst du mit deinen Freunden chatten. Es ist ein sicherer, dezentralisierter [Matrix]-Messenger! Erfahre mehr auf https://matrix.org wenn du möchtest, oder melde dich einfach an.",
+    "appIntro": "Mit Uchar kannst du mit deinen Freunden chatten. Es ist ein sicherer, dezentralisierter [Matrix]-Messenger! Erfahre mehr auf https://matrix.org wenn du möchtest, oder melde dich einfach an.",
     "theProcessWasCanceled": "Der Vorgang wurde abgebrochen.",
     "federationBaseUrl": "Basis-URL der Föderation",
     "clientWellKnownInformation": "Bekannte Informationen zum Client:",
@@ -2801,12 +2801,12 @@
         "description": "This should be a very short string because there is not much space in the button!"
     },
     "createNewChat": "Neuen Chat erstellen",
-    "supportFluffyChat": "FluffyChat unterstützen",
+    "supportFluffyChat": "Uchar unterstützen",
     "support": "Unterstützen",
-    "fluffyChatSupportBannerMessage": "FluffyChat braucht DEINE Hilfe!\n❤️❤️❤️\nFluffyChat wird immer kostenlos bleiben, aber Entwicklung und Hosting kosten Geld.\nDie Zukunft des Projekts hängt von deiner Unterstützung ab.",
-    "skipSupportingFluffyChat": "FluffyChat unterstützen überspringen",
+    "fluffyChatSupportBannerMessage": "Uchar braucht DEINE Hilfe!\n❤️❤️❤️\nUchar wird immer kostenlos bleiben, aber Entwicklung und Hosting kosten Geld.\nDie Zukunft des Projekts hängt von deiner Unterstützung ab.",
+    "skipSupportingFluffyChat": "Uchar unterstützen überspringen",
     "iDoNotWantToSupport": "Ich möchte nicht unterstützen",
-    "iAlreadySupportFluffyChat": "I unterstütze FluffyChat bereits",
+    "iAlreadySupportFluffyChat": "I unterstütze Uchar bereits",
     "photo": "Foto",
     "video": "Video"
 }

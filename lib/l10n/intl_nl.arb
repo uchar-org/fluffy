@@ -751,7 +751,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -908,7 +908,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} heeft je uitgenodigd voor FluffyChat.\n1. Bezoek https://fluffychat.im en installeer de app\n2. Registreer of log in\n3. Open deze uitnodigingslink:\n{link}",
+    "inviteText": "{username} heeft je uitgenodigd voor Uchar.\n1. Bezoek https://uchar.uz en installeer de app\n2. Registreer of log in\n3. Open deze uitnodigingslink:\n{link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1070,7 +1070,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Nieuw bericht in FluffyChat",
+    "newMessageInFluffyChat": "💬 Nieuw bericht in Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1628,7 +1628,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2552,7 +2552,7 @@
         }
     },
     "continueText": "Doorgaan",
-    "welcomeText": "Hallo hallo 👋 Dit is FluffyChat. Je kan inloggen op elke server die werkt met https://matrix.org. En dan chat je met iedereen. Het is een groot decentraal chat-netwerk!",
+    "welcomeText": "Hallo hallo 👋 Dit is Uchar. Je kan inloggen op elke server die werkt met https://matrix.org. En dan chat je met iedereen. Het is een groot decentraal chat-netwerk!",
     "appWantsToUseForLogin": "Inloggen met '{server}'",
     "@appWantsToUseForLogin": {
         "type": "String",
@@ -2771,9 +2771,9 @@
     "advancedConfigurations": "Geavanceerde configuraties",
     "signIn": "Log in",
     "createNewAccount": "Registreer nieuw account",
-    "signUpGreeting": "FluffyChat is decentraal! Kies een server waar je wil voor jouw account en laten we gaan!",
+    "signUpGreeting": "Uchar is decentraal! Kies een server waar je wil voor jouw account en laten we gaan!",
     "signInGreeting": "Heb je al een Matrix account? Welkom terug! Kies jouw server en log in.",
-    "appIntro": "Met FluffyChat kan je chatten met je vrienden. Het is een veilige en decentrale [matrix] app! Lees meer op https://matrix.org als je wilt of kies registreren.",
+    "appIntro": "Met Uchar kan je chatten met je vrienden. Het is een veilige en decentrale [matrix] app! Lees meer op https://matrix.org als je wilt of kies registreren.",
     "theProcessWasCanceled": "Het proces is geannuleerd.",
     "join": "Deelnemen",
     "searchOrEnterHomeserverAddress": "Zoek of voer serveradres in",
@@ -2792,11 +2792,11 @@
     },
     "createNewChat": "Creëer nieuw chat",
     "reset": "Herstellen",
-    "fluffyChatSupportBannerMessage": "Fluffy Chat heeft JOUW hulp nodig. _\n❤️❤️❤️\nFluffyChat zal altijd gratis zijn, maar ontwikkeling en hosting kost geld.\nDe toekomst van het project hangt af van steun van mensen zoals jij.",
-    "skipSupportingFluffyChat": "FluffyChat steunen overslaan",
+    "fluffyChatSupportBannerMessage": "Fluffy Chat heeft JOUW hulp nodig. _\n❤️❤️❤️\nUchar zal altijd gratis zijn, maar ontwikkeling en hosting kost geld.\nDe toekomst van het project hangt af van steun van mensen zoals jij.",
+    "skipSupportingFluffyChat": "Uchar steunen overslaan",
     "iDoNotWantToSupport": "Ik wil niet ondersteunen",
-    "iAlreadySupportFluffyChat": "Ik steun FluffyChat al",
-    "supportFluffyChat": "FluffyChat steunen",
+    "iAlreadySupportFluffyChat": "Ik steun Uchar al",
+    "supportFluffyChat": "Uchar steunen",
     "support": "Steunen",
     "setLowPriority": "Lage prioriteit instellen",
     "unsetLowPriority": "Lage prioriteit uitschakelen",
