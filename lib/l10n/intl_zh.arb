@@ -718,7 +718,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -875,7 +875,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} 邀请你使用 FluffyChat。 \n1. 安装 FluffyChat：https://fluffychat.im \n2. 注册或登录 \n3. 打开邀请链接：\n {link}",
+    "inviteText": "{username} 邀请你使用 Uchar。 \n1. 安装 Uchar：https://uchar.uz \n2. 注册或登录 \n3. 打开邀请链接：\n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1027,7 +1027,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 FluffyChat 新消息",
+    "newMessageInFluffyChat": "💬 Uchar 新消息",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1062,7 +1062,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "noGoogleServicesWarning": "看起来你手机上没有 Firebase Cloud Messaging。如果仍希望接收 FluffyChat 的推送通知，推荐安装 ntfy。借助 ntfy 或另一个 Unified Push 程序，你可以以一种数据安全的方式接收推送通知。你可以从 PlayStore 或 F-Droid 商店下载 ntfy。",
+    "noGoogleServicesWarning": "看起来你手机上没有 Firebase Cloud Messaging。如果仍希望接收 Uchar 的推送通知，推荐安装 ntfy。借助 ntfy 或另一个 Unified Push 程序，你可以以一种数据安全的方式接收推送通知。你可以从 PlayStore 或 F-Droid 商店下载 ntfy。",
     "@noGoogleServicesWarning": {
         "type": "String",
         "placeholders": {}
@@ -1548,7 +1548,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2058,7 +2058,7 @@
     "allSpaces": "所有空间",
     "foregroundServiceRunning": "此通知在前台服务运行时出现。",
     "screenSharingTitle": "屏幕共享",
-    "screenSharingDetail": "你正在 FluffyChat 中共享屏幕",
+    "screenSharingDetail": "你正在 Uchar 中共享屏幕",
     "doNotShowAgain": "不再显示",
     "googlyEyesContent": "{senderName} 向你发送了“大眼”表情",
     "@googlyEyesContent": {
@@ -2347,7 +2347,7 @@
             }
         }
     },
-    "appLockDescription": "用 pin 码在不用 FluffyChat 时锁定它",
+    "appLockDescription": "用 pin 码在不用 Uchar 时锁定它",
     "globalChatId": "全局聊天 ID",
     "accessAndVisibility": "访问和可见性",
     "accessAndVisibilityDescription": "谁可以加入此聊天以及怎样发现该聊天。",
@@ -2494,7 +2494,7 @@
     },
     "oneOfYourDevicesIsNotVerified": "您设备中的一台未验证",
     "noticeChatBackupDeviceVerification": "注意：当你连接所有设备到聊天备份时，这些设备将被自动验证。",
-    "welcomeText": "你好呀 👋 欢迎来到 FluffyChat。你可以登录任意兼容 https://matrix.org 的 homeserver，然后和任何人聊天。这是个巨大的去中心化消息网络！",
+    "welcomeText": "你好呀 👋 欢迎来到 Uchar。你可以登录任意兼容 https://matrix.org 的 homeserver，然后和任何人聊天。这是个巨大的去中心化消息网络！",
     "continueText": "继续",
     "blur": "模糊：",
     "opacity": "不透明：",
@@ -2772,9 +2772,9 @@
     "advancedConfigurations": "高级配置",
     "signIn": "登录",
     "createNewAccount": "创建新账户",
-    "signUpGreeting": "FluffyChat 是去中心化的！选择您希望创建账户的服务器！",
+    "signUpGreeting": "Uchar 是去中心化的！选择您希望创建账户的服务器！",
     "signInGreeting": "已经有 Matrix 账户了？欢迎回来！选择 homeserver 登录。",
-    "appIntro": "借助 FluffyChat，您可以和好友聊天。它是安全的去中心化 [matrix] 消息收发应用！如果愿意，可以在 https://matrix.org 了解更多信息，也可直接注册账户。",
+    "appIntro": "借助 Uchar，您可以和好友聊天。它是安全的去中心化 [matrix] 消息收发应用！如果愿意，可以在 https://matrix.org 了解更多信息，也可直接注册账户。",
     "theProcessWasCanceled": "过程被取消。",
     "join": "加入",
     "searchOrEnterHomeserverAddress": "搜索或输入 homeserver 地址",
@@ -2793,12 +2793,12 @@
     },
     "createNewChat": "新建聊天",
     "reset": "重置",
-    "supportFluffyChat": "支持 FluffyChat",
+    "supportFluffyChat": "支持 Uchar",
     "support": "支持",
-    "fluffyChatSupportBannerMessage": "FluffyChat 需要您的帮助！\n❤️❤️❤️\nFluffyChat 将始终免费，但开发和托管仍然要花钱。\n项目的未来仰赖像您这样的人的支持。",
-    "skipSupportingFluffyChat": "跳过支持 FluffyChar",
+    "fluffyChatSupportBannerMessage": "Uchar 需要您的帮助！\n❤️❤️❤️\nUchar 将始终免费，但开发和托管仍然要花钱。\n项目的未来仰赖像您这样的人的支持。",
+    "skipSupportingFluffyChat": "跳过支持 Uchar",
     "iDoNotWantToSupport": "我不想支持",
-    "iAlreadySupportFluffyChat": "我已支持 FluffyChat",
+    "iAlreadySupportFluffyChat": "我已支持 Uchar",
     "setLowPriority": "设置低优先级",
     "unsetLowPriority": "取消设置低优先级",
     "removeCallFromChat": "从聊天中删除通话",

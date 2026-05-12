@@ -871,7 +871,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -1027,7 +1027,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} запрасіў вас у FluffyChat.\n1. Перайдзіце на fluffychat.im і ўстанавіце праграму\n2. Зарэгестрыруйцесь альбо ўвайдзіце\n3. Перайдзіце па запрашальнай спасылцы:\n{link}",
+    "inviteText": "{username} запрасіў вас у Uchar.\n1. Перайдзіце на uchar.uz і ўстанавіце праграму\n2. Зарэгестрыруйцесь альбо ўвайдзіце\n3. Перайдзіце па запрашальнай спасылцы:\n{link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1193,7 +1193,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Новае паведамленне ў FluffyChat",
+    "newMessageInFluffyChat": "💬 Новае паведамленне ў Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1385,7 +1385,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -1611,7 +1611,7 @@
     "custom": "Карыстальніцкае",
     "foregroundServiceRunning": "Гэта паведамленне з'явіцца, калі асноўныя службы запрацуюць.",
     "screenSharingTitle": "падзяліцца экранам",
-    "screenSharingDetail": "Вы дзеліцеся экранам у FluffyChat",
+    "screenSharingDetail": "Вы дзеліцеся экранам у Uchar",
     "whyIsThisMessageEncrypted": "Чаму гэта паведамленне нельга прачытаць?",
     "noKeyForThisMessage": "Гэта можа здарыцца з-за таго, што паведамленне было даслана да таго, як вы увайшлі ў уліковы запіс на гэтай прыладзе.\n\nТаксама верагодна, што адпраўшчык заблакіраваў вашу прыладу ці ў вас хібы з інтэрнэтам.\n\nВы можаце чытаць гэта паведамленне з іншага сеансу? Тад дашліце паведамленне адтуль! Перайдзіце ў Налады > Прылады і пераканайцеся ў тым, што вашы прылады верыфікавалі адна адну. Калі вы адкрыеце пакой наступны раз і абодве сэсіі будуць запушчаны, ключы павінны сінхранізавацца аўтаматычна.\n\nВы не хаціце згубіць клбчы, калі будзеце выходзіць ці змяняць прылады? Пераканайцеся ў тым, што вы уключылі рэзервовае капіраванне чатаў у наладах.",
     "newGroup": "Новая група",
@@ -2595,7 +2595,7 @@
     },
     "oneOfYourDevicesIsNotVerified": "Адна з вашых прылад не спраўджана",
     "noticeChatBackupDeviceVerification": "Заўвага: Калі вы падключыце ўсе свае прылады да рэзервовага капіравання, яны аўтаматычна спраўдзяцца.",
-    "welcomeText": "Вітаначкі 👋 Гэта FluffyChat. Вы можаце ўвайсці на любы дамашні сервер, што сумяшчальны з https://matrix.org, а потым паразмаўляць з кім-небудзь. Гэта вялізная дэцэнтралізаваная сетка абмену паведамленнямі!",
+    "welcomeText": "Вітаначкі 👋 Гэта Uchar. Вы можаце ўвайсці на любы дамашні сервер, што сумяшчальны з https://matrix.org, а потым паразмаўляць з кім-небудзь. Гэта вялізная дэцэнтралізаваная сетка абмену паведамленнямі!",
     "blur": "Размыццё:",
     "opacity": "Празрыстасць:",
     "setWallpaper": "Задаць шпалеры",
@@ -2759,9 +2759,9 @@
     "advancedConfigurations": "Пашыраная канфігурацыя",
     "signIn": "Увайсці",
     "createNewAccount": "Стварыць новы ўліковы запіс",
-    "signUpGreeting": "FluffyChat дэцэнтралізаваны! Выберыце свой сервер, дзе вы хаціце стварыць уліковы запіс і прайягвайце!",
+    "signUpGreeting": "Uchar дэцэнтралізаваны! Выберыце свой сервер, дзе вы хаціце стварыць уліковы запіс і прайягвайце!",
     "signInGreeting": "Вы ўжо маеце ўліковы запіс у Matrix? З вяртаннем! Выберыце свой хатні сервер і аўтарызуйцеся.",
-    "appIntro": "З дапамогай FluffyChat вы можаце размаўляць з вашымі сябрамі. Гэта бяспечны дэцэнтралізаваны [matrix] мэнэджэр! Даведайцеся больш на https://matrix.org, калі хаціце ці проста ўвайдзіце.",
+    "appIntro": "З дапамогай Uchar вы можаце размаўляць з вашымі сябрамі. Гэта бяспечны дэцэнтралізаваны [matrix] мэнэджэр! Даведайцеся больш на https://matrix.org, калі хаціце ці проста ўвайдзіце.",
     "theProcessWasCanceled": "Працэс быў скасаваны.",
     "join": "Далучыцца",
     "searchOrEnterHomeserverAddress": "Пашукайце ці ўвядзіце адрас хатняга сервера",
@@ -2780,12 +2780,12 @@
     },
     "createNewChat": "Стварыць новы чат",
     "reset": "Скінуць",
-    "supportFluffyChat": "Падтрымаць FluffyChat",
+    "supportFluffyChat": "Падтрымаць Uchar",
     "support": "Падтрымаць",
-    "fluffyChatSupportBannerMessage": "FluffyChat патрэбна ВАША дапамога!\n❤️❤️❤️\nFluffyChat будзе заўсёды бясплатным, bале распрацоўка і арэнда сервероў мае свой кошт.\nБудучыня праекту залежыць ад падтрымкі людзей як вы.",
-    "skipSupportingFluffyChat": "Прапусціць падтрымку FluffyChat",
+    "fluffyChatSupportBannerMessage": "Uchar патрэбна ВАША дапамога!\n❤️❤️❤️\nUchar будзе заўсёды бясплатным, bале распрацоўка і арэнда сервероў мае свой кошт.\nБудучыня праекту залежыць ад падтрымкі людзей як вы.",
+    "skipSupportingFluffyChat": "Прапусціць падтрымку Uchar",
     "iDoNotWantToSupport": "Я не хачу падтрымаць",
-    "iAlreadySupportFluffyChat": "Я ўжо падтрымаў FluffyChat",
+    "iAlreadySupportFluffyChat": "Я ўжо падтрымаў Uchar",
     "setLowPriority": "Прызначыць нізкі прыярытэт",
     "unsetLowPriority": "Скасаваць нізкі прыярытэт",
     "removeCallFromChat": "Прыбраць выклік з чату",

@@ -417,7 +417,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
     final exportBytes = Uint8List.fromList(const Utf8Codec().encode(export));
 
     final exportFileName =
-        'fluffychat-export-${DateFormat(DateFormat.YEAR_MONTH_DAY).format(DateTime.now())}.fluffybackup';
+        'uchar-export-${DateFormat(DateFormat.YEAR_MONTH_DAY).format(DateTime.now())}.ucharbackup';
 
     final file = MatrixFile(bytes: exportBytes, name: exportFileName);
     if (!context.mounted) return;

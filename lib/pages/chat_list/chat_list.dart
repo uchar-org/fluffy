@@ -525,7 +525,7 @@ class ChatListController extends State<ChatList>
               onPressed: () {
                 messenger.clearMaterialBanners();
                 launchUrlString(
-                  'https://fluffychat.im/faq/#how_can_i_support_fluffychat',
+                  'https://uchar.uz/faq/#how_can_i_support_uchar',
                 );
               },
               child: Text(

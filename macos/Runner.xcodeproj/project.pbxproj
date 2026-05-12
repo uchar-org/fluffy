@@ -445,7 +445,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = uz.uzinfocom.uchar;
-				PRODUCT_COPYRIGHT = "Copyright © 2023 FluffyChat authors. All rights reserved.";
+				PRODUCT_COPYRIGHT = "Copyright © 2023 Uchar. All rights reserved.";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -455,7 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
-				PRODUCT_NAME = FluffyChat;
+				PRODUCT_NAME = Uchar;
 			};
 			name = Profile;
 		};
@@ -580,7 +580,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = uz.uzinfocom.uchar;
-				PRODUCT_COPYRIGHT = "Copyright © 2023 FluffyChat authors. All rights reserved.";
+				PRODUCT_COPYRIGHT = "Copyright © 2023 Uchar. All rights reserved.";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -609,7 +609,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = uz.uzinfocom.uchar;
-				PRODUCT_COPYRIGHT = "Copyright © 2023 FluffyChat authors. All rights reserved.";
+				PRODUCT_COPYRIGHT = "Copyright © 2023 Uchar. All rights reserved.";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -619,7 +619,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
-				PRODUCT_NAME = FluffyChat;
+				PRODUCT_NAME = Uchar;
 			};
 			name = Debug;
 		};
@@ -627,7 +627,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = FluffyChat;
+				PRODUCT_NAME = Uchar;
 			};
 			name = Release;
 		};

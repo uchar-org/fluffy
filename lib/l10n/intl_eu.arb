@@ -471,7 +471,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -583,7 +583,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username}(e)k FluffyChatera gonbidatu zaitu.\n1. Bisitatu https://fluffychat.im eta instalatu aplikazioa\n2. Eman izena edo hasi saioa\n3. Ireki gonbidapen-esteka:\n{link}",
+    "inviteText": "{username}(e)k Ucharera gonbidatu zaitu.\n1. Bisitatu https://uchar.uz eta instalatu aplikazioa\n2. Eman izena edo hasi saioa\n3. Ireki gonbidapen-esteka:\n{link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -720,7 +720,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 Mezu berria FluffyChaten",
+    "newMessageInFluffyChat": "💬 Mezu berria Ucharen",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1048,7 +1048,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2045,7 +2045,7 @@
     "allSpaces": "Gune guztiak",
     "newGroup": "Talde berria",
     "screenSharingTitle": "pantaila-partekatzea",
-    "screenSharingDetail": "Pantaila FluffyChaten partekatzen ari zara",
+    "screenSharingDetail": "Pantaila Ucharen partekatzen ari zara",
     "noKeyForThisMessage": "Mezua gailu honetan saioa hasi baino lehen bidali bazen gertatu daiteke.\n\nBeste aukera bat igorleak zure gailua blokeatu izana da, edo zerbaitek huts egin izana interneteko konexioan.\n\nMezua beste saio batean irakur dezakezu? Hala bada, mezua transferitu dezakezu! Zoaz Ezrpenetara > Gailuak eta baieztatu zure gailuek bata bestea egiaztatu dutela. Gela irekiko duzun hurrengo aldian eta bi saioak aurreko planoan irekita daudenean, gakoak automatikoki partekatuko dira.\n\nEz duzu gakorik galdu nahi saioa amaitu edo gailuak aldatzen dituzunean? Baieztatu ezarpenetan txaten babeskopiak gaituta dituzula.",
     "supposedMxid": "Hau {mxid} izan behar da",
     "@supposedMxid": {
@@ -2499,7 +2499,7 @@
     "setWallpaper": "Ezarri horma-irudia",
     "blur": "Lausotu:",
     "continueText": "Jarraitu",
-    "welcomeText": "Ieup 👋 Ongi etorri FluffyChat-era. https://matrix.org-rekin bateragarria den edozein zerbitzaritan hasi dezakezu saioa eta edonorekin txateatu. Mezularitza-sare deszentralizatu eraraldoia da!",
+    "welcomeText": "Ieup 👋 Ongi etorri Uchar-era. https://matrix.org-rekin bateragarria den edozein zerbitzaritan hasi dezakezu saioa eta edonorekin txateatu. Mezularitza-sare deszentralizatu eraraldoia da!",
     "contactServerAdmin": "Jarri harremanetan zerbitzariaren administratzailearekin",
     "aboutHomeserver": "{homeserver}(e)ri buruz",
     "@aboutHomeserver": {
@@ -2772,9 +2772,9 @@
     "identityServer": "Identitate-zerbitzaria:",
     "signIn": "Hasi saioa",
     "createNewAccount": "Sortu kontu berria",
-    "signUpGreeting": "FluffyChat deszentralizatua da! Hautatu zure kontua zein zerbitzaritan sortu nahi duzun, eta hasi erabiltzen!",
+    "signUpGreeting": "Uchar deszentralizatua da! Hautatu zure kontua zein zerbitzaritan sortu nahi duzun, eta hasi erabiltzen!",
     "signInGreeting": "Baduzu dagoeneko Matrix kontu bat? Ongi etorri berriro ere! Hautatu zure zerbitzaria eta hasi saioa.",
-    "appIntro": "FluffyChat-i esker lagunekin txateatu dezakezu. [matrix]-erako mezularitza programa seguru eta deszentralizatua da! Nahi baduzu, irakurri gehiago https://matrix.org gunean, edo hasi saioa.",
+    "appIntro": "Uchar-i esker lagunekin txateatu dezakezu. [matrix]-erako mezularitza programa seguru eta deszentralizatua da! Nahi baduzu, irakurri gehiago https://matrix.org gunean, edo hasi saioa.",
     "theProcessWasCanceled": "Eragiketa bertan behera utzi da.",
     "join": "Batu",
     "searchOrEnterHomeserverAddress": "Bilatu edo sartu zerbitzariaren helbidea",
@@ -2793,11 +2793,11 @@
     },
     "createNewChat": "Sortu txat berria",
     "reset": "Berrezarri",
-    "supportFluffyChat": "Eman babesa FluffyChat-i",
+    "supportFluffyChat": "Eman babesa Uchar-i",
     "support": "Lagundu",
-    "fluffyChatSupportBannerMessage": "FluffyChat-ek ZURE laguntza behar du!\n❤️❤️❤️\nFluffyChat beti izango da doakoa, baina garapenak eta ostatatzeak dirua eskatzen du.\nProiektuaren etorkizuna zu bezalako pertsonen babesaren menpe dago.",
+    "fluffyChatSupportBannerMessage": "Uchar-ek ZURE laguntza behar du!\n❤️❤️❤️\nUchar beti izango da doakoa, baina garapenak eta ostatatzeak dirua eskatzen du.\nProiektuaren etorkizuna zu bezalako pertsonen babesaren menpe dago.",
     "iDoNotWantToSupport": "Ez diot babesik eman nahi",
-    "iAlreadySupportFluffyChat": "Laguntzen ari naiz dagoeneko FluffyChat",
+    "iAlreadySupportFluffyChat": "Laguntzen ari naiz dagoeneko Uchar",
     "setLowPriority": "Ezarri lehentasun baxua",
     "unsetLowPriority": "Kendu lehentasun baxua",
     "removeCallFromChat": "Kendu deia txatetik",
@@ -2809,7 +2809,7 @@
     "joinVideoCall": "Batu bideo-deira",
     "live": "Zuzenean",
     "playSoundOnNotification": "Jo soinua jakinarazpenekin",
-    "skipSupportingFluffyChat": "Muzin egin FluffyChat-en laguntza eskaerari",
+    "skipSupportingFluffyChat": "Muzin egin Uchar-en laguntza eskaerari",
     "photo": "Argazkia",
     "video": "Bideoa"
 }

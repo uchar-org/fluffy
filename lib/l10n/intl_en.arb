@@ -875,7 +875,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "fluffychat": "FluffyChat",
+    "fluffychat": "Uchar",
     "@fluffychat": {
         "type": "String",
         "placeholders": {}
@@ -1031,7 +1031,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "inviteText": "{username} invited you to FluffyChat.\n1. Visit fluffychat.im and install the app \n2. Sign up or sign in \n3. Open the invite link: \n {link}",
+    "inviteText": "{username} invited you to Uchar.\n1. Visit uchar.uz and install the app \n2. Sign up or sign in \n3. Open the invite link: \n {link}",
     "@inviteText": {
         "type": "String",
         "placeholders": {
@@ -1197,7 +1197,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "newMessageInFluffyChat": "💬 New message in FluffyChat",
+    "newMessageInFluffyChat": "💬 New message in Uchar",
     "@newMessageInFluffyChat": {
         "type": "String",
         "placeholders": {}
@@ -1811,7 +1811,7 @@
         "type": "String",
         "placeholders": {}
     },
-    "title": "FluffyChat",
+    "title": "Uchar",
     "@title": {
         "description": "Title for the application",
         "type": "String",
@@ -2536,7 +2536,7 @@
     "oneOfYourDevicesIsNotVerified": "One of your devices is not verified",
     "noticeChatBackupDeviceVerification": "Note: When you connect all your devices to the chat backup, they are automatically verified.",
     "continueText": "Continue",
-    "welcomeText": "Hey Hey 👋 This is FluffyChat. You can sign in to any homeserver, which is compatible with https://matrix.org. And then chat with anyone. It's a huge decentralized messaging network!",
+    "welcomeText": "Hey Hey 👋 This is Uchar. You can sign in to any homeserver, which is compatible with https://matrix.org. And then chat with anyone. It's a huge decentralized messaging network!",
     "blur": "Blur:",
     "opacity": "Opacity:",
     "setWallpaper": "Set wallpaper",
@@ -2782,9 +2782,9 @@
         }
     },
     "createNewAccount": "Create new account",
-    "signUpGreeting": "FluffyChat is decentralized! Select a server where you want to create your account and let's go!",
+    "signUpGreeting": "Uchar is decentralized! Select a server where you want to create your account and let's go!",
     "signInGreeting": "You already have an account in Matrix? Welcome back! Select your homeserver and sign in.",
-    "appIntro": "With FluffyChat you can chat with your friends. It's a secure decentralized [matrix] messenger! Learn more on https://matrix.org if you like or just sign up.",
+    "appIntro": "With Uchar you can chat with your friends. It's a secure decentralized [matrix] messenger! Learn more on https://matrix.org if you like or just sign up.",
     "theProcessWasCanceled": "The process was canceled.",
     "join": "Join",
     "searchOrEnterHomeserverAddress": "Search or enter homeserver address",
@@ -2807,12 +2807,12 @@
     },
     "createNewChat": "Create new chat",
     "reset": "Reset",
-    "supportFluffyChat": "Support FluffyChat",
+    "supportFluffyChat": "Support Uchar",
     "support": "Support",
     "fluffyChatSupportBannerMessage": "Uchar needs YOUR help!\n❤️❤️❤️\nUchar will always be free, but development and hosting still cost money.\nThe future of the project depends on support from people like you.",
-    "skipSupportingFluffyChat": "Skip supporting FluffyChat",
+    "skipSupportingFluffyChat": "Skip supporting Uchar",
     "iDoNotWantToSupport": "I do not want to support",
-    "iAlreadySupportFluffyChat": "I already support FluffyChat",
+    "iAlreadySupportFluffyChat": "I already support Uchar",
     "setLowPriority": "Set low priority",
     "unsetLowPriority": "Unset low priority",
     "removeCallFromChat": "Remove call from chat",

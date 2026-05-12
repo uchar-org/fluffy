@@ -1650,6 +1650,11 @@
         "type": "String",
         "placeholders": {}
     },
+    "createNewAccount": "Hisobga olish yozuvini yaratish",
+    "@createNewAccount": {
+        "type": "String",
+        "placeholders": {}
+    },
     "reject": "Rad qilish",
     "@reject": {
         "type": "String",
