@@ -194,40 +194,44 @@ class ChatListViewBody extends StatelessWidget {
                   if (client.prevBatch != null &&
                       rooms.isEmpty &&
                       !controller.isSearchMode) ...[
-                    Column(
-                      mainAxisAlignment: .center,
-                      children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const Column(
-                              mainAxisSize: .min,
-                              children: [
-                                DummyChatListItem(opacity: 0.5, animate: false),
-                                DummyChatListItem(opacity: 0.3, animate: false),
-                              ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 48,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: .center,
+                        children: [
+                          Container(
+                            width: 96,
+                            height: 96,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: theme.colorScheme.primaryContainer
+                                  .withValues(alpha: 0.6),
                             ),
-                            Icon(
-                              TablerIcons.message,
-                              size: 128,
-                              color: theme.colorScheme.secondary,
+                            alignment: Alignment.center,
+                            child: Icon(
+                              client.rooms.isEmpty
+                                  ? TablerIcons.message_plus
+                                  : TablerIcons.message_off,
+                              size: 44,
+                              color: theme.colorScheme.onPrimaryContainer,
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
                             client.rooms.isEmpty
                                 ? L10n.of(context).noChatsFoundHere
                                 : L10n.of(context).noMoreChatsFound,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: theme.colorScheme.secondary,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ]),

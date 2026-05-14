@@ -58,11 +58,12 @@ class ChatListItem extends StatelessWidget {
     final backgroundColor = activeChat
         ? theme.colorScheme.secondaryContainer
         : null;
-    final displayname = room.getLocalizedDisplayname(
-      MatrixLocals(L10n.of(context)),
-    );
+    final matrixLocals = MatrixLocals(L10n.of(context));
     final filter = this.filter;
-    if (filter != null && !displayname.toLowerCase().contains(filter)) {
+    if (filter != null &&
+        !room.getLocalizedDisplayname(matrixLocals).toLowerCase().contains(
+          filter,
+        )) {
       return const SizedBox.shrink();
     }
 
@@ -79,7 +80,9 @@ class ChatListItem extends StatelessWidget {
         color: backgroundColor,
         child: FutureBuilder(
           future: room.name.isEmpty ? room.loadHeroUsers() : null,
-          builder: (context, _) => GestureDetector(
+          builder: (context, _) {
+            final displayname = room.getLocalizedDisplayname(matrixLocals);
+            return GestureDetector(
             behavior: HitTestBehavior.translucent,
             onSecondaryTapDown: (details) =>
                 onLongPress?.call(context, details.globalPosition),
@@ -372,7 +375,8 @@ class ChatListItem extends StatelessWidget {
                       onPressed: onForget,
                     ),
             ),
-          ),
+          );
+          },
         ),
       ),
     );
